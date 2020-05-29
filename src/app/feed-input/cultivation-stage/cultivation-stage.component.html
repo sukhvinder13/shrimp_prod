@@ -1,0 +1,337 @@
+<hr>
+<span>Select :</span>
+
+<div class="row">
+  <!-- <div class="radio"   name="fieldname"  ngDefaultControl>
+    <label style="margin: 1rem;" *ngFor="let x of selectInputs">
+      <input type="radio" name="optradio" checked   [value]="x">{{x}}
+    </label> -->
+  <!-- <label  style="margin: 1rem;"><input type="radio" name="optradio" checked>Water Medicine</label>
+    <label style="margin: 1rem;"><input type="radio" name="optradio" checked>CheckNet</label>
+    <label style="margin: 1rem;"><input type="radio" name="optradio" checked>Shrimp Condition</label>
+    <label style="margin: 1rem;"><input type="radio" name="optradio" checked>Water Condition</label>
+    <label style="margin: 1rem;"><input type="radio" name="optradio" checked>Water Report</label> -->
+  <!-- </div> -->
+  <mat-radio-group class="example-radio-group" name="fieldname" (change)="changeComboo($event)"
+    [(ngModel)]="SelectedInput" ngDefaultControl>
+    <mat-radio-button class="example-radio-button" *ngFor="let x of selectInputs" [value]="x">
+      {{x}}
+    </mat-radio-button>
+  </mat-radio-group>
+</div>
+<hr>
+<div class="input-container">
+  <div class="example-selected-value">{{SelectedInput}}</div>
+  <div *ngIf="SelectedInput=='Feed'">
+    <div class="row">
+      <div class="col-md-6" >
+        <span>Select Feed</span>
+        <label style="margin: 1rem;" *ngFor="let feed of selectFeeds">
+          <button type="button" class="btn btn-light" [value]="feed">{{feed}}</button>
+        </label>
+      </div>
+      
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-6" >
+        <span>Select Tank</span>
+        <label style="margin: 1rem;" *ngFor="let tank of selectTanks">
+          <button type="button" class="btn btn-light" [value]="tank">{{tank}}</button>
+        </label>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-8">
+        <span>Feed Quantity  </span>
+        <label for="quantity">
+        <input type="number" class="form-control" placeholder="Enter Quantity " id="quantity">
+      </label></div>
+
+    </div>
+    <hr>
+    <label for="Medicine">Feed Medicine</label>
+    <hr>
+    <div class="row">
+      <div class="col-md-8">
+        <span>List Feed Medicine  </span>
+        <label for="quantity">
+          <select class="form-control" [(ngModel)]="selectedTanks" name="selectedTanks" #Origin>
+            <option value="">Select Medicine</option>
+            <option *ngFor="let tanks of selectTanks" value="{{tanks}}">{{tanks}}</option>
+          </select>
+      </label>
+    </div>
+    <div class="col-md-4">
+      <label style="margin: 1rem;">
+        <button type="button" class="btn btn-light" value="addMedicine">Add Medicine</button>
+        <button type="button" class="btn btn-primary" value="addMedicine">Delete Medicine</button>
+      </label>
+    </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-8">
+        <table>
+          <thead>
+            <tr>
+              <th>Sr No</th>
+              <th>Frequency (gms)</th>
+              <th>Frequency</th>
+              <th>Total Medicine</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><input type="number" class="form-control" placeholder="Enter Gut Care " id="Frequency">
+              </td>
+              <td><input type="number" class="form-control" placeholder="Enter Frequency " id="Frequency2">
+              </td>
+              <td><input type="number" class="form-control" placeholder="Total " id="Frequency">
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><input type="number" class="form-control" placeholder="Enter Gut Care " id="Frequency">
+              </td>
+              <td><input type="number" class="form-control" placeholder="Enter Frequency " id="Frequency22">
+              </td>
+              <td><input type="number" class="form-control" placeholder="Total " id="Frequency">
+              </td>
+            </tr>
+        </table>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary float-right">Submit</button>
+    <hr>
+  </div>
+
+
+  <div *ngIf="SelectedInput=='Water Medicine'">
+        <div class="row">
+      <div class="col-md-6" >
+        <span>Select Tank</span>
+        <label style="margin: 1rem;" *ngFor="let tank of selectTanks">
+          <button type="button" class="btn btn-light" [value]="tank">{{tank}}</button>
+        </label>
+      </div>
+    </div>
+    <hr>
+    <label for="Medicine">Water Medicine</label>
+    <hr>
+    <div class="row">
+      <div class="col-md-8">
+        <span>List Water Medicine  </span>
+        <label for="quantity">
+          <select class="form-control" [(ngModel)]="selectedTanks" name="selectedTanks" #Origin>
+            <option value="">Water Medicine</option>
+            <option *ngFor="let tanks of selectTanks" value="{{tanks}}">{{tanks}}</option>
+          </select>
+      </label>
+    </div>
+    <div class="col-md-4">
+      <label style="margin: 1rem;">
+        <button type="button" class="btn btn-light" value="addMedicine">Add Medicine</button>
+        <button type="button" class="btn btn-primary" value="addMedicine">Delete Medicine</button>
+      </label>
+    </div>
+
+    </div>
+    <hr>
+    <span>Active Water Medicine</span>
+    <div class="row">
+      <div class="col-md-8">
+        <table>
+          <thead>
+            <tr>
+              <th>Sr No</th>
+              <th>Frequency (gms)</th>
+              <th>Frequency</th>
+              <th>Time (HH:MM)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><input type="number" class="form-control" placeholder="Enter Gut Care " id="Frequency">
+              </td>
+              <td><input type="number" class="form-control" placeholder="Enter Frequency " id="Frequency2">
+              </td>
+              <td>
+                <input id="appt-time" class="form-control" type="time" name="appt-time" value="13:30">
+
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><input type="number" class="form-control" placeholder="Enter Gut Care " id="Frequency">
+              </td>
+              <td><input type="number" class="form-control" placeholder="Enter Frequency " id="Frequency22">
+              </td>
+              <td>
+                <input id="appt-time" class="form-control" type="time" name="appt-time" value="13:30">
+              </td>
+            </tr>
+        </table>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary float-right">Submit</button>
+    <hr>
+
+
+
+  </div>
+
+
+  <div *ngIf="SelectedInput=='CheckNet'">
+    <form>
+      <div class="row">
+        <div class=" col-md-6">
+          <label for="exampleFormControlSelect2">Select Tanks</label>
+          <select class="form-control" [(ngModel)]="selectedTanks" name="selectedTanks" #Origin>
+            <option value="">selectTanks</option>
+            <option *ngFor="let tanks of selectTanks" value="{{tanks}}">{{tanks}}</option>
+          </select>
+
+        </div>
+        <div class=" col-md-6" >
+          <label for="exampleFormControlSelect2">Select Feed</label>
+          <select class="form-control" [(ngModel)]="selectedFeeds" name="selectedfeeds" #Origin>
+            <option value="">Select Feed</option>
+            <option *ngFor="let feed of selectFeeds" value="{{feed}}">{{feed}}</option>
+          </select>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <label for="exampleFormControlSelect2" style="margin: 1rem;">How Much Left</label>
+        <table>
+          <thead>
+            <tr *ngFor="let cn of selectCNs">
+              <th>
+                <span style="margin: 1rem;">{{cn}}</span>
+              </th>
+              <th> <input type="number" class="form-control" id="CNs">
+              </th>
+            </tr>
+            <tr>
+
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <button type="submit" class="btn btn-primary float-right">Submit</button>
+
+    </form>
+  </div>
+  <div *ngIf="SelectedInput=='Shrimp Condition'">
+    <form>
+      <div class="row">
+        <div class=" col-md-6">
+          <label for="exampleFormControlSelect2">Select Tanks</label>
+          <select class="form-control" [(ngModel)]="selectedTanks" name="selectedTanks" #Origin>
+            <option value="">selectTanks</option>
+            <option *ngFor="let tanks of selectTanks" value="{{tanks}}">{{tanks}}</option>
+          </select>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-3">
+          <label for="exampleFormControlSelect2">Select Serverity</label>
+          <select class="form-control" [(ngModel)]="selectedFeeds" name="selectedfeeds" #Origin>
+            <option value="">Select </option>
+            <option *ngFor="let serverity of selectServerity" value="{{serverity}}">{{serverity}}</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label for="exampleFormControlSelect2">Upload Image</label>
+          <div class="file-upload-wrapper">
+            <input type="file" id="input-file-now-custom-2" class="file-upload"
+           data-height="500" />
+         </div>
+
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary float-right">Submit</button>
+
+     
+    </form>
+  </div>
+  <div *ngIf="SelectedInput=='Water Condition'">
+    <form>
+      <div class="row">
+        <div class=" col-md-6">
+          <label for="exampleFormControlSelect2">Select Tanks</label>
+          <select class="form-control" [(ngModel)]="selectedTanks" name="selectedTanks" #Origin>
+            <option value="">selectTanks</option>
+            <option *ngFor="let tanks of selectTanks" value="{{tanks}}">{{tanks}}</option>
+          </select>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-3">
+          <label for="exampleFormControlSelect2">Select Serverity</label>
+          <select class="form-control" [(ngModel)]="selectedFeeds" name="selectedfeeds" #Origin>
+            <option value="">Select </option>
+            <option *ngFor="let serverity of selectServerity" value="{{serverity}}">{{serverity}}</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label for="exampleFormControlSelect2">Upload Image</label>
+          <div class="file-upload-wrapper">
+            <input type="file" id="input-file-now-custom-2" class="file-upload"
+           data-height="500" />
+         </div>
+
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary float-right">Submit</button>
+
+     
+    </form>
+  </div>
+  <div *ngIf="SelectedInput=='Water Report'">
+    <div class=" col-md-6">
+      <label for="exampleFormControlSelect2">Select Tanks</label>
+      <select class="form-control" [(ngModel)]="selectedTanks" name="selectedTanks" #Origin>
+        <option value="">selectTanks</option>
+        <option *ngFor="let tanks of selectTanks" value="{{tanks}}">{{tanks}}</option>
+      </select>
+    </div><hr>
+    <span>Water Report</span>
+    <div class="row">
+      <div class="col-md-6">
+        <table><thead><tr><th>Ph</th><th>AM</th><th>PM</th></tr>
+          <tr>
+            <th></th><th><input type="number" class="form-control" id="CNs"></th>
+            <th><input type="number" class="form-control" id="CNs"></th>
+          </tr></thead></table>
+      <button type="submit" class="btn btn-primary float-right">Submit</button>
+    </div>
+      <div class="col-md-6">
+        <table><thead><tr><th>Water Turbidity</th><th>AM</th><th>PM</th></tr>
+          <tr>
+            <th></th><th><input type="number" class="form-control" id="CNs"></th>
+            <th><input type="number" class="form-control" id="CNs"></th>
+          </tr></thead></table>
+      <button type="submit" class="btn btn-primary float-right">Submit</button>
+      </div>
+
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-6">
+        <table><thead><tr><th>Do</th><th>AM</th><th>PM</th></tr>
+          <tr>
+            <th></th><th><input type="number" class="form-control" id="CNs"></th>
+            <th><input type="number" class="form-control" id="CNs"></th>
+          </tr></thead></table>
+      <button type="submit" class="btn btn-primary float-right">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,91 @@
+<hr>
+  <!-- <span>Pond Preparation Stage:</span> -->
+  <span>Select :</span>
+
+<div class="row">
+  <mat-radio-group class="example-radio-group" name="fieldname" (change)="ChangePondStage($event)"
+    [(ngModel)]="SelectedPondInputs" ngDefaultControl>
+    <mat-radio-button class="example-radio-button" *ngFor="let x of selectPondInputs" [value]="x">
+      {{x}}
+    </mat-radio-button>
+  </mat-radio-group>
+</div>
+<hr>
+<div class="input-container">
+  <div class="example-selected-value">{{SelectedPondInputs}}</div>
+<div *ngIf="SelectedPondInputs=='Add Medicine'">
+  <form>
+    <div class="row">
+      <div class=" col-md-4">
+        <label for="exampleFormControlSelect2">Select Tanks</label>
+        <select class="form-control" [(ngModel)]="selectedTanks" name="selectedTanks" #Origin>
+          <option value="">selectTanks</option>
+          <option *ngFor="let tanks of selectTanks" value="{{tanks}}">{{tanks}}</option>
+        </select>
+
+      </div>
+      <div class=" col-md-4" >
+        <label for="exampleFormControlSelect2">Select Medicine</label>
+        <select class="form-control" [(ngModel)]="selectedFeeds" name="selectedfeeds" #Origin>
+          <option value="">Select Medicine</option>
+          <option *ngFor="let feed of selectFeeds" value="{{feed}}">{{feed}}</option>
+        </select>
+      </div>
+      <div class=" col-md-4" >
+        <label for="exampleFormControlSelect2">Enter Dosage</label>
+        <input type="number" class="form-control" placeholder="Enter Dosage " id="enterDosage">
+      </div>
+    </div>
+    <hr>
+    <button type="submit" class="btn btn-primary float-right">Submit</button>
+  </form>
+</div>
+<div *ngIf="SelectedPondInputs=='Add Water Report'">
+  <form>
+    <div class="row">
+      <div class=" col-md-4">
+        <label for="exampleFormControlSelect2">Select Tanks</label>
+        <select class="form-control" [(ngModel)]="selectedTanks" name="selectedTanks" #Origin>
+          <option value="">selectTanks</option>
+          <option *ngFor="let tanks of selectTanks" value="{{tanks}}">{{tanks}}</option>
+        </select>
+
+      </div>
+      <div class=" col-md-4" >
+        <label for="exampleFormControlSelect2">Check AM|PM </label>
+        <input id="appt-time" class="form-control" type="time" name="appt-time" value="13:30">
+      </div>
+      <div class=" col-md-4" >
+        <label for="exampleFormControlSelect2">Add Ph|Turbicity </label>
+        <input type="number" class="form-control" placeholder="Enter Ph|Turbicity " id="addPH">
+      </div>
+    </div>
+    <hr>
+    <button type="submit" class="btn btn-primary float-right">Submit</button>
+  </form>
+</div>
+<div *ngIf="SelectedPondInputs=='Add Picture'">
+  <form>
+    <div class="row">
+      <div class=" col-md-4">
+        <label for="exampleFormControlSelect2">Select Tanks</label>
+        <select class="form-control" [(ngModel)]="selectedTanks" name="selectedTanks" #Origin>
+          <option value="">selectTanks</option>
+          <option *ngFor="let tanks of selectTanks" value="{{tanks}}">{{tanks}}</option>
+        </select>
+
+      </div>
+      <div class=" col-md-8" >
+        <label for="exampleFormControlSelect2">Add Picture</label>
+        <div class="file-upload-wrapper">
+          <input type="file" id="input-file-now-custom-2" class="file-upload"
+         data-height="500" />
+       </div>
+      </div>
+     
+    </div>
+    <hr>
+    <button type="submit" class="btn btn-primary float-right">Submit</button>
+  </form>
+</div>
+</div>
