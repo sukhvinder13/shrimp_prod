@@ -26,7 +26,7 @@ export class AddFarmService {
   getFarm() {
     this.http
       .get<{ message: string; posts: any }>(
-        "http://localhost:3000/addFarm"
+        "http://localhost:3000/readFarm"
       )
       .pipe(map((postData) => {
         console.log(postData);
@@ -78,7 +78,7 @@ export class AddFarmService {
       });
   }
   deleteFarm(postId: string) {
-    this.http.delete("http://localhost:3000/addFarm/" + postId)
+    this.http.delete("http://localhost:3000/deletefarm/" + postId)
       .subscribe(() => {
         const updatedPosts = this.posts.filter(post => post.id !== postId);
         this.posts = updatedPosts;

@@ -1,34 +1,33 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const mysql =require("mysql");
+const mysql = require("mysql");
 
-const  addFarmRoutes = require("./routes/addFarms")
+const addFarmRoutes = require("./routes/addFarms")
 const app = express();
+
 // mongoose
-//   .connect('mongodb+srv://admin:admin@cluster0-8zipq.mongodb.net/shrimp?retryWrites=true&w=majority',
-//   {useNewUrlParser: true, useUnifiedTopology: true}
+//   .connect('mongodb://localhost:27017/shrimp',
+//     { useNewUrlParser: true, useUnifiedTopology: true }
 //   )
 //   .then(() => {
 //     console.log("Connected to database!");
 //   })
 //   .catch((err) => {
-//     console.log("Connection failed!",err);
+//     console.log("Connection failed!", err);
 //   });
-//Create connection
-const conn = mysql.createConnection({
-     host     : '160.153.94.101',
-    port      :'3306',
-    user      : 'shrimp',
-    password  : 'shrimp@123',
-    database  : 'shrimp_db',
+mongoose
+  .connect('mongodb+srv://admin:admin@cluster0-8zipq.mongodb.net/shrimp?retryWrites=true&w=majority',
+  {useNewUrlParser: true, useUnifiedTopology: true}
+  )
+  .then(() => {
+    console.log("Connected to database!");
+  })
+  .catch((err) => {
+    console.log("Connection failed!",err);
   });
-   
-  //connect to database
-  conn.connect((err) =>{
-    if(err) throw err;
-    console.log('Mysql Connected...');
-  });
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -44,6 +43,16 @@ app.use((req, res, next) => {
   );
   next();
 });
-app.use("/addFarm",addFarmRoutes);
+app.use("/", addFarmRoutes);
 
 module.exports = app;
+ // this is the main entry file, this need not be exported
+// app.listen(3000,(err)=>{
+//   if(err){
+//     console.log('error occured while running server');
+//   }else{
+//     console.log('Server is running on port no 3000')
+//   }
+// })
+
+
