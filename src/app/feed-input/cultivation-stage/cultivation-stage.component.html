@@ -1,21 +1,9 @@
 <hr>
 <span>Select :</span>
-
 <div class="row">
-  <!-- <div class="radio"   name="fieldname"  ngDefaultControl>
-    <label style="margin: 1rem;" *ngFor="let x of selectInputs">
-      <input type="radio" name="optradio" checked   [value]="x">{{x}}
-    </label> -->
-  <!-- <label  style="margin: 1rem;"><input type="radio" name="optradio" checked>Water Medicine</label>
-    <label style="margin: 1rem;"><input type="radio" name="optradio" checked>CheckNet</label>
-    <label style="margin: 1rem;"><input type="radio" name="optradio" checked>Shrimp Condition</label>
-    <label style="margin: 1rem;"><input type="radio" name="optradio" checked>Water Condition</label>
-    <label style="margin: 1rem;"><input type="radio" name="optradio" checked>Water Report</label> -->
-  <!-- </div> -->
   <mat-radio-group class="example-radio-group" name="fieldname" (change)="changeComboo($event)"
     [(ngModel)]="SelectedInput" ngDefaultControl>
-    <mat-radio-button class="example-radio-button" *ngFor="let x of selectInputs" [value]="x">
-      {{x}}
+    <mat-radio-button class="example-radio-button" *ngFor="let x of selectInputs" [value]="x" style="margin:1rem;">  {{ x }}
     </mat-radio-button>
   </mat-radio-group>
 </div>
@@ -23,315 +11,422 @@
 <div class="input-container">
   <div class="example-selected-value">{{SelectedInput}}</div>
   <div *ngIf="SelectedInput=='Feed'">
-    <div class="row">
-      <div class="col-md-6" >
-        <span>Select Feed</span>
-        <label style="margin: 1rem;" *ngFor="let feed of selectFeeds">
-          <button type="button" class="btn btn-light" [value]="feed">{{feed}}</button>
-        </label>
-      </div>
-      
-    </div>
-    <hr>
-    <div class="row">
-      <div class="col-md-6" >
-        <span>Select Tank</span>
-        <label style="margin: 1rem;" *ngFor="let tank of selectTanks">
-          <button type="button" class="btn btn-light" [value]="tank">{{tank}}</button>
-        </label>
-      </div>
-    </div>
-    <hr>
-    <div class="row">
-      <div class="col-md-8">
-        <span>Feed Quantity  </span>
-        <label for="quantity">
-        <input type="number" class="form-control" placeholder="Enter Quantity " id="quantity">
-      </label></div>
-
-    </div>
-    <hr>
-    <label for="Medicine">Feed Medicine</label>
-    <hr>
-    <div class="row">
-      <div class="col-md-8">
-        <span>List Feed Medicine  </span>
-        <label for="quantity">
-          <select class="form-control" [(ngModel)]="selectedTanks" name="selectedTanks" #Origin>
-            <option value="">Select Medicine</option>
-            <option *ngFor="let tanks of selectTanks" value="{{tanks}}">{{tanks}}</option>
+    <form (submit)="postAddFeed(AddFeed)" #AddFeed="ngForm">
+      <div class="row">
+        <div class=" col-md-3">
+          <span>Select Farm</span>
+          <select class="form-control" ngModel name="farmOwner" #farmOwner="ngModel" required>
+            <option value="">Select Farm </option>
+            <option *ngFor="let farm of postsFarmOwner" [value]="farm.farmId">{{farm.firstName}} {{farm.lastName}}
+            </option>
           </select>
-      </label>
-    </div>
-    <div class="col-md-4">
-      <label style="margin: 1rem;">
-        <button type="button" class="btn btn-light" value="addMedicine">Add Medicine</button>
-        <button type="button" class="btn btn-primary" value="addMedicine">Delete Medicine</button>
-      </label>
-    </div>
+        </div>
+        <div class="col-md-4">
+          <span>Select Feed</span>
+          <select class="form-control" ngModel name="feedName" #feedName="ngModel" required>
+            <option value="">Select Feed</option>
+            <option *ngFor="let feed of selectFeeds" [value]="feed">{{feed}}</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <span>Select Tank</span>
+          <select class="form-control" ngModel name="tankId" #tankId="ngModel" required>
+            <option value="">Select Tank</option>
+            <option *ngFor="let tank of selectTanks" [value]="tank">{{tank}}</option>
+          </select>
+        </div>
 
-    </div>
-    <div class="row">
-      <div class="col-md-8">
-        <table>
-          <thead>
-            <tr>
-              <th>Sr No</th>
-              <th>Frequency (gms)</th>
-              <th>Frequency</th>
-              <th>Total Medicine</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td><input type="number" class="form-control" placeholder="Enter Gut Care " id="Frequency">
-              </td>
-              <td><input type="number" class="form-control" placeholder="Enter Frequency " id="Frequency2">
-              </td>
-              <td><input type="number" class="form-control" placeholder="Total " id="Frequency">
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td><input type="number" class="form-control" placeholder="Enter Gut Care " id="Frequency">
-              </td>
-              <td><input type="number" class="form-control" placeholder="Enter Frequency " id="Frequency22">
-              </td>
-              <td><input type="number" class="form-control" placeholder="Total " id="Frequency">
-              </td>
-            </tr>
-        </table>
       </div>
-    </div>
-    <button type="submit" class="btn btn-primary float-right">Submit</button>
+      <hr>
+      <div class="row">
+        <div class="col-md-8">
+          <span>Feed Quantity </span>
+          <label for="quantity">
+            <input type="number" class="form-control" ngModel name="quantity" #quantity="ngModel"
+              placeholder="Enter Quantity " id="quantity" required min="0">
+          </label></div>
+
+      </div>
+      <hr>
+      <label for="Medicine">Feed Medicine</label>
+      <hr>
+      <div class="row">
+        <div class="col-md-8">
+          <tr *ngFor="let field of fieldArray1; let i = index">
+            <td>
+          <span>List Feed Medicine </span>
+          <label for="quantity">
+            <select class="form-control" [(ngModel)]="field.medicines" name="field.medicines"  required>
+              <option value="">Select Medicine</option>
+              <option *ngFor="let medicines of selectMedicines" [value]="medicines">{{medicines}}</option>
+            </select>
+          </label>
+        </td>
+      </tr>
+        </div>
+        <div class="col-md-4">
+          <tr><th>
+          <label style="margin: 1rem;">
+            <button type="button" class="btn btn-light" (click)="addFieldValue1()" >Add Medicine</button>
+            <button type="button" class="btn btn-primary"  (click)="deleteFieldValue1(i)">Delete Medicine</button>
+          </label>
+        </th>
+        </tr>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8 table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Sr No</th>
+                <th>Frequency (gms)</th>
+                <th>Frequency</th>
+                <th>Total Medicine</th>
+                <!-- <th>Add/Delete</th> -->
+              </tr>
+            </thead>
+            <tbody *ngIf="!isEditItems">
+              <tr *ngFor="let field of fieldArray; let i = index">
+                <td>{{i+1}}</td>
+                <td><input type="number" class="form-control" [(ngModel)]="field.gutCare"  name="field.gutCare"
+                    placeholder="Enter Gut Care " id="gutCare">
+                </td>
+                <td><input type="number" class="form-control" [(ngModel)]="field.gutCareUnit"  name="field.gutCareUnit"
+                    placeholder="Enter Frequency " id="gutCareUnit">
+                </td>
+                <td><input type="number" class="form-control" [(ngModel)]="field.totalMedicine"  name="field.totalMedicine"
+                    placeholder="Total " id="totalMedicine">
+                </td>
+                <td>
+               
+              </td>
+              </tr>
+            </tbody>
+            <tr>
+              <td align="right" colspan="3">
+                <!-- <button *ngIf="fieldArray.length <= 10" class="btn btn-secondary btn-lg1" type="button" (click)="addFieldValue()" style="margin-right:10px">Add</button> -->
+                <button (click)="deleteFieldValue(i)" class="btn btn-danger" type="button">Delete</button>
+                <button *ngIf="fieldArray.length <= 10" class="btn btn-success "  (click)="addFieldValue()" type="button">Add</button>
+                <!-- <button (click)="onEditCloseItems()" class="btn btn-primary" type="button">Save</button> -->
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary float-right" [disabled]="!AddFeed.valid">Submit</button>
+    </form>
     <hr>
   </div>
 
 
   <div *ngIf="SelectedInput=='Water Medicine'">
-        <div class="row">
-      <div class="col-md-6" >
-        <span>Select Tank</span>
-        <label style="margin: 1rem;" *ngFor="let tank of selectTanks">
-          <button type="button" class="btn btn-light" [value]="tank">{{tank}}</button>
-        </label>
-      </div>
-    </div>
-    <hr>
-    <label for="Medicine">Water Medicine</label>
-    <hr>
-    <div class="row">
-      <div class="col-md-8">
-        <span>List Water Medicine  </span>
-        <label for="quantity">
-          <select class="form-control" [(ngModel)]="selectedTanks" name="selectedTanks" #Origin>
-            <option value="">Water Medicine</option>
-            <option *ngFor="let tanks of selectTanks" value="{{tanks}}">{{tanks}}</option>
+    <form (submit)="postAddWaterMedicine(AddWaterMedicine)" #AddWaterMedicine="ngForm">
+      <div class="row">
+        <div class=" col-md-6">
+          <span>Select Farm</span>
+          <select class="form-control" ngModel name="farmOwner" #farmOwner="ngModel" required>
+            <option value="">Select Farm </option>
+            <option *ngFor="let farm of postsFarmOwner" [value]="farm.farmId">{{farm.firstName}} {{farm.lastName}}
+            </option>
           </select>
-      </label>
-    </div>
-    <div class="col-md-4">
-      <label style="margin: 1rem;">
-        <button type="button" class="btn btn-light" value="addMedicine">Add Medicine</button>
-        <button type="button" class="btn btn-primary" value="addMedicine">Delete Medicine</button>
-      </label>
-    </div>
-
-    </div>
-    <hr>
-    <span>Active Water Medicine</span>
-    <div class="row">
-      <div class="col-md-8">
-        <table>
-          <thead>
-            <tr>
-              <th>Sr No</th>
-              <th>Frequency (gms)</th>
-              <th>Frequency</th>
-              <th>Time (HH:MM)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td><input type="number" class="form-control" placeholder="Enter Gut Care " id="Frequency">
-              </td>
-              <td><input type="number" class="form-control" placeholder="Enter Frequency " id="Frequency2">
-              </td>
-              <td>
-                <input id="appt-time" class="form-control" type="time" name="appt-time" value="13:30">
-
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td><input type="number" class="form-control" placeholder="Enter Gut Care " id="Frequency">
-              </td>
-              <td><input type="number" class="form-control" placeholder="Enter Frequency " id="Frequency22">
-              </td>
-              <td>
-                <input id="appt-time" class="form-control" type="time" name="appt-time" value="13:30">
-              </td>
-            </tr>
-        </table>
+        </div>
+        <div class="col-md-6">
+          <span>Select Tank</span>
+          <select class="form-control" ngModel name="tankId" #tankId="ngModel" required>
+            <option value="">Select Tank</option>
+            <option *ngFor="let tank of selectTanks" [value]="tank">{{tank}}</option>
+          </select>
+        </div>
       </div>
-    </div>
-    <button type="submit" class="btn btn-primary float-right">Submit</button>
-    <hr>
+      <hr>
+      <label for="Medicine">Water Medicine</label>
+      <hr>
+      <div class="row">
+        <div class="col-md-8">
+          <tr *ngFor="let field of fieldArray1; let i = index">
+            <td>
+          <span>List Water Medicine </span>
+          <label for="quantity">
+            <select class="form-control" [(ngModel)]="field.medicines" name="field.medicines"  required>
+              <option value="">Select Medicine</option>
+              <option *ngFor="let medicines of selectMedicines" [value]="medicines">{{medicines}}</option>
+            </select>
+          </label>
+        </td>
+      </tr>
+        </div>
+        <div class="col-md-4">
+          <tr><th>
+          <label style="margin: 1rem;">
+            <button type="button" class="btn btn-light" value="addMedicine" (click)="addFieldValue1()" >Add Medicine</button>
+            <button type="button" class="btn btn-primary" value="addMedicine" (click)="deleteFieldValue1(i)">Delete Medicine</button>
+          </label>
+        </th>
+        </tr>
+        </div>
+      </div>
+      <hr>
+      <span>Active Water Medicine</span>
+      <div class="row">
+        <div class="col-md-8">
+          <table>
+            <thead>
+              <tr>
+                <th>Sr No</th>
+                <th>Frequency (gms)</th>
+                <th>Frequency</th>
+                <th>Time (HH:MM)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let field of fieldArray; let i = index">
+                <td>{{i+1}}</td>
+                <td><input type="number" class="form-control" [(ngModel)]="field.gutCare" name="field.gutCare"
+                    placeholder="Enter Gut Care " id="gutCare">
+                </td>
+                <td><input type="number" class="form-control" [(ngModel)]="field.gutCareUnit" name="field.gutCareUnit" 
+                    placeholder="Enter Frequency " id="gutCareUnit">
+                </td>
+                <td>
+                  <input id="appt-time" class="form-control" [(ngModel)]="field.time"  name="field.time"  type="time"
+                    name="appt-time" value="13:30">
 
-
-
+                </td>
+              </tr>
+              <tr>
+                <td align="right" colspan="3">
+                  <!-- <button *ngIf="fieldArray.length <= 10" class="btn btn-secondary btn-lg1" type="button" (click)="addFieldValue()" style="margin-right:10px">Add</button> -->
+                  <button (click)="deleteFieldValue(i)" class="btn btn-danger" type="button">Delete</button>
+                  <button *ngIf="fieldArray.length <= 10" class="btn btn-success "  (click)="addFieldValue()" type="button">Add</button>
+                  <!-- <button (click)="onEditCloseItems()" class="btn btn-primary" type="button">Save</button> -->
+                </td>
+              </tr>
+          </table>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary float-right" [disabled]="!AddWaterMedicine.valid">Submit</button>
+      <hr>
+    </form>
   </div>
 
 
   <div *ngIf="SelectedInput=='CheckNet'">
-    <form>
+    <form (submit)="postAddCheckNet(AddCheckNet)" #AddCheckNet="ngForm">
       <div class="row">
-        <div class=" col-md-6">
-          <label for="exampleFormControlSelect2">Select Tanks</label>
-          <select class="form-control" [(ngModel)]="selectedTanks" name="selectedTanks" #Origin>
-            <option value="">selectTanks</option>
-            <option *ngFor="let tanks of selectTanks" value="{{tanks}}">{{tanks}}</option>
+        <div class=" col-md-3">
+          <span>Select Farm</span>
+          <select class="form-control" ngModel name="farmOwner" #farmOwner="ngModel" required>
+            <option value="">Select Farm </option>
+            <option *ngFor="let farm of postsFarmOwner" [value]="farm.farmId">{{farm.firstName}} {{farm.lastName}}
+            </option>
           </select>
-
         </div>
-        <div class=" col-md-6" >
-          <label for="exampleFormControlSelect2">Select Feed</label>
-          <select class="form-control" [(ngModel)]="selectedFeeds" name="selectedfeeds" #Origin>
+        <div class="col-md-4">
+          <span>Select Feed</span>
+          <select class="form-control" ngModel name="feedName" #feedName="ngModel" required>
             <option value="">Select Feed</option>
-            <option *ngFor="let feed of selectFeeds" value="{{feed}}">{{feed}}</option>
+            <option *ngFor="let feed of selectFeeds" [value]="feed">{{feed}}</option>
           </select>
         </div>
+        <div class="col-md-4">
+          <span>Select Tank</span>
+          <select class="form-control" ngModel name="tankId" #tankId="ngModel" required>
+            <option value="">Select Tank</option>
+            <option *ngFor="let tank of selectTanks" [value]="tank">{{tank}}</option>
+          </select>
+        </div>
+
       </div>
       <hr>
       <div class="row">
         <label for="exampleFormControlSelect2" style="margin: 1rem;">How Much Left</label>
         <table>
-          <thead>
-            <tr *ngFor="let cn of selectCNs">
+          <tbody>
+              <tr *ngFor="let field of fieldArray; let i = index">
+              <th><span style="margin: 1rem;">CN{{i+1}}</span></th>
               <th>
-                <span style="margin: 1rem;">{{cn}}</span>
-              </th>
-              <th> <input type="number" class="form-control" id="CNs">
+                <input type="number" class="form-control" [(ngModel)]="field.leftCheckNet" name="field.leftCheckNet"
+                placeholder="Enter leftCheckNet ">
               </th>
             </tr>
             <tr>
-
+              <th><button type="button" class="btn btn-light" (click)="addFieldValue()" >Add </button>
+                <button type="button" class="btn btn-primary"  (click)="deleteFieldValue(i)">Delete </button></th>
             </tr>
-          </thead>
+          </tbody>
         </table>
       </div>
-      <button type="submit" class="btn btn-primary float-right">Submit</button>
+      <button type="submit" class="btn btn-primary float-right" [disabled]="!AddCheckNet.valid">Submit</button>
 
     </form>
   </div>
   <div *ngIf="SelectedInput=='Shrimp Condition'">
-    <form>
+    <form (submit)="postAddShrimpCondition(ShrimpCondition)" #ShrimpCondition="ngForm">
       <div class="row">
         <div class=" col-md-6">
-          <label for="exampleFormControlSelect2">Select Tanks</label>
-          <select class="form-control" [(ngModel)]="selectedTanks" name="selectedTanks" #Origin>
-            <option value="">selectTanks</option>
-            <option *ngFor="let tanks of selectTanks" value="{{tanks}}">{{tanks}}</option>
+          <span>Select Farm</span>
+          <select class="form-control" ngModel name="farmOwner" #farmOwner="ngModel" required>
+            <option value="">Select Farm </option>
+            <option *ngFor="let farm of postsFarmOwner" [value]="farm.farmId">{{farm.firstName}} {{farm.lastName}}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <span>Select Tank</span>
+          <select class="form-control" ngModel name="tankId" #tankId="ngModel" required>
+            <option value="">Select Tank</option>
+            <option *ngFor="let tank of selectTanks" [value]="tank">{{tank}}</option>
           </select>
         </div>
       </div>
       <hr>
       <div class="row">
         <div class="col-md-3">
-          <label for="exampleFormControlSelect2">Select Serverity</label>
-          <select class="form-control" [(ngModel)]="selectedFeeds" name="selectedfeeds" #Origin>
+          <span >Select Serverity</span>
+          <select class="form-control" ngModel name="serverity" #serverity="ngModel" required>
             <option value="">Select </option>
             <option *ngFor="let serverity of selectServerity" value="{{serverity}}">{{serverity}}</option>
           </select>
         </div>
         <div class="col-md-6">
-          <label for="exampleFormControlSelect2">Upload Image</label>
+          <span>Upload Image</span>
           <div class="file-upload-wrapper">
-            <input type="file" id="input-file-now-custom-2" class="file-upload"
-           data-height="500" />
-         </div>
+            <input type="file" id="input-file-now-custom-2" 
+            ngModel name="file" #file="ngModel" class="file-upload" data-height="500" required />
+          </div>
 
         </div>
       </div>
-      <button type="submit" class="btn btn-primary float-right">Submit</button>
+      <button type="submit" class="btn btn-primary float-right" [disabled]="!ShrimpCondition.valid">Submit</button>
 
-     
+
     </form>
   </div>
   <div *ngIf="SelectedInput=='Water Condition'">
-    <form>
+    <form (submit)="postAddWaterCondition(WaterCondition)" #WaterCondition="ngForm">
       <div class="row">
         <div class=" col-md-6">
-          <label for="exampleFormControlSelect2">Select Tanks</label>
-          <select class="form-control" [(ngModel)]="selectedTanks" name="selectedTanks" #Origin>
-            <option value="">selectTanks</option>
-            <option *ngFor="let tanks of selectTanks" value="{{tanks}}">{{tanks}}</option>
+          <span>Select Farm</span>
+          <select class="form-control" ngModel name="farmOwner" #farmOwner="ngModel" required>
+            <option value="">Select Farm </option>
+            <option *ngFor="let farm of postsFarmOwner" [value]="farm.farmId">{{farm.firstName}} {{farm.lastName}}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <span>Select Tank</span>
+          <select class="form-control" ngModel name="tankId" #tankId="ngModel" required>
+            <option value="">Select Tank</option>
+            <option *ngFor="let tank of selectTanks" [value]="tank">{{tank}}</option>
           </select>
         </div>
       </div>
       <hr>
       <div class="row">
         <div class="col-md-3">
-          <label for="exampleFormControlSelect2">Select Serverity</label>
-          <select class="form-control" [(ngModel)]="selectedFeeds" name="selectedfeeds" #Origin>
+          <span >Select Serverity</span>
+          <select class="form-control" ngModel name="serverity" #serverity="ngModel" required>
             <option value="">Select </option>
             <option *ngFor="let serverity of selectServerity" value="{{serverity}}">{{serverity}}</option>
           </select>
         </div>
         <div class="col-md-6">
-          <label for="exampleFormControlSelect2">Upload Image</label>
+          <span>Upload Image</span>
           <div class="file-upload-wrapper">
-            <input type="file" id="input-file-now-custom-2" class="file-upload"
-           data-height="500" />
-         </div>
-
+            <input type="file" id="input-file-now-custom-2" 
+            ngModel name="file" #file="ngModel" class="file-upload" data-height="500" required />
+          </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary float-right">Submit</button>
-
-     
+      <button type="submit" class="btn btn-primary float-right" [disabled]="!WaterCondition.valid">Submit</button>
     </form>
   </div>
   <div *ngIf="SelectedInput=='Water Report'">
-    <div class=" col-md-6">
-      <label for="exampleFormControlSelect2">Select Tanks</label>
-      <select class="form-control" [(ngModel)]="selectedTanks" name="selectedTanks" #Origin>
-        <option value="">selectTanks</option>
-        <option *ngFor="let tanks of selectTanks" value="{{tanks}}">{{tanks}}</option>
-      </select>
-    </div><hr>
+    <form (submit)="postAddWaterReport(AddWaterReport)" #AddWaterReport="ngForm">
+    <div class="row">
+      <div class=" col-md-6">
+        <span>Select Farm</span>
+        <select class="form-control" ngModel name="farmOwner" #farmOwner="ngModel" required>
+          <option value="">Select Farm </option>
+          <option *ngFor="let farm of postsFarmOwner" [value]="farm.farmId">{{farm.firstName}} {{farm.lastName}}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <span>Select Tank</span>
+        <select class="form-control" ngModel name="waterPhReport" #waterPhReport="ngModel" required>
+          <option value="">Select Tank</option>
+          <option *ngFor="let tank of selectTanks" [value]="tank">{{tank}}</option>
+        </select>
+      </div>
+    </div>
+    <hr>
     <span>Water Report</span>
     <div class="row">
-      <div class="col-md-6">
-        <table><thead><tr><th>Ph</th><th>AM</th><th>PM</th></tr>
-          <tr>
-            <th></th><th><input type="number" class="form-control" id="CNs"></th>
-            <th><input type="number" class="form-control" id="CNs"></th>
-          </tr></thead></table>
-      <button type="submit" class="btn btn-primary float-right">Submit</button>
-    </div>
-      <div class="col-md-6">
-        <table><thead><tr><th>Water Turbidity</th><th>AM</th><th>PM</th></tr>
-          <tr>
-            <th></th><th><input type="number" class="form-control" id="CNs"></th>
-            <th><input type="number" class="form-control" id="CNs"></th>
-          </tr></thead></table>
-      <button type="submit" class="btn btn-primary float-right">Submit</button>
+      <div class="col-md-6 table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Ph</th>
+              <th>AM</th>
+              <th>PM</th>
+            </tr>
+            <tr >
+              <th></th>
+              <th *ngFor="let field of fieldArray2; let i = index">
+                <input type="number" class="form-control" [(ngModel)]="field.waterPhReport"
+                 name="field.waterPhReport"
+                required></th>
+              <!-- <th><input type="number" class="form-control" id="CNs" required></th> -->
+            </tr>
+          </thead>
+        </table>
+        <button type="button" class="btn btn-primary float-right">Submit</button>
+      </div>
+      <div class="col-md-6 table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Water Turbidity</th>
+              <th>AM</th>
+              <th>PM</th>
+            </tr>
+            <tr >
+              <th></th>
+              <th *ngFor="let field of fieldArray3; let i = index">
+                <input type="number" class="form-control" [(ngModel)]="field.waterTributeReport"
+                 name="field.waterTributeReport" 
+                 required ></th>
+            </tr>
+          </thead>
+        </table>
+        <button type="button" class="btn btn-primary float-right">Submit</button>
       </div>
 
     </div>
     <hr>
     <div class="row">
-      <div class="col-md-6">
-        <table><thead><tr><th>Do</th><th>AM</th><th>PM</th></tr>
-          <tr>
-            <th></th><th><input type="number" class="form-control" id="CNs"></th>
-            <th><input type="number" class="form-control" id="CNs"></th>
-          </tr></thead></table>
-      <button type="submit" class="btn btn-primary float-right">Submit</button>
+      <div class="col-md-6 table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Do</th>
+              <th>AM</th>
+              <th>PM</th>
+            </tr>
+            <tr >
+              <th></th>
+              <th *ngFor="let field of fieldArray4; let i = index">
+                <input type="number" class="form-control" [(ngModel)]="field.waterDoReport" 
+                name="field.waterDoReport"
+                required></th>
+            </tr>
+          </thead>
+        </table>
+        <button type="submit" class="btn btn-primary float-right" [disabled]="!AddWaterReport.valid">Submit</button>
       </div>
     </div>
+    </form>
   </div>
 </div>

@@ -14,78 +14,110 @@
 <div class="input-container">
   <div class="example-selected-value">{{SelectedPondInputs}}</div>
 <div *ngIf="SelectedPondInputs=='Add Medicine'">
-  <form>
+  <form (submit)="postAddMedicine(AddMedicine)" #AddMedicine="ngForm">
     <div class="row">
-      <div class=" col-md-4">
-        <label for="exampleFormControlSelect2">Select Tanks</label>
-        <select class="form-control" [(ngModel)]="selectedTanks" name="selectedTanks" #Origin>
-          <option value="">selectTanks</option>
-          <option *ngFor="let tanks of selectTanks" value="{{tanks}}">{{tanks}}</option>
+      <div class=" col-md-3">
+        <label for="farmOwner">Select Farm</label>
+        <select  id="farmOwner" class="form-control" 
+        ngModel name="farmOwner" #farmOwner="ngModel" required>
+          <option ng-value="">Select Farm </option>
+          <option *ngFor="let farm of postsFarmOwner" 
+          ng-value="farm.firstName">{{farm.firstName}} {{farm.lastName}}</option>
         </select>
-
       </div>
-      <div class=" col-md-4" >
-        <label for="exampleFormControlSelect2">Select Medicine</label>
-        <select class="form-control" [(ngModel)]="selectedFeeds" name="selectedfeeds" #Origin>
+       <div class=" col-md-3">
+        <label for="selectTank">Select Tanks</label>
+        <select class="form-control" 
+        ngModel name="selectTank" #selectTank="ngModel" required>
+          <option value="">Select Tanks</option>
+          <option *ngFor="let tanks of selectTanks" [value]="tanks">{{tanks}}</option>
+        </select>
+      </div>
+      <div class=" col-md-3" >
+        <label for="selectMedicine">Select Medicine</label>
+        <select class="form-control" 
+        ngModel name="selectMedicine" #selectMedicine="ngModel" required> 
           <option value="">Select Medicine</option>
-          <option *ngFor="let feed of selectFeeds" value="{{feed}}">{{feed}}</option>
+          <option *ngFor="let medicine of selectMedicines" [value]="medicine">{{medicine}}</option>
         </select>
       </div>
-      <div class=" col-md-4" >
-        <label for="exampleFormControlSelect2">Enter Dosage</label>
-        <input type="number" class="form-control" placeholder="Enter Dosage " id="enterDosage">
+      <div class=" col-md-3" >
+        <label for="dosage">Enter Dosage</label>
+        <input type="number" class="form-control" 
+        ngModel name="dosage" #dosage="ngModel" placeholder="Enter Dosage " id="enterDosage" min="0" required>
       </div>
     </div>
     <hr>
-    <button type="submit" class="btn btn-primary float-right">Submit</button>
+    <button type="submit" class="btn btn-primary float-right" [disabled]="!AddMedicine.valid">Submit</button>
   </form>
 </div>
 <div *ngIf="SelectedPondInputs=='Add Water Report'">
-  <form>
+  <form (submit)="postAddWaterReport(AddWaterReport)" #AddWaterReport="ngForm">
     <div class="row">
-      <div class=" col-md-4">
-        <label for="exampleFormControlSelect2">Select Tanks</label>
-        <select class="form-control" [(ngModel)]="selectedTanks" name="selectedTanks" #Origin>
-          <option value="">selectTanks</option>
-          <option *ngFor="let tanks of selectTanks" value="{{tanks}}">{{tanks}}</option>
+      <div class=" col-md-3">
+        <label for="farmOwner">Select Farm</label>
+        <select  id="farmOwner" class="form-control" 
+        ngModel name="farmOwner" #farmOwner="ngModel" required>
+          <option ng-value="">Select Farm </option>
+          <option *ngFor="let farm of postsFarmOwner" 
+          ng-value="farm.firstName">{{farm.firstName}} {{farm.lastName}}</option>
         </select>
-
       </div>
-      <div class=" col-md-4" >
-        <label for="exampleFormControlSelect2">Check AM|PM </label>
-        <input id="appt-time" class="form-control" type="time" name="appt-time" value="13:30">
+      <div class=" col-md-3">
+        <label for="selectTank">Select Tanks</label>
+        <select class="form-control" 
+        ngModel name="selectTank" #selectTank="ngModel" required>
+          <option value="">Select Tanks</option>
+          <option *ngFor="let tanks of selectTanks" [value]="tanks">{{tanks}}</option>
+        </select>
       </div>
-      <div class=" col-md-4" >
-        <label for="exampleFormControlSelect2">Add Ph|Turbicity </label>
-        <input type="number" class="form-control" placeholder="Enter Ph|Turbicity " id="addPH">
+      <div class=" col-md-3" >
+        <label for="selectTime">Check AM|PM </label>
+        <input id="appt-time" class="form-control" type="time"
+        ngModel name="selectTime" #selectTime="ngModel"  value="13:30" required>
+      </div>
+      <div class=" col-md-3" >
+        <label for="selectPH">Add Ph|Turbicity </label>
+        <input type="number" class="form-control"
+        ngModel name="selectPH" #selectPH="ngModel" placeholder="Enter Ph|Turbicity " id="addPH" required>
       </div>
     </div>
     <hr>
-    <button type="submit" class="btn btn-primary float-right">Submit</button>
+    <button type="submit" [disabled]="!AddWaterReport.valid" class="btn btn-primary float-right">Submit</button>
   </form>
 </div>
 <div *ngIf="SelectedPondInputs=='Add Picture'">
-  <form>
+  <form (submit)="postAddPicture(AddPicture)" #AddPicture="ngForm">
     <div class="row">
       <div class=" col-md-4">
-        <label for="exampleFormControlSelect2">Select Tanks</label>
-        <select class="form-control" [(ngModel)]="selectedTanks" name="selectedTanks" #Origin>
-          <option value="">selectTanks</option>
-          <option *ngFor="let tanks of selectTanks" value="{{tanks}}">{{tanks}}</option>
+        <span >Select Farm</span>
+        <select  id="farmOwner" class="form-control" 
+        ngModel name="farmOwner" #farmOwner="ngModel" required>
+          <option ng-value="">Select Farm </option>
+          <option *ngFor="let farm of postsFarmOwner" 
+          ng-value="farm.firstName">{{farm.firstName}} {{farm.lastName}}</option>
         </select>
-
       </div>
-      <div class=" col-md-8" >
-        <label for="exampleFormControlSelect2">Add Picture</label>
+      <div class=" col-md-4">
+        <span>Select Tanks</span>
+        <select class="form-control" 
+        ngModel name="selectTank" #selectTank="ngModel" required>
+          <option value="">Select Tanks</option>
+          <option *ngFor="let tanks of selectTanks" [value]="tanks">{{tanks}}</option>
+        </select>
+      </div>
+      <div class=" col-md-4" >
+        <label for="addFile">Add Picture</label>
         <div class="file-upload-wrapper">
-          <input type="file" id="input-file-now-custom-2" class="file-upload"
-         data-height="500" />
+          <input type="file" id="input-file-now-custom-2" 
+          ngModel name="addFile" #addFile="ngModel" class="file-upload"
+         data-height="500" required/>
        </div>
       </div>
      
     </div>
     <hr>
-    <button type="submit" class="btn btn-primary float-right">Submit</button>
+    <button type="submit" [disabled]="!AddPicture.valid" class="btn btn-primary float-right">Submit</button>
   </form>
 </div>
 </div>

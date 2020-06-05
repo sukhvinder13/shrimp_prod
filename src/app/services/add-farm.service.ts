@@ -5,6 +5,7 @@ import { Subject } from 'rxjs'
 // import { from } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { environment } from 'environments/environment';
 
 
 @Injectable({
@@ -26,7 +27,8 @@ export class AddFarmService {
   getFarm() {
     this.http
       .get<{ message: string; posts: any }>(
-        "http://localhost:3000/readFarm"
+        environment.baseUrl + '/readFarm'
+        // "http://localhost:3000/readFarm"
       )
       .pipe(map((postData) => {
         console.log(postData);
@@ -68,7 +70,11 @@ export class AddFarmService {
     };
 
     this.http.
-      post<{ message: string, postId: string }>('http://localhost:3000/addFarm', post).subscribe(res => {
+      post<{ message: string, postId: string }>(
+        environment.baseUrl + '/addFarm',
+
+        // 'http://localhost:3000/addFarm',
+         post).subscribe(res => {
         // this.getFarm
         const id = res.postId;
                 post.id = id;
@@ -78,7 +84,10 @@ export class AddFarmService {
       });
   }
   deleteFarm(postId: string) {
-    this.http.delete("http://localhost:3000/deletefarm/" + postId)
+    this.http.delete(
+      environment.baseUrl + '/deletefarm/' + postId)
+
+      // "http://localhost:3000/deletefarm/" + postId)
       .subscribe(() => {
         
         const updatedPosts = this.posts.filter(post => post.id !== postId);

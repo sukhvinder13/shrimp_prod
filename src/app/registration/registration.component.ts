@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AddFarmOwnerService } from 'app/services/add-farm-owner.service';
+import { NgForm } from '@angular/forms';
+
 
 @Component({
   selector: 'app-registration',
@@ -7,9 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private AddFarmOwnerService:AddFarmOwnerService) { }
 
   ngOnInit() {
   }
-
+  postFarmOwner(form: NgForm){
+    if(form.invalid){
+      console.log(form);
+      return;
+    }
+    this.AddFarmOwnerService.postFarmOwner(
+      form.value.firstName,form.value.lastName,form.value.mobile,
+      form.value.address,form.value.referral,form.value.pan,
+      form.value.adhaar,form.value.panFile,form.value.adhaarFile,form.value.companyName,
+      form.value.companyPan,form.value.companyAdhaar,form.value.companyGstNo,form.value.companyPanFile,
+      form.value.companyAdhaarFile);
+      alert("Owner Registered Sucessfully");
+      form.reset();
+  }
 }
