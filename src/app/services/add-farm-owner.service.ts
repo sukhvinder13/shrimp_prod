@@ -31,9 +31,9 @@ export class AddFarmOwnerService {
             farmId:post._id,
             firstName: post.firstName,
             lastName: post.lastName,
-            mobile: post.mobile,
-            address: post.address, 
-            referral: post.referral,
+            // mobile: post.mobile,
+            // address: post.address, 
+            // referral: post.referral,
             
           };
         });
@@ -48,16 +48,18 @@ export class AddFarmOwnerService {
   }
   //post farm owner
   postFarmOwner(firstName: string, lastName: string, mobile: number,
-    address: string, referral: string, pan: string, adhaar: number,
-    panFile:string,adhaarFile: string, companyName: string, companyPan: number,
-    companyAdhaar:number,companyGstNo:string,companyPanFile:string,
-    companyAdhaarFile:string) {
+    // address: string, referral: string, pan: string, adhaar: number,
+    // panFile:string,adhaarFile: string, companyName: string, companyPan: number,
+    // companyAdhaar:number,companyGstNo:string,companyPanFile:string,
+    // companyAdhaarFile:string
+    ) {
     const post: AddFarmOwner = {
       id: null, firstName: firstName, lastName: lastName,
-      mobile: mobile, address: address, referral: referral, pan: pan, adhaar: adhaar,
-      panFile: panFile, adhaarFile: adhaarFile, companyName: companyName,
-      companyPan: companyPan, companyAdhaar: companyAdhaar, companyGstNo: companyGstNo,
-      companyPanFile: companyPanFile, companyAdhaarFile: companyAdhaarFile,
+      mobile: mobile, 
+      // address: address, referral: referral, pan: pan, adhaar: adhaar,
+      // panFile: panFile, adhaarFile: adhaarFile, companyName: companyName,
+      // companyPan: companyPan, companyAdhaar: companyAdhaar, companyGstNo: companyGstNo,
+      // companyPanFile: companyPanFile, companyAdhaarFile: companyAdhaarFile,
 
 
     };

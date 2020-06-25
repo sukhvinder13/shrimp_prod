@@ -60,13 +60,15 @@ export class AddFarmService {
     return this.postsUpdated.asObservable();
   }
 
-  postFarm(farmOwner: string, farmHistory: string, village: string,
+  postFarm(farmOwner: object, farmHistory: string, village: string,
     mandal: string, city: string, state: string, zip: number,
-    country: string, noOfTanks: number, noOfEmployess: number) {
+    country: string, noOfTanks: number, noOfEmployess: number ,
+    tankCode:string,tankArea:Array<any>) {
     const post: AddFarm = {
       id: null, farmOwner: farmOwner, farmHistory: farmHistory,
       village: village, mandal: mandal, city: city, state: state, zip: zip,
-      country: country, noOfTanks: noOfTanks, noOfEmployess: noOfEmployess
+      country: country, noOfTanks: noOfTanks, noOfEmployess: noOfEmployess,
+      tankCode:tankCode,tankArea:tankArea
     };
 
     this.http.

@@ -4,19 +4,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { UserProfileComponent } from '../../user-profile/user-profile.component';
-import { TableListComponent } from '../../table-list/table-list.component';
-import { TypographyComponent } from '../../typography/typography.component';
-import { IconsComponent } from '../../icons/icons.component';
-import { MapsComponent } from '../../maps/maps.component';
-import { NotificationsComponent } from '../../notifications/notifications.component';
-import { UpgradeComponent } from '../../upgrade/upgrade.component';
-import { SelectionOfFarmsComponent } from '../../selection-of-farms/selection-of-farms.component';
-import { ReportsComponent } from '../../reports/reports.component';
-import { ChangePhaseComponent } from '../../change-phase/change-phase.component';
-import { CheckPreviousRecordsComponent } from '../../check-previous-records/check-previous-records.component';
-import { AddPrescriptionComponent } from '../../add-prescription/add-prescription.component';
 import { RegistrationComponent } from '../../registration/registration.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { NgSelectModule } from '@ng-select/ng-select';
 import {
   MatButtonModule,
   MatInputModule,
@@ -39,6 +29,7 @@ import { CultivationStageComponent } from 'app/feed-input/cultivation-stage/cult
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
+    NgSelectModule,
     ReactiveFormsModule,
     MatButtonModule,
     MatRippleModule,
@@ -49,22 +40,10 @@ import { CultivationStageComponent } from 'app/feed-input/cultivation-stage/cult
     MatProgressSpinnerModule,
     MatCardModule,
     MatPaginatorModule,
-    MatRadioModule
+    MatRadioModule,NgxPaginationModule
   ],
   declarations: [
     DashboardComponent,
-    UserProfileComponent,
-    TableListComponent,
-    TypographyComponent,
-    IconsComponent,
-    MapsComponent,
-    NotificationsComponent,
-    UpgradeComponent,
-    SelectionOfFarmsComponent,
-    ReportsComponent,
-    ChangePhaseComponent,
-    CheckPreviousRecordsComponent,
-    AddPrescriptionComponent,
     RegistrationComponent,
     AddFarmComponent,
     FeedInputComponent,

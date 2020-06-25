@@ -20,11 +20,12 @@ export class RegistrationComponent implements OnInit {
       return;
     }
     this.AddFarmOwnerService.postFarmOwner(
-      form.value.firstName,form.value.lastName,form.value.mobile,
-      form.value.address,form.value.referral,form.value.pan,
-      form.value.adhaar,form.value.panFile,form.value.adhaarFile,form.value.companyName,
-      form.value.companyPan,form.value.companyAdhaar,form.value.companyGstNo,form.value.companyPanFile,
-      form.value.companyAdhaarFile);
+      form.value.firstName,form.value.lastName,form.value.mobile);
+      // form.value.address,form.value.referral,form.value.pan,
+      // form.value.adhaar,form.value.panFile,form.value.adhaarFile,form.value.companyName,
+      // form.value.companyPan,form.value.companyAdhaar,form.value.companyGstNo,form.value.companyPanFile,
+      // form.value.companyAdhaarFile
+      // );
       alert("Owner Registered Sucessfully");
       form.reset();
   }

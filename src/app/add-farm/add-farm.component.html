@@ -16,22 +16,31 @@
             <mat-card>
               <form (submit)="postFarm(addFarm)" #addFarm="ngForm">
                 <div class="form-row">
-                  <div class="col-md-4 mb-3">
+                  <div class="col-md-6 mb-6">
                     <label for="farmOwner">Select Farm Owner</label>
-                    <select id="farmOwner" class="form-control is-valid" ngModel name="farmOwner" #farmOwner="ngModel"
-                      required>
+                    <select id="farmOwner" class="form-control is-valid" multiple ngModel name="farmOwner"
+                      #farmOwner="ngModel" required>
                       <option ng-value="" selected>Choose Owner</option>
-                      <option *ngFor="let owner of postsOwner" [value]="owner.farmId">{{owner.firstName}}
+                      <option *ngFor="let owner of postsOwner" [ngValue]="owner">{{owner.firstName}}
                         {{owner.lastName}}</option>
                     </select>
-                    <span *ngIf="farmOwner.invalid">Please choose farmOwner.</span>
+                    <!-- <ng-select bindLabel="name" class="form-control is-valid" placeholder=""
+                     appendTo="body" multiple="true"
+                       [clearable]="true"
+                       ngModel name="farmOwner" #farmOwner="ngModel">
+                      <ng-option [value]="owner" 
+                       *ngFor="let owner of postsOwner">
+                        {{owner.firstName}}  {{owner.lastName}}
+                      </ng-option>
+                    </ng-select> -->
+                    <span *ngIf="farmOwner.invalid">Choose farmOwner.</span>
 
                   </div>
-                  <div class="col-md-8 mb-3">
+                  <div class="col-md-6 mb-6">
                     <label for="farmHistory">Farm History</label>
                     <input type="text" class="form-control is-valid" ngModel name="farmHistory" id="farmHistory"
                       #farmHistory="ngModel" placeholder="Enter Farm History" required>
-                    <span *ngIf="farmHistory.invalid">Please enter farm History.</span>
+                    <span *ngIf="farmHistory.invalid">Enter farm History.</span>
 
                   </div>
                 </div>
@@ -40,21 +49,21 @@
                     <label for="village">Village</label>
                     <input type="text" class="form-control is-valid" ngModel name="village" id="village"
                       #village="ngModel" placeholder="Enter village" required>
-                    <span *ngIf="village.invalid">Please enter Village.</span>
+                    <span *ngIf="village.invalid">Enter Village.</span>
 
                   </div>
                   <div class="col-md-4 mb-3">
                     <label for="mandal">Mandal</label>
                     <input type="text" class="form-control is-valid" name="mandal" id="mandal" ngModel #mandal="ngModel"
                       placeholder="Enter Mandal" required>
-                    <span *ngIf="mandal.invalid">Please enter Mandal.</span>
+                    <span *ngIf="mandal.invalid">Enter Mandal.</span>
 
                   </div>
                   <div class="col-md-4 mb-3">
                     <label for="city">City</label>
                     <input type="text" class="form-control is-valid" name="city" id="city" ngModel #city="ngModel"
                       placeholder="Enter city" required>
-                    <span *ngIf="city.invalid">Please enter city.</span>
+                    <span *ngIf="city.invalid">Enter city.</span>
 
                   </div>
                 </div>
@@ -63,21 +72,21 @@
                     <label for="state">State</label>
                     <input type="text" class="form-control is-valid" name="state" id="state" ngModel #state="ngModel"
                       placeholder="Enter State" required>
-                    <span *ngIf="state.invalid">Please enter state.</span>
+                    <span *ngIf="state.invalid">Enter state.</span>
 
                   </div>
                   <div class="col-md-4 mb-3">
                     <label for="zip">ZIP</label>
                     <input type="text" class="form-control is-valid" name="zip" id="zip" ngModel #zip="ngModel"
                       placeholder="Enter Zip" required>
-                    <span *ngIf="zip.invalid">Please enter Zip.</span>
+                    <span *ngIf="zip.invalid">Enter Zip.</span>
 
                   </div>
                   <div class="col-md-4 mb-3">
                     <label for="country ">Country</label>
                     <input type="text" class="form-control is-valid" name="country" id="country" ngModel
                       #country="ngModel" placeholder="Enter Country" required>
-                    <span *ngIf="country.invalid">Please enter Country.</span>
+                    <span *ngIf="country.invalid">Enter Country.</span>
 
                   </div>
                 </div>
@@ -85,21 +94,56 @@
 
                   <div class="col-md-4 mb-3">
                     <label for="noOfTanks">No of Tanks</label>
-                    <input type="number" class="form-control is-valid" name="noOfTanks" id="noOfTanks" ngModel
-                      #noOfTanks="ngModel" placeholder="Enter No of Tanks" required min="0">
-                    <span *ngIf="noOfTanks.invalid">Please enter No of Tanks.</span>
+                    <input type="number" class="form-control is-valid" 
+                      name="noOfTanks" id="noOfTanks" ngModel #noOfTanks="ngModel" (ngModelChange)="dataChanged(noOfTanks)"
+                       placeholder="Enter No of Tanks"
+                      required min="0" max="12">
+                    <span *ngIf="noOfTanks.invalid">Enter No of Tanks.</span>
 
                   </div>
                   <div class="col-md-4 mb-3">
                     <label for="noOfEmployess">No Of Employees</label>
                     <input type="number" class="form-control is-valid" id="noOfEmployess" name="noOfEmployess" ngModel
                       #noOfEmployess="ngModel" placeholder="Enter No Of Employess" required min="0">
-                    <span *ngIf="noOfEmployess.invalid">Please enter no of Emp.</span>
-
+                    <span *ngIf="noOfEmployess.invalid">Enter no of Emp.</span>
                   </div>
                   <div class="col-md-4 mb-3">
-                    <!-- <label for="country ">Country</label>
-      <input type="text" class="form-control is-valid" id="country" placeholder="Enter Country" required> -->
+                    <label for="tankCode">Tank Code</label>
+                    <input type="text" class="form-control is-valid" id="tankCode" name="tankCode" ngModel
+                      #tankCode="ngModel" placeholder="Enter Code" required maxlength="6">
+                    <span *ngIf="noOfEmployess.invalid">Enter Code.</span>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col-md-8 mb-3">
+                    <label for="tankArea">Water Area of Tank</label>
+                    <!-- <tr *ngFor="let field of waterAreaOfTank; let i = index">
+                      <td>
+                        <label for="tankArea">{{tankCode}}
+                          <input type="number" class="form-control is-valid" 
+                          [(ngModel)]="field.tankArea" name="field.tankArea" id="tankArea"
+                           placeholder="Enter area" required min="0">
+                        </label>
+                      </td>
+                    </tr> -->
+                    <tbody >
+                      <tr>
+                        <th>Tank Code</th>
+                        <th>Tank Area</th>
+                      </tr>
+                      <tr *ngFor="let field of fieldArray; let i = index">
+                        <!-- <td>{{tankCode.value}}</td> -->
+                        <td>
+                          <input type="text" class="form-control" 
+                          [(ngModel)]="field.tank_name" name="field.tank_name" 
+                           id="tank_name">
+                      </td>
+                        <td><input type="number" class="form-control" [(ngModel)]="field.tank_area"  name="field.tank_area"
+                            placeholder="Enter Tank Area " id="tank_area">
+                        </td>
+                      <!-- </td> -->
+                      </tr>
+                    </tbody>
                   </div>
                 </div>
                 <!-- <button class="btn btn-primary" type="reset" (click)="resetFarm">Reset</button> -->
@@ -136,11 +180,20 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let getFarm of posts;let i = index;">
+          <tr *ngFor="let getFarm of posts | paginate: { itemsPerPage: 10, currentPage: p };let i = index;">
             <th scope="row">{{i +1}}</th>
-            <td>{{getFarm.farmOwner}}</td>
+            <td>
+              <div *ngFor="let fo of posts[i].farmOwner;let j = index">
+                <span *ngIf="fo.firstName">
+                  {{j+1}}. {{fo.firstName}} {{fo.lastName}}
+                </span>
+              </div>
+              <span *ngIf="getFarm.farmOwner.firstName">
+                {{getFarm.farmOwner.firstName}} {{getFarm.farmOwner.lastName}}
+              </span>
+            </td>
             <td>{{getFarm.farmHistory}}</td>
-            <td>{{getFarm.Village}}</td>
+            <td>{{getFarm.village}}</td>
             <td>{{getFarm.mandal}}</td>
             <td>{{getFarm.city}}</td>
             <td>{{getFarm.state}}</td>
@@ -155,8 +208,11 @@
           </tr>
         </tbody>
       </table>
-      <mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOptions"
-        (page)=onChangePage($event)></mat-paginator>
+      <!-- <mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOptions"
+        (page)=onChangePage($event)></mat-paginator> -->
+      <div class="pagination-controls">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
     </div>
   </div>
 </div>

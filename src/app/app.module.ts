@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from "@angular/common/http";
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 import { AppRoutingModule } from './app.routing';
@@ -11,20 +12,6 @@ import { ComponentsModule } from './components/components.module';
 
 import { AppComponent } from './app.component';
 import { MatProgressSpinnerModule, MatRadioModule } from '@angular/material'
-
-// import { DashboardComponent } from './dashboard/dashboard.component';
-// import { UserProfileComponent } from './user-profile/user-profile.component';
-// import { TableListComponent } from './table-list/table-list.component';
-// import { TypographyComponent } from './typography/typography.component';
-// import { IconsComponent } from './icons/icons.component';
-// import { MapsComponent } from './maps/maps.component';
-// import { NotificationsComponent } from './notifications/notifications.component';
-// import { UpgradeComponent } from './upgrade/upgrade.component';
-// import { SelectionOfFarmsComponent } from './selection-of-farms/selection-of-farms.component';
-// import { ReportsComponent } from './reports/reports.component';
-// import { ChangePhaseComponent } from './change-phase/change-phase.component';
-// import { CheckPreviousRecordsComponent } from './check-previous-records/check-previous-records.component';
-// import { AddPrescriptionComponent } from './add-prescription/add-prescription.component';
 import {
   AgmCoreModule
 } from '@agm/core';
@@ -42,7 +29,7 @@ import { CultivationStageComponent } from './feed-input/cultivation-stage/cultiv
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
+    HttpModule,NgSelectModule,
     HttpClientModule,
     ComponentsModule,
     RouterModule,
