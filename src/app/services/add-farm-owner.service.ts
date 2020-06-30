@@ -15,33 +15,9 @@ export class AddFarmOwnerService {
 
   constructor( private http : HttpClient) { }
   //get farm owner
+  // get all Lesson
   getFarmOwner() {
-    this.http
-      .get<{ message: string; posts: any }>(
-        environment.baseUrl + '/readFarmOwner'
-        // "http://localhost:3000/readFarm"
-      )
-      .pipe(map((postData) => {
-        console.log(postData);
-        // this.Farms=postData;
-        // console.log(posts);
-
-        return postData.posts.map(post => {
-          return {
-            farmId:post._id,
-            firstName: post.firstName,
-            lastName: post.lastName,
-            // mobile: post.mobile,
-            // address: post.address, 
-            // referral: post.referral,
-            
-          };
-        });
-      }))
-      .subscribe(transformedPosts => {
-        this.posts = transformedPosts;
-        this.postsUpdated.next([...this.posts]);
-      });
+    return this.http.get(environment.baseUrl + '/readFarmOwner');
   }
   getPostUpdateListener() {
     return this.postsUpdated.asObservable();

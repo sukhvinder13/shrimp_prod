@@ -24,6 +24,9 @@ import { AddFarmComponent } from 'app/add-farm/add-farm.component';
 import { FeedInputComponent } from 'app/feed-input/feed-input.component';
 import { PondPrepartionComponent } from 'app/pond-prepartion/pond-prepartion.component';
 import { CultivationStageComponent } from 'app/feed-input/cultivation-stage/cultivation-stage.component';
+import { FeedChecknetComponent } from 'app/feed-input/feed-checknet/feed-checknet.component';
+import { WaterMedicineReportComponent } from 'app/feed-input/water-medicine-report/water-medicine-report.component';
+import { ObservationsComponent } from 'app/feed-input/observations/observations.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -48,7 +51,10 @@ import { CultivationStageComponent } from 'app/feed-input/cultivation-stage/cult
     AddFarmComponent,
     FeedInputComponent,
     PondPrepartionComponent,
-    CultivationStageComponent
+    CultivationStageComponent,
+    FeedChecknetComponent,
+    WaterMedicineReportComponent,
+    ObservationsComponent
   ]
 })
 

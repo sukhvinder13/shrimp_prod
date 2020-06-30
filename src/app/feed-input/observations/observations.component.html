@@ -1,0 +1,243 @@
+<!-- <div class="main-content">
+  <div class="container-fluid"> -->
+    <hr>
+    <div class="row">
+      <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+        <button type="button" id="b1" class="btn btn-info" [ngClass]="['bntStyle']"
+          (click)="loadShrimpObv();" value="Feed">Shrimp</button>
+      </div>
+      <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+        <button type="button" id="b2" class="btn btn-info" 
+        (click)="loadWaterObv();">Water</button>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <mat-radio-group class="example-radio-group" name="fieldname" 
+      (change)="changeFeed($event)"
+      [(ngModel)]="SelectedFeeds" ngDefaultControl>
+      <mat-radio-button class="example-radio-button" 
+      *ngFor="let x of selectFeeds" [value]="x" style="margin:1rem;">  {{ x }}
+      </mat-radio-button>
+    </mat-radio-group>
+    </div>
+    <hr>
+
+  <!-- Div for shrimp obv -->
+    <div class="row" *ngIf="div_shrimp">
+      <div class="col-md-12 offset-md-12">
+        <form [formGroup]="waterobvform" (ngSubmit)="onSubmit()">
+          <div formArrayName="response" >
+            <table class="table table-responsive">
+        <th>
+          <tbody>
+           <tr><input type="text" value="Tank No" readonly></tr>
+           <tr><input type="text" value="No body Moulting" readonly></tr>
+           <tr><input type="text" value="No Head Moulting " readonly></tr>
+         <tr><input type="text" value="No Moulting" readonly></tr>
+         <tr><input type="text" value="No new shell formation" readonly></tr>
+         <tr><input type="text" value="Meesum cut Black" readonly></tr>
+         <tr><input type="text" value="Meesum cut" readonly></tr>
+         <tr><input type="text" value="Garuku Meesum" readonly></tr>
+         <tr><input type="text" value="Long Fecals" readonly></tr>
+         <tr><input type="text" value="Yellow Fecals" readonly></tr>
+         <tr><input type="text" value="White Fecals" readonly></tr>
+         <tr><input type="text" value="White gut" readonly></tr>
+         <tr><input type="text" value="Empty gut" readonly></tr>
+         <tr><input type="text" value="Plankton gut" readonly></tr>
+         <tr><input type="text" value="Soil gut" readonly></tr>
+         <tr><input type="text" value="Gap Gut" readonly></tr>
+         <tr><input type="text" value="Black Gill" readonly></tr>
+         <tr><input type="text" value="Brown Gill" readonly></tr>
+         <tr><input type="text" value="No Jiguru" readonly></tr>
+         <tr><input type="text" value="Size variation" readonly></tr>
+         <tr><input type="text" value="Toka Erupulu" readonly></tr>
+         <tr><input type="text" value="Kallu Erupulu" readonly></tr>
+         <tr><input type="text" value="Kidny Color change" readonly></tr>
+         <tr><input type="text" value="Head Water" readonly></tr>
+         <tr><input type="text" value="White Muscle" readonly></tr>
+         <tr><input type="text" value="Mineral Bends" readonly></tr>
+         <tr><input type="text" value="Gottuku Ravadam" readonly></tr>
+         <tr><input type="text" value="Paina Eedadam" readonly></tr>
+         <tr><input type="text" value="Body cracks" readonly></tr>
+         <tr><input type="text" value="Hatchery Bends" readonly></tr>
+         <tr><input type="text" value="Loose Shell" readonly></tr>
+         <tr><input type="text" value="Deads" readonly></tr>
+         <tr><input type="text" value="EPH" readonly></tr>
+         <tr><input type="text" value="Virus" readonly></tr>
+         <tr><input type="text" value="White Spot" readonly></tr>
+         <tr><input type="text" value="Potti Royya" readonly></tr>
+         <tr><input type="text" value="Snail" readonly></tr>
+         <tr><input type="text" value="Do" readonly></tr>
+         <tr><input type="text" value="Theegalu" readonly></tr>
+         <tr><input type="text" value="Chikkadanam" readonly></tr>
+         <tr><input type="text" value="Water crash" readonly></tr>
+         <tr><input type="text" value="Turbidity" readonly></tr>
+         <tr><input type="text" value="Water color" readonly></tr>
+        </tbody>
+      </th>
+        <th *ngFor="let response of waterobvform.get('response')['controls'];
+        let i=index">
+        <tbody [formGroupName]="i">
+          <!-- <tr> {{i+1}}</tr> -->
+          <tr>  <input type="text" formControlName="tank_name" readonly></tr>
+          <tr><input type="number" formControlName="no_body_moulting" min="1" max="5"></tr>
+          <tr><input type="number" formControlName="no_head_moulting" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="no_moulting" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="no_new_shell_formation" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="meesum_cut_black" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="meesum_cut" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="garuku_meesum" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="long_fecals" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="yellow_fecals" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="white_fecals" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="white_gut" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="empty_gut" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="plankton_gut" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="soil_gut" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="gap_gut" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="black_gill" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="brown_gill" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="no_jiguru" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="size_variation" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="toka_erupulu" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="kallu_erupulu" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="kidny_color_change" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="head_water" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="white_muscle" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="mineral_bends" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="gottuku_ravadam" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="paina_eedadam" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="body_cracks" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="hatchery_bends" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="loose_shell" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="deads" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="EPH" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="virus" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="white_spot" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="potti_royya" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="snail" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="do" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="theegalu" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="chikkadanam" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="water_crash" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="turbidity" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="water_color" min="1" max="5"></tr>    
+        </tbody>
+        </th>
+      </table>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary">Submit</button>
+      </div>
+        </form>
+          </div>
+    </div>
+<!-- water data -->
+ <div class="card-deck row" *ngIf="div_water">
+      <form [formGroup]="waterobvform" (ngSubmit)="onSubmitWater()">
+        <div formArrayName="response" >
+          <table class="table table-responsive">
+      <th>
+        <tbody>
+          <tr><input type="text" value="Tank No" readonly></tr>
+          <tr><input type="text" value="No body Moulting" readonly></tr>
+          <tr><input type="text" value="No Head Moulting " readonly></tr>
+        <tr><input type="text" value="No Moulting" readonly></tr>
+        <tr><input type="text" value="No new shell formation" readonly></tr>
+        <tr><input type="text" value="Meesum cut Black" readonly></tr>
+        <tr><input type="text" value="Meesum cut" readonly></tr>
+        <tr><input type="text" value="Garuku Meesum" readonly></tr>
+        <tr><input type="text" value="Long Fecals" readonly></tr>
+        <tr><input type="text" value="Yellow Fecals" readonly></tr>
+        <tr><input type="text" value="White Fecals" readonly></tr>
+        <tr><input type="text" value="White gut" readonly></tr>
+        <tr><input type="text" value="Empty gut" readonly></tr>
+        <tr><input type="text" value="Plankton gut" readonly></tr>
+        <tr><input type="text" value="Soil gut" readonly></tr>
+        <tr><input type="text" value="Gap Gut" readonly></tr>
+        <tr><input type="text" value="Black Gill" readonly></tr>
+        <tr><input type="text" value="Brown Gill" readonly></tr>
+        <tr><input type="text" value="No Jiguru" readonly></tr>
+        <tr><input type="text" value="Size variation" readonly></tr>
+        <tr><input type="text" value="Toka Erupulu" readonly></tr>
+        <tr><input type="text" value="Kallu Erupulu" readonly></tr>
+        <tr><input type="text" value="Kidny Color change" readonly></tr>
+        <tr><input type="text" value="Head Water" readonly></tr>
+        <tr><input type="text" value="White Muscle" readonly></tr>
+        <tr><input type="text" value="Mineral Bends" readonly></tr>
+        <tr><input type="text" value="Gottuku Ravadam" readonly></tr>
+        <tr><input type="text" value="Paina Eedadam" readonly></tr>
+        <tr><input type="text" value="Body cracks" readonly></tr>
+        <tr><input type="text" value="Hatchery Bends" readonly></tr>
+        <tr><input type="text" value="Loose Shell" readonly></tr>
+        <tr><input type="text" value="Deads" readonly></tr>
+        <tr><input type="text" value="EPH" readonly></tr>
+        <tr><input type="text" value="Virus" readonly></tr>
+        <tr><input type="text" value="White Spot" readonly></tr>
+        <tr><input type="text" value="Potti Royya" readonly></tr>
+        <tr><input type="text" value="Snail" readonly></tr>
+        <tr><input type="text" value="Do" readonly></tr>
+        <tr><input type="text" value="Theegalu" readonly></tr>
+        <tr><input type="text" value="Chikkadanam" readonly></tr>
+        <tr><input type="text" value="Water crash" readonly></tr>
+        <tr><input type="text" value="Turbidity" readonly></tr>
+        <tr><input type="text" value="Water color" readonly></tr>
+      </tbody>
+    </th>
+      <th *ngFor="let response of waterobvform.get('response')['controls'];
+      let i=index">
+      <tbody [formGroupName]="i">
+        <!-- <tr> {{i+1}}</tr> -->
+        <tr>  <input type="text" formControlName="tank_name" readonly></tr>
+        <tr><input type="number" formControlName="no_body_moulting" min="1" max="5"></tr>
+        <tr><input type="number" formControlName="no_head_moulting" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="no_moulting" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="no_new_shell_formation" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="meesum_cut_black" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="meesum_cut" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="garuku_meesum" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="long_fecals" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="yellow_fecals" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="white_fecals" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="white_gut" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="empty_gut" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="plankton_gut" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="soil_gut" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="gap_gut" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="black_gill" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="brown_gill" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="no_jiguru" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="size_variation" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="toka_erupulu" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="kallu_erupulu" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="kidny_color_change" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="head_water" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="white_muscle" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="mineral_bends" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="gottuku_ravadam" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="paina_eedadam" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="body_cracks" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="hatchery_bends" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="loose_shell" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="deads" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="EPH" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="virus" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="white_spot" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="potti_royya" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="snail" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="do" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="theegalu" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="chikkadanam" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="water_crash" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="turbidity" min="1" max="5"></tr>
+      <tr><input type="number" formControlName="water_color" min="1" max="5"></tr>  
+      </tbody>
+      </th>
+    </table>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary">Submit</button>
+    </div>
+      </form>
+  </div>

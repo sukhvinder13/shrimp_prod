@@ -12,18 +12,10 @@ import { ComponentsModule } from './components/components.module';
 
 import { AppComponent } from './app.component';
 import { MatProgressSpinnerModule, MatRadioModule } from '@angular/material'
-import {
-  AgmCoreModule
-} from '@agm/core';
+// import {
+//   AgmCoreModule
+// } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { RegistrationComponent } from './registration/registration.component';
-import { from } from 'rxjs';
-import { AddFarmComponent } from './add-farm/add-farm.component';
-import { FeedInputComponent } from './feed-input/feed-input.component';
-import { PondPrepartionComponent } from './pond-prepartion/pond-prepartion.component';
-import { CultivationStageComponent } from './feed-input/cultivation-stage/cultivation-stage.component';
-// import { LoginComponent } from './component/login/login.component';
-
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -36,13 +28,13 @@ import { CultivationStageComponent } from './feed-input/cultivation-stage/cultiv
     AppRoutingModule,
     MatProgressSpinnerModule,
     MatRadioModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
-    })
+    // AgmCoreModule.forRoot({
+    //   apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
+    // })
   ],
   declarations: [
     AppComponent,
-    AdminLayoutComponent
+    AdminLayoutComponent,
     ],
   providers: [],
   bootstrap: [AppComponent]

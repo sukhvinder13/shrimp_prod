@@ -18,6 +18,8 @@ export class AddFarmComponent implements OnInit {
   // newFarmData={};
   posts: AddFarm[] = [];
   postsOwner: AddFarmOwner[] = [];
+  farmOwnerData:any=[];
+  farmData:any=[];
   // @ViewChild('closebutton') closebutton;
   private postsSub: Subscription;
   private postsSubOwner: Subscription;
@@ -27,20 +29,23 @@ export class AddFarmComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = false;
+    this.readFarmOwner();
+    this.readFarm_details();
+  }
 
-    this.AddFarmService.getFarm();
-    this.addFarmOwnerService.getFarmOwner();
-    this.postsSub = this.AddFarmService.getPostUpdateListener()
-      .subscribe((posts: AddFarm[]) => {
-        this.isLoading = false;
-
-        this.posts = posts;
-      });
-    this.postsSubOwner = this.addFarmOwnerService.getPostUpdateListener()
-      .subscribe((posts: AddFarmOwner[]) => {
-        this.isLoading = false;
-        this.postsOwner = posts;
-      });
+  //read farm owner
+  readFarmOwner(){
+    this.addFarmOwnerService.getFarmOwner().subscribe((data)=>{
+      this.farmOwnerData=data;
+      console.log(data);
+    })
+  }
+  //read farm
+  readFarm_details(){
+    this.AddFarmService.getFarm().subscribe((data)=>{
+      this.farmData=data;
+      console.log(data);
+    })
   }
   //dynamic button
   fieldArray: Array<any> = [{}];
@@ -86,6 +91,8 @@ export class AddFarmComponent implements OnInit {
       return;
     }
     console.log(form.value);
+    // console.log(form.value.fieldArray);
+    // return;
     console.log(this.fieldArray);
     this.AddFarmService.postFarm(form.value.farmOwner, form.value.farmHistory, form.value.village,
       form.value.mandal, form.value.city, form.value.state,

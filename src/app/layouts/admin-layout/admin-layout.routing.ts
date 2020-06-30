@@ -11,5 +11,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'registration', component: RegistrationComponent },
     { path: 'add-farm', component: AddFarmComponent },
     { path: 'feed-input', component: FeedInputComponent },
+    { path: 'feed-input/:farmId', component: FeedInputComponent },
+    { path: 'feed-input/:farmId/:farmDate', component: FeedInputComponent },
 
 ];

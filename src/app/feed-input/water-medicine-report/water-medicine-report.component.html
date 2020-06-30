@@ -1,0 +1,160 @@
+<!-- <div class="main-content">
+  <div class="container-fluid"> -->
+    <hr>
+    <div class="row">
+      <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+        <button type="button" id="b1" class="btn btn-info" [ngClass]="['bntStyle']"
+          (click)="loadWaterMedicine();" value="Feed">Water Medicine</button>
+      </div>
+      <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+        <button type="button" id="b2" class="btn btn-info" 
+        (click)="loadWaterReport();">Water Report</button>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <mat-radio-group class="example-radio-group" name="fieldname" 
+      (change)="changeFeed($event)"
+      [(ngModel)]="SelectedFeeds" ngDefaultControl>
+      <mat-radio-button class="example-radio-button" 
+      *ngFor="let x of selectFeeds" [value]="x" style="margin:1rem;">  {{ x }}
+      </mat-radio-button>
+    </mat-radio-group>
+    </div>
+    <hr>
+    <!-- <div class="card-deck row">
+      <form [formGroup]="watermedicineform" (ngSubmit)="onSubmit()">
+        <div formArrayName="response" >
+      <th *ngFor="let response of watermedicineform.get('response')['controls'];
+      let i=index">
+      <tbody [formGroupName]="i">
+        <tr> {{i+1}}</tr>
+        <tr>  <input type="text" formControlName="tank_name"  class="form-control"></tr>
+        <tr>  <input type="text" formControlName="code"  class="form-control"></tr>
+        <tr>  <input type="text" formControlName="quantity_kg"  class="form-control"></tr>
+        <tr>  <input type="text" formControlName="cn_gm_kg"  class="form-control"></tr>
+        <tr>  <input type="text" formControlName="cn_gm"  class="form-control"></tr>
+      </tbody>
+      </th>
+      </div>
+      </form>
+  </div> -->
+    <div class="row" *ngIf="div_Water_medicine">
+      <div class="col-md-12 offset-md-12">
+          <form [formGroup]="watermedicineform" (ngSubmit)="onSubmit()">
+              <div formArrayName="response" >
+                  <div *ngFor="let response of watermedicineform.get('response')['controls'];
+                  let i=index" class="col-md-4 " style="display:flex;">
+                      <!-- <div>
+                          <span>Tank {{i + 1}}</span>
+                          <span *ngIf="watermedicineform.get('response').length > 1"
+                              (click)="removefeedsform(i)">Remove
+                          </span>
+                      </div> -->
+                      <div [formGroupName]="i">
+                        <div>
+                          <label>TankName</label>
+                          <input type="text" formControlName="tank_name"  class="form-control">
+                          <!-- <small [hidden]="watermedicineform.controls.response.controls[i].controls.feed.valid">
+                              No is required
+                          </small> -->
+                      </div>
+                          <div>
+                            <label>Time</label>
+                            <input type="text" formControlName="time"  class="form-control">
+                            <!-- <small [hidden]="watermedicineform.controls.response.controls[i].controls.feed.valid">
+                                No is required
+                            </small> -->
+                        </div>
+                         <div>
+                            <label>Code</label>
+                            <input type="text" formControlName="code"  class="form-control">
+                            <!-- <small [hidden]="watermedicineform.controls.response.controls[i].controls.code.valid">
+                                code is required
+                            </small> -->
+                        </div>
+                        <div>
+                          <label>Quantity </label>
+                          <input type="text" formControlName="quantity"  class="form-control">
+                          <!-- <small [hidden]="watermedicineform.controls.response.controls[i].controls.feed.valid">
+                              No is required
+                          </small> -->
+                      </div>
+                      </div>
+                  </div>
+              </div>
+                <hr>
+              <div class="form-group">
+                  <button class="btn btn-primary">Submit</button>
+              </div>
+          </form>
+          </div>
+    </div>
+<!-- Checknets data -->
+ <div class="card-deck row" *ngIf="div_water_report">
+      <form [formGroup]="waterreportform" (ngSubmit)="onSubmitWaterReport()">
+        <div formArrayName="response" >
+          <table class="table table-responsive">
+      <th>
+        <tbody>
+         <tr><input type="text" value="Tank No/Bore No" readonly></tr>
+         <tr><input type="text" value="Salinty" readonly></tr>
+         <tr><input type="text" value="Alkalinity " readonly></tr>
+       <tr><input type="text" value="Hardness" readonly></tr>
+       <tr><input type="text" value="Ammonia" readonly></tr>
+       <tr><input type="text" value="Calcium" readonly></tr>
+       <tr><input type="text" value="Magnesium" readonly></tr>
+       <tr><input type="text" value="Potassium" readonly></tr>
+       <tr><input type="text" value="Phosphate" readonly></tr>
+       <tr><input type="text" value="Chlorine" readonly></tr>
+       <tr><input type="text" value="Fluoride" readonly></tr>
+       <tr><input type="text" value="Iron" readonly></tr>
+       <tr><input type="text" value="Nitrite" readonly></tr>
+       <tr><input type="text" value="Nitrate" readonly></tr>
+       <tr><input type="text" value="Turbidity" readonly></tr>
+       <tr><input type="text" value="Green" readonly></tr>
+       <tr><input type="text" value="Yellow" readonly></tr>
+       <tr><input type="text" value="Do Am" readonly></tr>
+       <tr><input type="text" value="Do Noon" readonly></tr>
+       <tr><input type="text" value="Do Pm" readonly></tr>
+       <tr><input type="text" value="Ph Am" readonly></tr>
+       <tr><input type="text" value="Ph Noon" readonly></tr>
+       <tr><input type="text" value="Ph Pm" readonly></tr>
+      </tbody>
+    </th>
+      <th *ngFor="let response of waterreportform.get('response')['controls'];
+      let i=index">
+      <tbody [formGroupName]="i">
+        <!-- <tr> {{i+1}}</tr> -->
+        <tr>  <input type="text" formControlName="tank_name"  ></tr>
+        <tr>  <input type="text" formControlName="salinity"  ></tr>
+        <tr>  <input type="text" formControlName="alkality"  ></tr>
+        <tr>  <input type="text" formControlName="hardness"></tr>
+        <tr>  <input type="text" formControlName="ammonia"  ></tr>
+        <tr>  <input type="text" formControlName="calcium" ></tr>
+        <tr>  <input type="text" formControlName="magnesium"  ></tr>
+        <tr>  <input type="text" formControlName="potassium"  ></tr>
+        <tr>  <input type="text" formControlName="phosphate"  ></tr>
+        <tr>  <input type="text" formControlName="chlorine"  ></tr>
+        <tr>  <input type="text" formControlName="fluoride"  ></tr>
+        <tr>  <input type="text" formControlName="iron"  ></tr>
+        <tr>  <input type="text" formControlName="nitrite"  ></tr>
+        <tr>  <input type="text" formControlName="nitrate"></tr>
+        <tr>  <input type="text" formControlName="turbidity"></tr>
+        <tr>  <input type="text" formControlName="green"></tr>
+        <tr>  <input type="text" formControlName="yellow"></tr>
+        <tr>  <input type="text" formControlName="do_am"></tr>
+        <tr>  <input type="text" formControlName="do_noon"></tr>
+        <tr>  <input type="text" formControlName="do_pm"></tr>
+        <tr>  <input type="text" formControlName="ph_am"></tr>
+        <tr>  <input type="text" formControlName="ph_noon"></tr>
+        <tr>  <input type="text" formControlName="ph_pm"></tr>
+      </tbody>
+      </th>
+    </table>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary">Submit</button>
+    </div>
+      </form>
+  </div>

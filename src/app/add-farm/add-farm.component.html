@@ -21,7 +21,7 @@
                     <select id="farmOwner" class="form-control is-valid" multiple ngModel name="farmOwner"
                       #farmOwner="ngModel" required>
                       <option ng-value="" selected>Choose Owner</option>
-                      <option *ngFor="let owner of postsOwner" [ngValue]="owner">{{owner.firstName}}
+                      <option *ngFor="let owner of farmOwnerData.posts" [ngValue]="owner">{{owner.firstName}}
                         {{owner.lastName}}</option>
                     </select>
                     <!-- <ng-select bindLabel="name" class="form-control is-valid" placeholder=""
@@ -136,9 +136,10 @@
                         <td>
                           <input type="text" class="form-control" 
                           [(ngModel)]="field.tank_name" name="field.tank_name" 
-                           id="tank_name">
+                           id="tank_name" value="{{tankCode.value}}" >
                       </td>
-                        <td><input type="number" class="form-control" [(ngModel)]="field.tank_area"  name="field.tank_area"
+                        <td>
+                          <input type="number" class="form-control" [(ngModel)]="field.tank_area"  name="field.tank_area"
                             placeholder="Enter Tank Area " id="tank_area">
                         </td>
                       <!-- </td> -->
@@ -180,10 +181,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let getFarm of posts | paginate: { itemsPerPage: 10, currentPage: p };let i = index;">
+          <tr *ngFor="let getFarm of farmData.posts | paginate: { itemsPerPage: 10, currentPage: p };let i = index;">
             <th scope="row">{{i +1}}</th>
             <td>
-              <div *ngFor="let fo of posts[i].farmOwner;let j = index">
+              <div *ngFor="let fo of farmData.posts[i].farmOwner;let j = index">
                 <span *ngIf="fo.firstName">
                   {{j+1}}. {{fo.firstName}} {{fo.lastName}}
                 </span>
@@ -202,7 +203,7 @@
             <td>{{getFarm.noOfTanks}}</td>
             <td>{{getFarm.noOfEmployess}}</td>
             <td>
-              <button mat-button color="warn" (click)="onDelete(getFarm.id)">DELETE</button>
+              <button mat-button color="warn" (click)="onDelete(getFarm._id)">DELETE</button>
 
             </td>
           </tr>
