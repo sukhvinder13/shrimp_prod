@@ -20,6 +20,9 @@ export class FeedInputComponent implements OnInit {
   public FeedAndChecknet: boolean = false;
   public WaterAndMedicine: boolean = false;
   public Observations:boolean =false;
+  public CountHarvest:boolean =false;
+  public StockStocking:boolean =false;
+
 
 
   ngOnInit() {
@@ -58,63 +61,96 @@ export class FeedInputComponent implements OnInit {
     this.pondPrepartionComponent = false;
     this.WaterAndMedicine=false;
     this.Observations = false;
+    this.CountHarvest=false;
+    this.StockStocking=false;
     document.getElementById("b1").style.background = "green";
     document.getElementById("b2").style.background = "";
     document.getElementById("b3").style.background = "";
     document.getElementById("b4").style.background = "";
+    document.getElementById("b5").style.background = "";
 
   }
   loadWaterReportMedicine(){
     this.WaterAndMedicine=true;
     this.FeedAndChecknet = false;
     this.Observations = false;
+    this.CountHarvest=false;
+    this.StockStocking=false;
     document.getElementById("b1").style.background = "";
     document.getElementById("b2").style.background = "green";
     document.getElementById("b3").style.background = "";
     document.getElementById("b4").style.background = "";
+    document.getElementById("b5").style.background = "";
   }
   loadObservations(){
     this.Observations = true;
     this.WaterAndMedicine=false;
     this.FeedAndChecknet = false;
+    this.CountHarvest=false;
+    this.StockStocking=false;
     document.getElementById("b1").style.background = "";
     document.getElementById("b2").style.background = "";
     document.getElementById("b3").style.background = "green";
     document.getElementById("b4").style.background = "";
+    document.getElementById("b5").style.background = "";
   }
-  loadPondPrepartion() {
-    this.pondPrepartionComponent = true;
-    this.cultivationStage = false;
-    document.getElementById("b1").style.background = "green";
-    document.getElementById("b2").style.background = "";
-    document.getElementById("b3").style.background = "";
-    document.getElementById("b4").style.background = "";
-
-  }
-  loadCultivationStage() {
-    this.cultivationStage = true;
-    this.pondPrepartionComponent = false;
-    document.getElementById("b2").style.background = "green";
-    document.getElementById("b1").style.background = "";
-    document.getElementById("b3").style.background = "";
-    document.getElementById("b4").style.background = "";
-  }
-  loadHalfHarvest() {
-    this.cultivationStage = false;
-    this.pondPrepartionComponent = false;
-    document.getElementById("b1").style.background = "";
-    document.getElementById("b2").style.background = "";
-    document.getElementById("b3").style.background = "green";
-    document.getElementById("b4").style.background = "";
-
-  }
-  loadFullHarvest() {
-    this.cultivationStage = false;
-    this.pondPrepartionComponent = false;
+  loadCountHarvest(){
+    this.Observations = false;
+    this.WaterAndMedicine=false;
+    this.FeedAndChecknet = false;
+    this.CountHarvest=true;
+    this.StockStocking=false;
     document.getElementById("b1").style.background = "";
     document.getElementById("b2").style.background = "";
     document.getElementById("b3").style.background = "";
     document.getElementById("b4").style.background = "green";
+    document.getElementById("b5").style.background = "";
   }
- 
+  loadStockStocking(){
+    this.Observations = false;
+    this.WaterAndMedicine=false;
+    this.FeedAndChecknet = false;
+    this.CountHarvest=false;
+    this.StockStocking=true;
+    document.getElementById("b1").style.background = "";
+    document.getElementById("b2").style.background = "";
+    document.getElementById("b3").style.background = "";
+    document.getElementById("b4").style.background = "";
+    document.getElementById("b5").style.background = "green";
+  }
+  // loadPondPrepartion() {
+  //   this.pondPrepartionComponent = true;
+  //   this.cultivationStage = false;
+  //   document.getElementById("b1").style.background = "green";
+  //   document.getElementById("b2").style.background = "";
+  //   document.getElementById("b3").style.background = "";
+  //   document.getElementById("b4").style.background = "";
+
+  // }
+  // loadCultivationStage() {
+  //   this.cultivationStage = true;
+  //   this.pondPrepartionComponent = false;
+  //   document.getElementById("b2").style.background = "green";
+  //   document.getElementById("b1").style.background = "";
+  //   document.getElementById("b3").style.background = "";
+  //   document.getElementById("b4").style.background = "";
+  // }
+  // loadHalfHarvest() {
+  //   this.cultivationStage = false;
+  //   this.pondPrepartionComponent = false;
+  //   document.getElementById("b1").style.background = "";
+  //   document.getElementById("b2").style.background = "";
+  //   document.getElementById("b3").style.background = "green";
+  //   document.getElementById("b4").style.background = "";
+
+  // }
+  // loadFullHarvest() {
+  //   this.cultivationStage = false;
+  //   this.pondPrepartionComponent = false;
+  //   document.getElementById("b1").style.background = "";
+  //   document.getElementById("b2").style.background = "";
+  //   document.getElementById("b3").style.background = "";
+  //   document.getElementById("b4").style.background = "green";
+  // }
+  
 }

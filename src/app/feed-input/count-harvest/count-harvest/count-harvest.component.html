@@ -1,0 +1,478 @@
+<hr>
+<div class="row">
+  <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+    <button type="button" id="count" class="btn btn-info" (click)="loadCount();" value="Count">Count</button>
+  </div>
+  <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+    <button type="button" id="harvest" class="btn btn-info" (click)="loadHarvest();">Harvest</button>
+  </div>
+</div>
+<div class="row" *ngIf="harvestFormData">
+  <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+    <button type="button" id="halfHarvest" class="btn btn-info" (click)="halfHarvest();">
+      Half Harvest</button>
+  </div>
+  <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+    <button type="button" id="fullHarvest" class="btn btn-info" (click)="fullHarvest();">
+      Full Harvest</button>
+  </div>
+</div>
+<hr>
+<div class="card-deck row" *ngIf="countFormData">
+  <form [formGroup]="countForm" (ngSubmit)="onSubmitcountForm()">
+    <div formArrayName="TankInput">
+      <table class="table table-responsive">
+        <th>
+          <tbody>
+            <tr><input type="text" value="Tank Name" readonly></tr>
+            <tr><input type="text" value="Count" readonly></tr>
+            <tr><input type="text" value="Count/Grams " readonly></tr>
+            <tr><input type="text" value="Kg's / net" readonly></tr>
+            <tr><input type="text" value="Roopchand Count" readonly></tr>
+            <tr><input type="text" value="Neeting Side" readonly></tr>
+            <tr><input type="text" value="1st Feed Time" readonly></tr>
+            <tr><input type="text" value="Neeting Time" readonly></tr>
+          </tbody>
+        </th>
+        <th *ngFor="let TankInput of countForm.get('TankInput')['controls'];
+  let i=index">
+          <tbody [formGroupName]="i">
+            <!-- <tr> {{i+1}}</tr> -->
+            <tr> <input type="text" formControlName="tank_name" readonly></tr>
+            <tr> <input type="text" formControlName="count"></tr>
+            <tr> <input type="text" formControlName="count_gms"></tr>
+            <tr> <input type="text" formControlName="kg_net"></tr>
+            <tr> <input type="text" formControlName="roopchand_count"></tr>
+            <tr> <input type="text" formControlName="neeting_side"></tr>
+            <tr> <input type="text" formControlName="first_feed_time"></tr>
+            <tr> <input type="text" formControlName="neeting_time"></tr>
+          </tbody>
+        </th>
+      </table>
+    </div>
+
+    <h1 class="text-center">Count Observation</h1>
+    <div formArrayName="CountObservations">
+      <table class="table table-responsive">
+        <th>
+          <tbody>
+            <tr><input type="text" value="Tank Name" readonly></tr>
+            <tr><input type="text" value="No body Moulting" readonly></tr>
+            <tr><input type="text" value="No Head Moulting" readonly></tr>
+            <tr><input type="text" value="No Moulting" readonly></tr>
+            <tr><input type="text" value="No new shell formation" readonly></tr>
+            <tr><input type="text" value="Meesum cut Black" readonly></tr>
+            <tr><input type="text" value="Meesum cut" readonly></tr>
+            <tr><input type="text" value="Garuku Meesum" readonly></tr>
+            <tr><input type="text" value="Long Fecals" readonly></tr>
+            <tr><input type="text" value="Yellow Fecals" readonly></tr>
+            <tr><input type="text" value="White Fecals" readonly></tr>
+            <tr><input type="text" value="White Gut" readonly></tr>
+            <tr><input type="text" value="Empty Gut" readonly></tr>
+            <tr><input type="text" value="Plankton Gut" readonly></tr>
+            <tr><input type="text" value="Soil Gut" readonly></tr>
+            <tr><input type="text" value="Gap gut" readonly></tr>
+            <tr><input type="text" value="Black Gill" readonly></tr>
+            <tr><input type="text" value="Brown Gill" readonly></tr>
+            <tr><input type="text" value="No Jiguru" readonly></tr>
+            <tr><input type="text" value="Size Variation" readonly></tr>
+            <tr><input type="text" value="Toka Erupulu" readonly></tr>
+            <tr><input type="text" value="Kallu Erupulu" readonly></tr>
+            <tr><input type="text" value="Kallu Pakudu" readonly></tr>
+            <tr><input type="text" value="Kidney Color Change" readonly></tr>
+            <tr><input type="text" value="Head Water" readonly></tr>
+            <tr><input type="text" value="White Muscle" readonly></tr>
+            <tr><input type="text" value="Minerial Bends" readonly></tr>
+            <tr><input type="text" value="Gottuku Ravadam" readonly></tr>
+            <tr><input type="text" value="Paina Eedadam" readonly></tr>
+            <tr><input type="text" value="Body Cracks" readonly></tr>
+            <tr><input type="text" value="Hatchery Bends" readonly></tr>
+            <tr><input type="text" value="Loose Shell" readonly></tr>
+            <tr><input type="text" value="Deads" readonly></tr>
+            <tr><input type="text" value="Potti Royya" readonly></tr>
+            <tr><input type="text" value="Snail" readonly></tr>
+            <tr><input type="text" value="Theegalu" readonly></tr>
+            <tr><input type="text" value="Chikkadanam" readonly></tr>
+            <tr><input type="text" value="Water Crash" readonly></tr>
+            <tr><input type="text" value="Turbidity" readonly></tr>
+            <tr><input type="text" value="Water Color" readonly></tr>
+          </tbody>
+        </th>
+        <th *ngFor="let CountObservations of countForm.get('CountObservations')['controls'];
+      let j=index">
+          <tbody [formGroupName]="j">
+            <!-- <tr> {{i+1}}</tr> -->
+            <tr> <input type="text" formControlName="tank_name" readonly></tr>
+            <tr> <input type="text" formControlName="no_body_moulting"></tr>
+            <tr> <input type="text" formControlName="no_head_moulting"></tr>
+            <tr> <input type="text" formControlName="no_moulting"></tr>
+            <tr> <input type="text" formControlName="no_new_shell_formation"></tr>
+            <tr> <input type="text" formControlName="meesum_cut_black"></tr>
+            <tr> <input type="text" formControlName="meesum_cut"></tr>
+            <tr> <input type="text" formControlName="garuku_meesum"></tr>
+            <tr> <input type="text" formControlName="long_fecals" readonly></tr>
+            <tr> <input type="text" formControlName="yellow_fecals"></tr>
+            <tr> <input type="text" formControlName="white_fecals"></tr>
+            <tr> <input type="text" formControlName="white_gut"></tr>
+            <tr> <input type="text" formControlName="empty_gut"></tr>
+            <tr> <input type="text" formControlName="plankton_gut"></tr>
+            <tr> <input type="text" formControlName="soil_gut"></tr>
+            <tr> <input type="text" formControlName="gap_gut"></tr>
+            <tr> <input type="text" formControlName="black_gill" readonly></tr>
+            <tr> <input type="text" formControlName="brown_gill"></tr>
+            <tr> <input type="text" formControlName="no_jiguru"></tr>
+            <tr> <input type="text" formControlName="size_variation"></tr>
+            <tr> <input type="text" formControlName="toka_erupulu"></tr>
+            <tr> <input type="text" formControlName="kallu_erupulu"></tr>
+            <tr> <input type="text" formControlName="kallu_pakudu"></tr>
+            <tr> <input type="text" formControlName="kidney_color_change"></tr>
+            <tr> <input type="text" formControlName="head_water" readonly></tr>
+            <tr> <input type="text" formControlName="white_muscle"></tr>
+            <tr> <input type="text" formControlName="minerial_bends"></tr>
+            <tr> <input type="text" formControlName="gottuku_ravadam"></tr>
+            <tr> <input type="text" formControlName="paina_eedadam"></tr>
+            <tr> <input type="text" formControlName="body_cracks"></tr>
+            <tr> <input type="text" formControlName="hatchery_bends"></tr>
+            <tr> <input type="text" formControlName="loose_shell"></tr>
+            <tr> <input type="text" formControlName="deads" readonly></tr>
+            <tr> <input type="text" formControlName="potti_royya"></tr>
+            <tr> <input type="text" formControlName="snail"></tr>
+            <tr> <input type="text" formControlName="theegalu"></tr>
+            <tr> <input type="text" formControlName="chikkadanam"></tr>
+            <tr> <input type="text" formControlName="water_crash"></tr>
+            <tr> <input type="text" formControlName="turbidity"></tr>
+            <tr> <input type="text" formControlName="water_color"></tr>
+          </tbody>
+        </th>
+      </table>
+    </div>
+    <h1 class="text-center">Count Report</h1>
+
+    <div formArrayName="CountReport">
+      <table class="table table-responsive">
+        <tr>
+          <tbody>
+            <th><input type="text" value="Tank Name" readonly></th>
+            <th colspan="4"><input type="text" value="Report" readonly></th>
+          </tbody>
+        </tr>
+        <tr *ngFor="let CountReport of countForm.get('CountReport')['controls'];
+      let i=index">
+          <tbody [formGroupName]="i">
+            <td><input type="text" formControlName="tank_name" readonly></td>
+            <td><input type="text" formControlName="report" placeholder="report"></td>
+          </tbody>
+        </tr>
+      </table>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>
+
+<!--Fll Harvest Form and data -->
+<!-- full harvest full harvest --><!-- full harvest full harvest --><!-- full harvest full harvest -->
+<div class="card-deck row" *ngIf="fullHarvestFormData">
+  <form [formGroup]="fullharvestForm" (ngSubmit)="onSubmitFullharvestForm()">
+    <div formArrayName="TankInput">
+      <table class="table table-responsive">
+        <th>
+          <tbody>
+            <tr><input type="text" value="Tank NO" readonly></tr>
+            <tr><input type="text" value="Count" readonly></tr>
+            <tr><input type="text" value="Kgs " readonly></tr>
+            <tr><input type="text" value="Price" readonly></tr>
+            <tr><input type="text" value="Kgs" readonly></tr>
+            <tr><input type="text" value="price" readonly></tr>
+            <tr><input type="text" value="Middle Men" readonly></tr>
+
+          </tbody>
+        </th>
+        <th *ngFor="let TankInput of fullharvestForm.get('TankInput')['controls'];
+  let i=index">
+          <tbody [formGroupName]="i">
+            <!-- <tr> {{i+1}}</tr> -->
+            <tr> <input type="text" formControlName="tank_name" readonly></tr>
+            <tr> <input type="text" formControlName="count"></tr>
+            <tr> <input type="text" formControlName="harvest_kgs"></tr>
+            <tr> <input type="text" formControlName="harvest_price"></tr>
+            <tr> <input type="text" formControlName="loose_shell_kg"></tr>
+            <tr> <input type="text" formControlName="loose_shell_price"></tr>
+            <tr> <input type="text" formControlName="middleman"></tr>
+          </tbody>
+        </th>
+      </table>
+    </div>
+    <h1 class="text-center">Full Harvest Observation</h1>
+    <div formArrayName="CountObservations">
+      <table class="table table-responsive">
+        <th>
+          <tbody>
+            <tr><input type="text" value="Tank Name" readonly></tr>
+            <tr><input type="text" value="No body Moulting" readonly></tr>
+            <tr><input type="text" value="No Head Moulting" readonly></tr>
+            <tr><input type="text" value="No Moulting" readonly></tr>
+            <tr><input type="text" value="No new shell formation" readonly></tr>
+            <tr><input type="text" value="Meesum cut Black" readonly></tr>
+            <tr><input type="text" value="Meesum cut" readonly></tr>
+            <tr><input type="text" value="Garuku Meesum" readonly></tr>
+            <tr><input type="text" value="Long Fecals" readonly></tr>
+            <tr><input type="text" value="Yellow Fecals" readonly></tr>
+            <tr><input type="text" value="White Fecals" readonly></tr>
+            <tr><input type="text" value="White Gut" readonly></tr>
+            <tr><input type="text" value="Empty Gut" readonly></tr>
+            <tr><input type="text" value="Plankton Gut" readonly></tr>
+            <tr><input type="text" value="Soil Gut" readonly></tr>
+            <tr><input type="text" value="Gap gut" readonly></tr>
+            <tr><input type="text" value="Black Gill" readonly></tr>
+            <tr><input type="text" value="Brown Gill" readonly></tr>
+            <tr><input type="text" value="No Jiguru" readonly></tr>
+            <tr><input type="text" value="Size Variation" readonly></tr>
+            <tr><input type="text" value="Toka Erupulu" readonly></tr>
+            <tr><input type="text" value="Kallu Erupulu" readonly></tr>
+            <tr><input type="text" value="Kallu Pakudu" readonly></tr>
+            <tr><input type="text" value="Kidney Color Change" readonly></tr>
+            <tr><input type="text" value="Head Water" readonly></tr>
+            <tr><input type="text" value="White Muscle" readonly></tr>
+            <tr><input type="text" value="Minerial Bends" readonly></tr>
+            <tr><input type="text" value="Gottuku Ravadam" readonly></tr>
+            <tr><input type="text" value="Paina Eedadam" readonly></tr>
+            <tr><input type="text" value="Body Cracks" readonly></tr>
+            <tr><input type="text" value="Hatchery Bends" readonly></tr>
+            <tr><input type="text" value="Loose Shell" readonly></tr>
+            <tr><input type="text" value="Deads" readonly></tr>
+            <tr><input type="text" value="Potti Royya" readonly></tr>
+            <tr><input type="text" value="Snail" readonly></tr>
+            <tr><input type="text" value="Theegalu" readonly></tr>
+            <tr><input type="text" value="Chikkadanam" readonly></tr>
+            <tr><input type="text" value="Water Crash" readonly></tr>
+            <tr><input type="text" value="Turbidity" readonly></tr>
+            <tr><input type="text" value="Water Color" readonly></tr>
+          </tbody>
+        </th>
+        <th *ngFor="let CountObservations of fullharvestForm.get('CountObservations')['controls'];
+      let j=index">
+          <tbody [formGroupName]="j">
+            <!-- <tr> {{i+1}}</tr> -->
+            <tr> <input type="text" formControlName="tank_name" readonly></tr>
+            <tr> <input type="text" formControlName="no_body_moulting"></tr>
+            <tr> <input type="text" formControlName="no_head_moulting"></tr>
+            <tr> <input type="text" formControlName="no_moulting"></tr>
+            <tr> <input type="text" formControlName="no_new_shell_formation"></tr>
+            <tr> <input type="text" formControlName="meesum_cut_black"></tr>
+            <tr> <input type="text" formControlName="meesum_cut"></tr>
+            <tr> <input type="text" formControlName="garuku_meesum"></tr>
+            <tr> <input type="text" formControlName="long_fecals" readonly></tr>
+            <tr> <input type="text" formControlName="yellow_fecals"></tr>
+            <tr> <input type="text" formControlName="white_fecals"></tr>
+            <tr> <input type="text" formControlName="white_gut"></tr>
+            <tr> <input type="text" formControlName="empty_gut"></tr>
+            <tr> <input type="text" formControlName="plankton_gut"></tr>
+            <tr> <input type="text" formControlName="soil_gut"></tr>
+            <tr> <input type="text" formControlName="gap_gut"></tr>
+            <tr> <input type="text" formControlName="black_gill" readonly></tr>
+            <tr> <input type="text" formControlName="brown_gill"></tr>
+            <tr> <input type="text" formControlName="no_jiguru"></tr>
+            <tr> <input type="text" formControlName="size_variation"></tr>
+            <tr> <input type="text" formControlName="toka_erupulu"></tr>
+            <tr> <input type="text" formControlName="kallu_erupulu"></tr>
+            <tr> <input type="text" formControlName="kallu_pakudu"></tr>
+            <tr> <input type="text" formControlName="kidney_color_change"></tr>
+            <tr> <input type="text" formControlName="head_water" readonly></tr>
+            <tr> <input type="text" formControlName="white_muscle"></tr>
+            <tr> <input type="text" formControlName="minerial_bends"></tr>
+            <tr> <input type="text" formControlName="gottuku_ravadam"></tr>
+            <tr> <input type="text" formControlName="paina_eedadam"></tr>
+            <tr> <input type="text" formControlName="body_cracks"></tr>
+            <tr> <input type="text" formControlName="hatchery_bends"></tr>
+            <tr> <input type="text" formControlName="loose_shell"></tr>
+            <tr> <input type="text" formControlName="deads" readonly></tr>
+            <tr> <input type="text" formControlName="potti_royya"></tr>
+            <tr> <input type="text" formControlName="snail"></tr>
+            <tr> <input type="text" formControlName="theegalu"></tr>
+            <tr> <input type="text" formControlName="chikkadanam"></tr>
+            <tr> <input type="text" formControlName="water_crash"></tr>
+            <tr> <input type="text" formControlName="turbidity"></tr>
+            <tr> <input type="text" formControlName="water_color"></tr>
+          </tbody>
+        </th>
+      </table>
+    </div>
+    <h1 class="text-center"> Report</h1>
+
+    <div formArrayName="CountReport">
+      <table class="table table-responsive">
+        <tr>
+          <tbody>
+            <th><input type="text" value="Tank Name" readonly></th>
+            <th colspan="4"><input type="text" value="Report" readonly></th>
+          </tbody>
+        </tr>
+        <tr *ngFor="let CountReport of fullharvestForm.get('CountReport')['controls'];
+      let i=index">
+          <tbody [formGroupName]="i">
+            <td><input type="text" formControlName="tank_name" readonly></td>
+            <td><input type="text" formControlName="report" placeholder="report"></td>
+          </tbody>
+        </tr>
+      </table>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>
+
+<!-- Harvest Form and data -->
+<!-- Half harvest full harvest --><!-- Half harvest full harvest --><!-- Half harvest full harvest -->
+<div class="card-deck row" *ngIf="halfHarvestFormData">
+  <form [formGroup]="halfharvestform" (ngSubmit)="onSubmitharvestForm()">
+    <div formArrayName="TankInput">
+      <table class="table table-responsive">
+        <th>
+          <tbody>
+            <tr><input type="text" value="Tank NO" readonly></tr>
+            <tr><input type="text" value="Count" readonly></tr>
+            <tr><input type="text" value="Kgs " readonly></tr>
+            <tr><input type="text" value="Price" readonly></tr>
+            <tr><input type="text" value="Kgs" readonly></tr>
+            <tr><input type="text" value="price" readonly></tr>
+            <tr><input type="text" value="Middle Men" readonly></tr>
+
+          </tbody>
+        </th>
+        <th *ngFor="let TankInput of halfharvestform.get('TankInput')['controls'];
+  let i=index">
+          <tbody [formGroupName]="i">
+            <!-- <tr> {{i+1}}</tr> -->
+            <tr> <input type="text" formControlName="tank_name" readonly></tr>
+            <tr> <input type="text" formControlName="count"></tr>
+            <tr> <input type="text" formControlName="harvest_kgs"></tr>
+            <tr> <input type="text" formControlName="harvest_price"></tr>
+            <tr> <input type="text" formControlName="loose_shell_kg"></tr>
+            <tr> <input type="text" formControlName="loose_shell_price"></tr>
+            <tr> <input type="text" formControlName="middleman"></tr>
+          </tbody>
+        </th>
+      </table>
+    </div>
+    <h1 class="text-center">Partial Harvest Observation</h1>
+    <div formArrayName="CountObservations">
+      <table class="table table-responsive">
+        <th>
+          <tbody>
+            <tr><input type="text" value="Tank Name" readonly></tr>
+            <tr><input type="text" value="No body Moulting" readonly></tr>
+            <tr><input type="text" value="No Head Moulting" readonly></tr>
+            <tr><input type="text" value="No Moulting" readonly></tr>
+            <tr><input type="text" value="No new shell formation" readonly></tr>
+            <tr><input type="text" value="Meesum cut Black" readonly></tr>
+            <tr><input type="text" value="Meesum cut" readonly></tr>
+            <tr><input type="text" value="Garuku Meesum" readonly></tr>
+            <tr><input type="text" value="Long Fecals" readonly></tr>
+            <tr><input type="text" value="Yellow Fecals" readonly></tr>
+            <tr><input type="text" value="White Fecals" readonly></tr>
+            <tr><input type="text" value="White Gut" readonly></tr>
+            <tr><input type="text" value="Empty Gut" readonly></tr>
+            <tr><input type="text" value="Plankton Gut" readonly></tr>
+            <tr><input type="text" value="Soil Gut" readonly></tr>
+            <tr><input type="text" value="Gap gut" readonly></tr>
+            <tr><input type="text" value="Black Gill" readonly></tr>
+            <tr><input type="text" value="Brown Gill" readonly></tr>
+            <tr><input type="text" value="No Jiguru" readonly></tr>
+            <tr><input type="text" value="Size Variation" readonly></tr>
+            <tr><input type="text" value="Toka Erupulu" readonly></tr>
+            <tr><input type="text" value="Kallu Erupulu" readonly></tr>
+            <tr><input type="text" value="Kallu Pakudu" readonly></tr>
+            <tr><input type="text" value="Kidney Color Change" readonly></tr>
+            <tr><input type="text" value="Head Water" readonly></tr>
+            <tr><input type="text" value="White Muscle" readonly></tr>
+            <tr><input type="text" value="Minerial Bends" readonly></tr>
+            <tr><input type="text" value="Gottuku Ravadam" readonly></tr>
+            <tr><input type="text" value="Paina Eedadam" readonly></tr>
+            <tr><input type="text" value="Body Cracks" readonly></tr>
+            <tr><input type="text" value="Hatchery Bends" readonly></tr>
+            <tr><input type="text" value="Loose Shell" readonly></tr>
+            <tr><input type="text" value="Deads" readonly></tr>
+            <tr><input type="text" value="Potti Royya" readonly></tr>
+            <tr><input type="text" value="Snail" readonly></tr>
+            <tr><input type="text" value="Theegalu" readonly></tr>
+            <tr><input type="text" value="Chikkadanam" readonly></tr>
+            <tr><input type="text" value="Water Crash" readonly></tr>
+            <tr><input type="text" value="Turbidity" readonly></tr>
+            <tr><input type="text" value="Water Color" readonly></tr>
+          </tbody>
+        </th>
+        <th *ngFor="let CountObservations of halfharvestform.get('CountObservations')['controls'];
+      let j=index">
+          <tbody [formGroupName]="j">
+            <!-- <tr> {{i+1}}</tr> -->
+            <tr> <input type="text" formControlName="tank_name" readonly></tr>
+            <tr> <input type="text" formControlName="no_body_moulting"></tr>
+            <tr> <input type="text" formControlName="no_head_moulting"></tr>
+            <tr> <input type="text" formControlName="no_moulting"></tr>
+            <tr> <input type="text" formControlName="no_new_shell_formation"></tr>
+            <tr> <input type="text" formControlName="meesum_cut_black"></tr>
+            <tr> <input type="text" formControlName="meesum_cut"></tr>
+            <tr> <input type="text" formControlName="garuku_meesum"></tr>
+            <tr> <input type="text" formControlName="long_fecals" readonly></tr>
+            <tr> <input type="text" formControlName="yellow_fecals"></tr>
+            <tr> <input type="text" formControlName="white_fecals"></tr>
+            <tr> <input type="text" formControlName="white_gut"></tr>
+            <tr> <input type="text" formControlName="empty_gut"></tr>
+            <tr> <input type="text" formControlName="plankton_gut"></tr>
+            <tr> <input type="text" formControlName="soil_gut"></tr>
+            <tr> <input type="text" formControlName="gap_gut"></tr>
+            <tr> <input type="text" formControlName="black_gill" readonly></tr>
+            <tr> <input type="text" formControlName="brown_gill"></tr>
+            <tr> <input type="text" formControlName="no_jiguru"></tr>
+            <tr> <input type="text" formControlName="size_variation"></tr>
+            <tr> <input type="text" formControlName="toka_erupulu"></tr>
+            <tr> <input type="text" formControlName="kallu_erupulu"></tr>
+            <tr> <input type="text" formControlName="kallu_pakudu"></tr>
+            <tr> <input type="text" formControlName="kidney_color_change"></tr>
+            <tr> <input type="text" formControlName="head_water" readonly></tr>
+            <tr> <input type="text" formControlName="white_muscle"></tr>
+            <tr> <input type="text" formControlName="minerial_bends"></tr>
+            <tr> <input type="text" formControlName="gottuku_ravadam"></tr>
+            <tr> <input type="text" formControlName="paina_eedadam"></tr>
+            <tr> <input type="text" formControlName="body_cracks"></tr>
+            <tr> <input type="text" formControlName="hatchery_bends"></tr>
+            <tr> <input type="text" formControlName="loose_shell"></tr>
+            <tr> <input type="text" formControlName="deads" readonly></tr>
+            <tr> <input type="text" formControlName="potti_royya"></tr>
+            <tr> <input type="text" formControlName="snail"></tr>
+            <tr> <input type="text" formControlName="theegalu"></tr>
+            <tr> <input type="text" formControlName="chikkadanam"></tr>
+            <tr> <input type="text" formControlName="water_crash"></tr>
+            <tr> <input type="text" formControlName="turbidity"></tr>
+            <tr> <input type="text" formControlName="water_color"></tr>
+          </tbody>
+        </th>
+      </table>
+    </div>
+    <h1 class="text-center"> Report</h1>
+
+    <div formArrayName="CountReport">
+      <table class="table table-responsive">
+        <tr>
+          <tbody>
+            <th><input type="text" value="Tank Name" readonly></th>
+            <th colspan="4"><input type="text" value="Report" readonly></th>
+          </tbody>
+        </tr>
+        <tr *ngFor="let CountReport of halfharvestform.get('CountReport')['controls'];
+      let i=index">
+          <tbody [formGroupName]="i">
+            <td><input type="text" formControlName="tank_name" readonly></td>
+            <td><input type="text" formControlName="report" placeholder="report"></td>
+          </tbody>
+        </tr>
+      </table>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>

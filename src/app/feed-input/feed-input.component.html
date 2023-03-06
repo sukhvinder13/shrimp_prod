@@ -33,17 +33,19 @@
         (click)="loadObservations();">Observation</button>
       </div>
       <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-        <button type="button" id="b4" class="btn btn-info" (click)="loadFullHarvest();">Count & Harvest</button>
+        <button type="button" id="b4" class="btn btn-info" (click)="loadCountHarvest();">Count & Harvest</button>
       </div>
       <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
-        <button type="button" id="b4" class="btn btn-info" (click)="loadFullHarvest();">Stock & Stocking</button>
+        <button type="button" id="b5" class="btn btn-info" (click)="loadStockStocking();">Stock & Stocking</button>
       </div>
     </div>
    
     <app-feed-checknet *ngIf='FeedAndChecknet'></app-feed-checknet>
     <app-observations *ngIf="Observations"></app-observations>
-    <app-water-medicine-report *ngIf="WaterAndMedicine"></app-water-medicine-report>
-    <app-pond-prepartion *ngIf='pondPrepartionComponent'></app-pond-prepartion>
-    <app-cultivation-stage *ngIf='cultivationStage'></app-cultivation-stage>
+    <app-water-medicine-report *ngIf='WaterAndMedicine'></app-water-medicine-report>
+    <app-count-harvest *ngIf='CountHarvest'></app-count-harvest>
+    <app-stock-stocking *ngIf='StockStocking'></app-stock-stocking>
+    <!-- <app-pond-prepartion *ngIf='pondPrepartionComponent'></app-pond-prepartion>
+    <app-cultivation-stage *ngIf='cultivationStage'></app-cultivation-stage> -->
   </div>
 </div>

@@ -24,8 +24,8 @@
     <hr>
     <!-- <div class="card-deck row">
       <form [formGroup]="watermedicineform" (ngSubmit)="onSubmit()">
-        <div formArrayName="response" >
-      <th *ngFor="let response of watermedicineform.get('response')['controls'];
+        <div formArrayName="TankInput" >
+      <th *ngFor="let TankInput of watermedicineform.get('TankInput')['controls'];
       let i=index">
       <tbody [formGroupName]="i">
         <tr> {{i+1}}</tr>
@@ -42,45 +42,48 @@
     <div class="row" *ngIf="div_Water_medicine">
       <div class="col-md-12 offset-md-12">
           <form [formGroup]="watermedicineform" (ngSubmit)="onSubmit()">
-              <div formArrayName="response" >
-                  <div *ngFor="let response of watermedicineform.get('response')['controls'];
+              <div formArrayName="TankInput" >
+                  <!-- <div *ngFor="let TankInput of watermedicineform.get('TankInput')['controls'];
                   let i=index" class="col-md-4 " style="display:flex;">
-                      <!-- <div>
-                          <span>Tank {{i + 1}}</span>
-                          <span *ngIf="watermedicineform.get('response').length > 1"
-                              (click)="removefeedsform(i)">Remove
-                          </span>
-                      </div> -->
                       <div [formGroupName]="i">
                         <div>
                           <label>TankName</label>
                           <input type="text" formControlName="tank_name"  class="form-control">
-                          <!-- <small [hidden]="watermedicineform.controls.response.controls[i].controls.feed.valid">
-                              No is required
-                          </small> -->
                       </div>
                           <div>
                             <label>Time</label>
                             <input type="text" formControlName="time"  class="form-control">
-                            <!-- <small [hidden]="watermedicineform.controls.response.controls[i].controls.feed.valid">
-                                No is required
-                            </small> -->
                         </div>
                          <div>
                             <label>Code</label>
                             <input type="text" formControlName="code"  class="form-control">
-                            <!-- <small [hidden]="watermedicineform.controls.response.controls[i].controls.code.valid">
-                                code is required
-                            </small> -->
                         </div>
                         <div>
                           <label>Quantity </label>
                           <input type="text" formControlName="quantity"  class="form-control">
-                          <!-- <small [hidden]="watermedicineform.controls.response.controls[i].controls.feed.valid">
-                              No is required
-                          </small> -->
                       </div>
                       </div>
+                  </div> -->
+                  <div>
+                    <table class="table table-responsive" style="padding: 0%;">
+                      <tr>
+                        <tbody>
+                        <th><input type="text" value="Tank name" readonly></th>
+                        <th><input type="text" value="Time" readonly></th>
+                        <th><input type="text" value="Code" readonly></th>
+                        <th><input type="text" value="Quantity" readonly></th>
+                      </tbody>
+                      </tr>
+                      <tr *ngFor="let TankInput of watermedicineform.get('TankInput')['controls'];
+                      let i=index">
+                        <tbody [formGroupName]="i">
+                          <th><input type="text" formControlName="tank_name" readonly></th>
+                          <th><input type="text" formControlName="time"></th>
+                          <th><input type="text" formControlName="code"></th>
+                          <th><input type="text" formControlName="quantity"></th>
+                        </tbody>
+                      </tr>
+                    </table>
                   </div>
               </div>
                 <hr>
@@ -93,7 +96,7 @@
 <!-- Checknets data -->
  <div class="card-deck row" *ngIf="div_water_report">
       <form [formGroup]="waterreportform" (ngSubmit)="onSubmitWaterReport()">
-        <div formArrayName="response" >
+        <div formArrayName="TankInput" >
           <table class="table table-responsive">
       <th>
         <tbody>
@@ -122,7 +125,7 @@
        <tr><input type="text" value="Ph Pm" readonly></tr>
       </tbody>
     </th>
-      <th *ngFor="let response of waterreportform.get('response')['controls'];
+      <th *ngFor="let TankInput of waterreportform.get('TankInput')['controls'];
       let i=index">
       <tbody [formGroupName]="i">
         <!-- <tr> {{i+1}}</tr> -->

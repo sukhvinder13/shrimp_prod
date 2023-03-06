@@ -16,6 +16,9 @@ import { MatProgressSpinnerModule, MatRadioModule } from '@angular/material'
 //   AgmCoreModule
 // } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { CountHarvestComponent } from './feed-input/count-harvest/count-harvest/count-harvest.component';
+import { StockStockingComponent } from './feed-input/stock-stocking/stock-stocking/stock-stocking.component';
+import { InspectionsComponent } from './inspections/inspections.component';
 @NgModule({
   imports: [
     BrowserAnimationsModule,

@@ -22,7 +22,7 @@ export class WaterMedicineReportComponent implements OnInit {
   div_water_report:boolean=false;
   farm_Id:string;
   farm_Date:string;
-  selectedFeeds:string;
+  feedInput:string;
   submitted=false;
 
   constructor(private formBuilder: FormBuilder,
@@ -36,20 +36,20 @@ export class WaterMedicineReportComponent implements OnInit {
     // console.log(this.farm_Id);
     // console.log(this.farm_Date);
     this.watermedicineform = this.formBuilder.group({
-      farmId: [this.farm_Id, Validators.required],
-      createdAt: [this.farm_Date, Validators.required],
+      farmCode: [this.farm_Id, Validators.required],
+      selectedAt: [this.farm_Date, Validators.required],
       inputType: ['Water Medicine', Validators.required],
-      selectedFeeds: ['', Validators.required],
-      response: this.formBuilder.array([
+      feedInput: ['', Validators.required],
+      TankInput: this.formBuilder.array([
         this.initResponse(),
       ])
     });
     this.waterreportform = this.formBuilder.group({
-      farmId: [this.farm_Id, Validators.required],
-      createdAt: [this.farm_Date, Validators.required],
+      farmCode: [this.farm_Id, Validators.required],
+      selectedAt: [this.farm_Date, Validators.required],
       inputType: ['Water Report', Validators.required],
-      selectedFeeds: ['', Validators.required],
-      response: this.formBuilder.array([
+      feedInput: ['', Validators.required],
+      TankInput: this.formBuilder.array([
         this.initResponseCheckNet(),
       ])
     });
@@ -65,8 +65,8 @@ export class WaterMedicineReportComponent implements OnInit {
       console.log(this.farmFetchedById);
       this.responseData = this.farmFetchedById[0].tankArea;
       console.log(this.responseData);
-      this.watermedicineform.setControl('response', this.setResponseMedicine(this.responseData));
-      this.waterreportform.setControl('response', this.setResponseReport(this.responseData));
+      this.watermedicineform.setControl('TankInput', this.setResponseMedicine(this.responseData));
+      this.waterreportform.setControl('TankInput', this.setResponseReport(this.responseData));
     })
   }
   setResponseMedicine(responseSet): FormArray {
@@ -167,16 +167,16 @@ loadWaterReport() {
 }
 changeFeed(event) {
   console.log(event);
-  this.selectedFeeds = event.value;
+  this.feedInput = event.value;
 }
 get f() { return this.watermedicineform.controls; }
 get c() { return this.waterreportform.controls; }
   //submit form
   onSubmit() {
     this.submitted = true;
-    this.watermedicineform.patchValue({ selectedFeeds: this.selectedFeeds });
+    this.watermedicineform.patchValue({ feedInput: this.feedInput });
     console.log(this.watermedicineform.value);
-    if (!this.watermedicineform.valid && this.selectedFeeds=='undefined') {
+    if (!this.watermedicineform.valid && this.feedInput=='undefined') {
       alert('Please select Feed')
       return false;
     } else {
@@ -194,7 +194,7 @@ get c() { return this.waterreportform.controls; }
  //submit form
  onSubmitWaterReport() {
   this.submitted = true;
-  this.waterreportform.patchValue({ selectedFeeds: this.selectedFeeds });
+  this.waterreportform.patchValue({ feedInput: this.feedInput });
   console.log(this.waterreportform.value);
   if (!this.waterreportform.valid) {
     return false;
@@ -202,7 +202,7 @@ get c() { return this.waterreportform.controls; }
     if (window.confirm('Are you sure?')) {
       this._inputFeed.createWaterReport(this.waterreportform.value)
         .subscribe(res => {
-          alert(' Successfully')
+          alert('Water Report added Successfully')
           // this.router.navigateByUrl('/manageLesson');
         }, (error) => {
           console.log(error)

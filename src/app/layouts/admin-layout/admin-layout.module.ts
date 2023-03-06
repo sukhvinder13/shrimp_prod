@@ -18,7 +18,8 @@ import {
   MatCard,
   MatCardModule,
   MatPaginatorModule,
-  MatRadioModule
+  MatRadioModule,
+  MatTableModule
 } from '@angular/material';
 import { AddFarmComponent } from 'app/add-farm/add-farm.component';
 import { FeedInputComponent } from 'app/feed-input/feed-input.component';
@@ -27,6 +28,10 @@ import { CultivationStageComponent } from 'app/feed-input/cultivation-stage/cult
 import { FeedChecknetComponent } from 'app/feed-input/feed-checknet/feed-checknet.component';
 import { WaterMedicineReportComponent } from 'app/feed-input/water-medicine-report/water-medicine-report.component';
 import { ObservationsComponent } from 'app/feed-input/observations/observations.component';
+import { CountHarvestComponent } from 'app/feed-input/count-harvest/count-harvest/count-harvest.component';
+import { StockStockingComponent } from 'app/feed-input/stock-stocking/stock-stocking/stock-stocking.component';
+import { CustomersDataComponent } from 'app/customers-data/customers-data.component';
+import { InspectionsComponent } from 'app/inspections/inspections.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -43,6 +48,7 @@ import { ObservationsComponent } from 'app/feed-input/observations/observations.
     MatProgressSpinnerModule,
     MatCardModule,
     MatPaginatorModule,
+    MatTableModule,
     MatRadioModule,NgxPaginationModule
   ],
   declarations: [
@@ -54,7 +60,11 @@ import { ObservationsComponent } from 'app/feed-input/observations/observations.
     CultivationStageComponent,
     FeedChecknetComponent,
     WaterMedicineReportComponent,
-    ObservationsComponent
+    ObservationsComponent,
+    CountHarvestComponent,
+    StockStockingComponent,
+    CustomersDataComponent,
+    InspectionsComponent
   ]
 })
 

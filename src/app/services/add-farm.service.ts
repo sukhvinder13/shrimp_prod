@@ -65,29 +65,29 @@ export class AddFarmService {
 
   postFarm(farmOwner: object, farmHistory: string, village: string,
     mandal: string, city: string, state: string, zip: number,
-    country: string, noOfTanks: number, noOfEmployess: number ,
-    tankCode:string,tankArea:Array<any>) {
+    country: string, noOfTanks: number, noOfEmployess: number,
+    tankCode: string, tankArea: Array<any>) {
     const post: AddFarm = {
       id: null, farmOwner: farmOwner, farmHistory: farmHistory,
       village: village, mandal: mandal, city: city, state: state, zip: zip,
       country: country, noOfTanks: noOfTanks, noOfEmployess: noOfEmployess,
-      tankCode:tankCode,tankArea:tankArea
+      tankCode: tankCode, tankArea: tankArea
     };
     console.log(post);
-// return
+    // return
     this.http.
       post<{ message: string, postId: string }>(
         environment.baseUrl + '/addFarm',
 
         // 'http://localhost:3000/addFarm',
-         post).subscribe(res => {
-        // this.getFarm
-        const id = res.postId;
-                post.id = id;
-                this.posts.push(post);
-        this.postsUpdated.next([...this.posts]);
-                
-      });
+        post).subscribe(res => {
+          // this.getFarm
+          const id = res.postId;
+          post.id = id;
+          this.posts.push(post);
+          this.postsUpdated.next([...this.posts]);
+
+        });
   }
   deleteFarm(postId: string) {
     this.http.delete(
@@ -95,10 +95,16 @@ export class AddFarmService {
 
       // "http://localhost:3000/deletefarm/" + postId)
       .subscribe(() => {
-        
+
         const updatedPosts = this.posts.filter(post => post.id !== postId);
         this.posts = updatedPosts;
         this.postsUpdated.next([...this.posts]);
       });
+  }
+  getCustoemrs() {
+    return this.http.get(environment.baseUrl + '/getCustomers');
+  }
+  getInspections() {
+    return this.http.get(environment.baseUrl + '/getInspections');
   }
 }
