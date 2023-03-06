@@ -27,6 +27,9 @@ import { CultivationStageComponent } from 'app/feed-input/cultivation-stage/cult
 import { FeedChecknetComponent } from 'app/feed-input/feed-checknet/feed-checknet.component';
 import { WaterMedicineReportComponent } from 'app/feed-input/water-medicine-report/water-medicine-report.component';
 import { ObservationsComponent } from 'app/feed-input/observations/observations.component';
+import { CountHarvestComponent } from 'app/feed-input/count-harvest/count-harvest/count-harvest.component';
+import { StockStockingComponent } from 'app/feed-input/stock-stocking/stock-stocking/stock-stocking.component';
+import { CustomersDataComponent } from 'app/customers-data/customers-data.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -54,7 +57,10 @@ import { ObservationsComponent } from 'app/feed-input/observations/observations.
     CultivationStageComponent,
     FeedChecknetComponent,
     WaterMedicineReportComponent,
-    ObservationsComponent
+    ObservationsComponent,
+    CountHarvestComponent,
+    StockStockingComponent,
+    CustomersDataComponent
   ]
 })
 

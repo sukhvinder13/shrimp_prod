@@ -31,6 +31,7 @@ export class AddFarmComponent implements OnInit {
     this.isLoading = false;
     this.readFarmOwner();
     this.readFarm_details();
+
   }
 
   //read farm owner

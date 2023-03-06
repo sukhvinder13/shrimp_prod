@@ -22,7 +22,7 @@ export class ObservationsComponent implements OnInit {
   div_water: boolean = false;
   farm_Id: string;
   farm_Date: string;
-  selectedFeeds: string;
+  feedInput: string;
   submitted = false;
   constructor(private formBuilder: FormBuilder,
     private _addFarmService: AddFarmService,
@@ -32,23 +32,21 @@ export class ObservationsComponent implements OnInit {
   ngOnInit() {
     this.farm_Id = this.route.snapshot.params.farmId;
     this.farm_Date = this.route.snapshot.params.farmDate;
-    // console.log(this.farm_Id);
-    // console.log(this.farm_Date);
     this.shrimpobvform = this.formBuilder.group({
-      farmId: [this.farm_Id, Validators.required],
-      createdAt: [this.farm_Date, Validators.required],
+      farmCode: [this.farm_Id, Validators.required],
+      selectedAt: [this.farm_Date, Validators.required],
       inputType: ['Shrimp Observation', Validators.required],
-      selectedFeeds: ['', Validators.required],
-      response: this.formBuilder.array([
+      feedInput: ['', Validators.required],
+      TankInput: this.formBuilder.array([
         this.initResponse(),
       ])
     });
     this.waterobvform = this.formBuilder.group({
-      farmId: [this.farm_Id, Validators.required],
-      createdAt: [this.farm_Date, Validators.required],
+      farmCode: [this.farm_Id, Validators.required],
+      selectedAt: [this.farm_Date, Validators.required],
       inputType: ['Water Observation', Validators.required],
-      selectedFeeds: ['', Validators.required],
-      response: this.formBuilder.array([
+      feedInput: ['', Validators.required],
+      TankInput: this.formBuilder.array([
         this.initResponseCheckNet(),
       ])
     });
@@ -64,8 +62,8 @@ export class ObservationsComponent implements OnInit {
       console.log(this.farmFetchedById);
       this.responseData = this.farmFetchedById[0].tankArea;
       console.log(this.responseData);
-      this.shrimpobvform.setControl('response', this.setResponseShrimp(this.responseData));
-      this.waterobvform.setControl('response', this.setResponseWater(this.responseData));
+      this.shrimpobvform.setControl('TankInput', this.setResponseShrimp(this.responseData));
+      this.waterobvform.setControl('TankInput', this.setResponseWater(this.responseData));
     })
   }
   setResponseShrimp(responseSet): FormArray {
@@ -274,34 +272,34 @@ export class ObservationsComponent implements OnInit {
   loadShrimpObv() {
     this.div_shrimp = true;
     this.div_water = false;
-    document.getElementById("b1").style.background = "green";
-    document.getElementById("b2").style.background = "";
+    document.getElementById("shrimpb1").style.background = "green";
+    document.getElementById("waterb2").style.background = "";
   }
   loadWaterObv() {
     this.div_shrimp = false;
     this.div_water = true;
-    document.getElementById("b1").style.background = "";
-    document.getElementById("b2").style.background = "green";
+    document.getElementById("shrimpb1").style.background = "";
+    document.getElementById("waterb2").style.background = "green";
   }
   changeFeed(event) {
     console.log(event);
-    this.selectedFeeds = event.value;
+    this.feedInput = event.value;
   }
   get f() { return this.shrimpobvform.controls; }
   get c() { return this.waterobvform.controls; }
   //submit form
   onSubmit() {
     this.submitted = true;
-    this.shrimpobvform.patchValue({ selectedFeeds: this.selectedFeeds });
+    this.shrimpobvform.patchValue({ feedInput: this.feedInput });
     console.log(this.shrimpobvform.value);
-    if (!this.shrimpobvform.valid && this.selectedFeeds == 'undefined') {
+    if (!this.shrimpobvform.valid && this.feedInput == 'undefined') {
       alert('Please select Feed')
       return false;
     } else {
       if (window.confirm('Are you sure?')) {
         this._inputFeed.createShrimpObv(this.shrimpobvform.value)
           .subscribe(res => {
-            alert('Water Medicine created Successfully')
+            alert('Shrimp Observation created Successfully')
             // this.router.navigateByUrl('/manageLesson');
           }, (error) => {
             console.log(error)
@@ -312,7 +310,7 @@ export class ObservationsComponent implements OnInit {
   //submit form
   onSubmitWater() {
     this.submitted = true;
-    this.waterobvform.patchValue({ selectedFeeds: this.selectedFeeds });
+    this.waterobvform.patchValue({ feedInput: this.feedInput });
     console.log(this.waterobvform.value);
     if (!this.waterobvform.valid) {
       return false;
@@ -320,7 +318,7 @@ export class ObservationsComponent implements OnInit {
       if (window.confirm('Are you sure?')) {
         this._inputFeed.createWaterObv(this.waterobvform.value)
           .subscribe(res => {
-            alert(' Successfully')
+            alert('Water Observation added Successfully')
             // this.router.navigateByUrl('/manageLesson');
           }, (error) => {
             console.log(error)

@@ -12,6 +12,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/registration', title: 'Register Farm Owner',  icon: 'person_add', class: '' },
     { path: '/add-farm', title: 'Add Farm ',  icon: 'group_add', class: '' },
     { path: '/feed-input', title: 'Feed Input ',  icon: 'input', class: '' },
+    { path: '/customers-data', title: 'Customer ',  icon: 'input', class: '' },
     
     // { path: '/user-profile', title: 'Tasks',  icon:'dns', class: '' },
     // { path: '/selection-of-farm', title: 'Selection of Farm',  icon:'select_all', class: '' },

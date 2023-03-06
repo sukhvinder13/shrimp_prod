@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { AddFarmService } from 'app/services/add-farm.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FeedInputService } from 'app/services/feed-input.service';
+import { HttpErrorResponse } from '@angular/common/http';
+// import { exists } from 'fs';
 @Component({
   selector: 'app-feed-checknet',
   templateUrl: './feed-checknet.component.html',
@@ -23,7 +25,7 @@ export class FeedChecknetComponent implements OnInit {
   responseData: Array<any>;
   div_feed: boolean = false;
   div_checkNet:boolean=false;
-  selectedFeeds: string;
+  feedInput: string;
 
   SelectedFeeds: string;
   selectFeeds: string[] = ['Feed1', 'Feed2', 'Feed3', 'Feed4'];
@@ -39,20 +41,20 @@ export class FeedChecknetComponent implements OnInit {
     // console.log(this.farm_Id);
     // console.log(this.farm_Date);
     this.feedsform = this.formBuilder.group({
-      farmId: [this.farm_Id, Validators.required],
-      createdAt: [this.farm_Date, Validators.required],
+      farmCode: [this.farm_Id, Validators.required],
+      selectedAt: [this.farm_Date, Validators.required],
       inputType: ['Feed', Validators.required],
-      selectedFeeds: ['', Validators.required],
-      response: this.formBuilder.array([
+      feedInput: ['', Validators.required],
+      TankInput: this.formBuilder.array([
         this.initResponse(),
       ])
     });
     this.checkNetform = this.formBuilder.group({
-      farmId: [this.farm_Id, Validators.required],
-      createdAt: [this.farm_Date, Validators.required],
+      farmCode: [this.farm_Id, Validators.required],
+      selectedAt: [this.farm_Date, Validators.required],
       inputType: ['CheckNet', Validators.required],
-      selectedFeeds: ['', Validators.required],
-      response: this.formBuilder.array([
+      feedInput: ['', Validators.required],
+      TankInput: this.formBuilder.array([
         this.initResponseCheckNet(),
       ])
     });
@@ -62,25 +64,25 @@ export class FeedChecknetComponent implements OnInit {
 //for feed form
   addfeedsform() {
     // add address to the list
-    const control = <FormArray>this.feedsform.get('response');
+    const control = <FormArray>this.feedsform.get('TankInput');
     control.push(this.initResponse());
   }
 
   removeResponse(i: number) {
     // remove address from the list
-    const control = <FormArray>this.feedsform.get('response');
+    const control = <FormArray>this.feedsform.get('TankInput');
     control.removeAt(i);
   }
   //for checkNet form
   addcheckNetform() {
     // add address to the list
-    const control = <FormArray>this.checkNetform.get('response');
+    const control = <FormArray>this.checkNetform.get('TankInput');
     control.push(this.initResponse());
   }
 
   removecheckNetform(i: number) {
     // remove address from the list
-    const control = <FormArray>this.checkNetform.get('response');
+    const control = <FormArray>this.checkNetform.get('TankInput');
     control.removeAt(i);
   }
   getFarmData() {
@@ -93,8 +95,8 @@ export class FeedChecknetComponent implements OnInit {
       console.log(this.farmFetchedById);
       this.responseData = this.farmFetchedById[0].tankArea;
       console.log(this.responseData);
-      this.feedsform.setControl('response', this.setResponse(this.responseData));
-      this.checkNetform.setControl('response', this.setResponseCheckNet(this.responseData));
+      this.feedsform.setControl('TankInput', this.setResponse(this.responseData));
+      this.checkNetform.setControl('TankInput', this.setResponseCheckNet(this.responseData));
     })
   }
   setResponse(responseSet): FormArray {
@@ -173,7 +175,7 @@ initResponseCheckNet() {
   }
   changeFeed(event) {
     console.log(event);
-    this.selectedFeeds = event.value;
+    this.feedInput = event.value;
   }
   get f() { return this.feedsform.controls; }
   get c() { return this.checkNetform.controls; }
@@ -181,7 +183,7 @@ initResponseCheckNet() {
   //submit form
   onSubmit() {
     this.submitted = true;
-    this.feedsform.patchValue({ selectedFeeds: this.selectedFeeds });
+    this.feedsform.patchValue({ feedInput: this.feedInput });
     console.log(this.feedsform.value);
     if (!this.feedsform.valid) {
       return false;
@@ -189,10 +191,23 @@ initResponseCheckNet() {
       if (window.confirm('Are you sure?')) {
         this._inputFeed.createFeeds(this.feedsform.value)
           .subscribe(res => {
-            alert('Lesson Updated Successfully')
-            // this.router.navigateByUrl('/manageLesson');
-          }, (error) => {
-            console.log(error)
+            if(res){
+              alert('Feed added Successfully')
+            }
+          }, error=> {
+            console.log(error);
+            if (error instanceof HttpErrorResponse) {
+            console.log(error.status);
+            console.log(error);
+              if (error.status === 400 || error.status === 500) {
+                alert('Feed `this.feedInput` already added for Date `this.farm_Date`');
+              } else {
+                alert('internal error occured')
+              }
+            } else {
+              // alert('internal error occured without any http error');
+              alert(`Feed ${this.feedInput} for Date ${this.farm_Date} already exists`);
+            }
           })
       }
     }
@@ -201,15 +216,16 @@ initResponseCheckNet() {
    //submit form
    onSubmitCheckNet() {
     this.submitted = true;
-    this.checkNetform.patchValue({ selectedFeeds: this.selectedFeeds });
+    this.checkNetform.patchValue({ feedInput: this.feedInput });
     console.log(this.checkNetform.value);
     if (!this.checkNetform.valid) {
+      console.log('validation  error');
       return false;
     } else {
       if (window.confirm('Are you sure?')) {
         this._inputFeed.createCheckNet(this.checkNetform.value)
           .subscribe(res => {
-            alert('Lesson Updated Successfully')
+            alert('CheckNet added Successfully')
             // this.router.navigateByUrl('/manageLesson');
           }, (error) => {
             console.log(error)

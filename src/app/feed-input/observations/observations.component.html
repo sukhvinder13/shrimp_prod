@@ -3,11 +3,11 @@
     <hr>
     <div class="row">
       <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-        <button type="button" id="b1" class="btn btn-info" [ngClass]="['bntStyle']"
+        <button type="button" id="shrimpb1" class="btn btn-info" [ngClass]="['bntStyle']"
           (click)="loadShrimpObv();" value="Feed">Shrimp</button>
       </div>
       <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-        <button type="button" id="b2" class="btn btn-info" 
+        <button type="button" id="waterb2" class="btn btn-info" 
         (click)="loadWaterObv();">Water</button>
       </div>
     </div>
@@ -26,8 +26,8 @@
   <!-- Div for shrimp obv -->
     <div class="row" *ngIf="div_shrimp">
       <div class="col-md-12 offset-md-12">
-        <form [formGroup]="waterobvform" (ngSubmit)="onSubmit()">
-          <div formArrayName="response" >
+        <form [formGroup]="shrimpobvform" (ngSubmit)="onSubmit()">
+          <div formArrayName="TankInput" >
             <table class="table table-responsive">
         <th>
           <tbody>
@@ -76,7 +76,7 @@
          <tr><input type="text" value="Water color" readonly></tr>
         </tbody>
       </th>
-        <th *ngFor="let response of waterobvform.get('response')['controls'];
+        <th *ngFor="let TankInput of shrimpobvform.get('TankInput')['controls'];
         let i=index">
         <tbody [formGroupName]="i">
           <!-- <tr> {{i+1}}</tr> -->
@@ -136,7 +136,7 @@
 <!-- water data -->
  <div class="card-deck row" *ngIf="div_water">
       <form [formGroup]="waterobvform" (ngSubmit)="onSubmitWater()">
-        <div formArrayName="response" >
+        <div formArrayName="TankInput" >
           <table class="table table-responsive">
       <th>
         <tbody>
@@ -185,7 +185,7 @@
         <tr><input type="text" value="Water color" readonly></tr>
       </tbody>
     </th>
-      <th *ngFor="let response of waterobvform.get('response')['controls'];
+      <th *ngFor="let TankInput of waterobvform.get('TankInput')['controls'];
       let i=index">
       <tbody [formGroupName]="i">
         <!-- <tr> {{i+1}}</tr> -->

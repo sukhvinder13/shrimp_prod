@@ -21,8 +21,8 @@
                     <select id="farmOwner" class="form-control is-valid" multiple ngModel name="farmOwner"
                       #farmOwner="ngModel" required>
                       <option ng-value="" selected>Choose Owner</option>
-                      <option *ngFor="let owner of farmOwnerData.posts" [ngValue]="owner">{{owner.firstName}}
-                        {{owner.lastName}}</option>
+                      <option *ngFor="let owner of farmOwnerData.posts" [ngValue]="owner">{{owner?.firstName}}
+                        {{owner?.lastName}}</option>
                     </select>
                     <!-- <ng-select bindLabel="name" class="form-control is-valid" placeholder=""
                      appendTo="body" multiple="true"
@@ -186,11 +186,11 @@
             <td>
               <div *ngFor="let fo of farmData.posts[i].farmOwner;let j = index">
                 <span *ngIf="fo.firstName">
-                  {{j+1}}. {{fo.firstName}} {{fo.lastName}}
+                  {{j+1}}. {{fo?.firstName}} {{fo?.lastName}}
                 </span>
               </div>
-              <span *ngIf="getFarm.farmOwner.firstName">
-                {{getFarm.farmOwner.firstName}} {{getFarm.farmOwner.lastName}}
+              <span *ngIf="getFarm.farmOwner?.firstName">
+                {{getFarm.farmOwner?.firstName}} {{getFarm.farmOwner?.lastName}}
               </span>
             </td>
             <td>{{getFarm.farmHistory}}</td>
