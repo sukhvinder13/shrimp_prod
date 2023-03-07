@@ -104,4 +104,7 @@ export class AddFarmService {
   getCustoemrs() {
     return this.http.get(environment.baseUrl + '/getCustomers');
   }
+  getInspections() {
+    return this.http.get(environment.baseUrl + '/getInspections');
+  }
 }

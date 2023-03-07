@@ -18,7 +18,8 @@ import {
   MatCard,
   MatCardModule,
   MatPaginatorModule,
-  MatRadioModule
+  MatRadioModule,
+  MatTableModule
 } from '@angular/material';
 import { AddFarmComponent } from 'app/add-farm/add-farm.component';
 import { FeedInputComponent } from 'app/feed-input/feed-input.component';
@@ -30,6 +31,7 @@ import { ObservationsComponent } from 'app/feed-input/observations/observations.
 import { CountHarvestComponent } from 'app/feed-input/count-harvest/count-harvest/count-harvest.component';
 import { StockStockingComponent } from 'app/feed-input/stock-stocking/stock-stocking/stock-stocking.component';
 import { CustomersDataComponent } from 'app/customers-data/customers-data.component';
+import { InspectionsComponent } from 'app/inspections/inspections.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -46,6 +48,7 @@ import { CustomersDataComponent } from 'app/customers-data/customers-data.compon
     MatProgressSpinnerModule,
     MatCardModule,
     MatPaginatorModule,
+    MatTableModule,
     MatRadioModule,NgxPaginationModule
   ],
   declarations: [
@@ -60,7 +63,8 @@ import { CustomersDataComponent } from 'app/customers-data/customers-data.compon
     ObservationsComponent,
     CountHarvestComponent,
     StockStockingComponent,
-    CustomersDataComponent
+    CustomersDataComponent,
+    InspectionsComponent
   ]
 })
 

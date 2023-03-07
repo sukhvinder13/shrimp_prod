@@ -1,0 +1,29 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="table-responsive">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Business  Name</th>
+            <th scope="col">Certificate_number</th>
+            <th scope="col">Result</th>
+            <th scope="col">Date</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of inspections?.posts">
+            <td>{{x.business_name}}</td>
+            <td>{{x.certificate_number}}</td>
+            <td>{{x.result}}</td>
+            <td>{{x.date}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="pagination-controls">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
+
