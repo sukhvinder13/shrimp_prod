@@ -13,7 +13,7 @@ export class AccountsComponent implements OnInit {
   constructor(private AddFarmService: AddFarmService) { }
   accountsData:any;
   // @ViewChild('paginator') paginator: MatPaginator;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   displayedColumns: string[] = ['account_id','limit'];
   dataSource = new MatTableDataSource<any>();
 

@@ -12,7 +12,7 @@ export class CustomersDataComponent implements OnInit {
   customerData:any;
   constructor(private AddFarmService: AddFarmService,private toastr: ToastrService) { }
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator , {static: false}) paginator: MatPaginator;
   displayedColumns: string[] = ['sr','email','name','birthdate','address'];
   dataSource = new MatTableDataSource<any>();
   ngOnInit() {
