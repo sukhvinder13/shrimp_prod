@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AddFarmService } from 'app/services/add-farm.service';
 import * as Chartist from 'chartist';
 
 @Component({
@@ -7,8 +8,8 @@ import * as Chartist from 'chartist';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
-  constructor() { }
+  customerData:any;
+  constructor(private AddFarmService:AddFarmService) { }
   startAnimationForLineChart(chart){
       let seq: any, delays: any, durations: any;
       seq = 0;
@@ -66,6 +67,7 @@ export class DashboardComponent implements OnInit {
       seq2 = 0;
   };
   ngOnInit() {
+    this.getCustomer()
       /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
 
       const dataDailySalesChart: any = {
@@ -146,5 +148,10 @@ export class DashboardComponent implements OnInit {
       //start animation for the Emails Subscription Chart
       this.startAnimationForBarChart(websiteViewsChart);
   }
-
+  getCustomer(){
+    this.AddFarmService.getCustoemrs().subscribe((data =>{
+      this.customerData=data;
+      console.log(data)
+   }))
+  }
 }

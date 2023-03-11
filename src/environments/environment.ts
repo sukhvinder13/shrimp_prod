@@ -6,6 +6,9 @@
 export const environment = {
   production: false,
   baseUrl:'http://localhost:3000'
+  // baseUrl:'https://nodejsstartup.onrender.com'
+
   // baseUrl:'http://167.71.228.227:3000'
+ // http://sukhvindersingh.lovestoblog.com/'
 
 };

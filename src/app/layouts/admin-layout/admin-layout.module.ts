@@ -32,6 +32,10 @@ import { CountHarvestComponent } from 'app/feed-input/count-harvest/count-harves
 import { StockStockingComponent } from 'app/feed-input/stock-stocking/stock-stocking/stock-stocking.component';
 import { CustomersDataComponent } from 'app/customers-data/customers-data.component';
 import { InspectionsComponent } from 'app/inspections/inspections.component';
+import { TweetsComponent } from 'app/tweets/tweets.component';
+import { SalesComponent } from 'app/sales/sales.component';
+import { AccountsComponent } from 'app/accounts/accounts.component';
+import { ToastrModule } from 'ngx-toastr/public_api';
 @NgModule({
   imports: [
     CommonModule,
@@ -49,7 +53,8 @@ import { InspectionsComponent } from 'app/inspections/inspections.component';
     MatCardModule,
     MatPaginatorModule,
     MatTableModule,
-    MatRadioModule,NgxPaginationModule
+    MatRadioModule,NgxPaginationModule,
+
   ],
   declarations: [
     DashboardComponent,
@@ -64,7 +69,10 @@ import { InspectionsComponent } from 'app/inspections/inspections.component';
     CountHarvestComponent,
     StockStockingComponent,
     CustomersDataComponent,
-    InspectionsComponent
+    InspectionsComponent,
+    TweetsComponent,
+    SalesComponent,
+    AccountsComponent
   ]
 })
 

@@ -1,0 +1,26 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="table-responsive">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Email</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Store Location</th>
+            <th scope="col">PurchaseMethod</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of salesData?.posts">
+            <td>{{x.customer.email}}</td>
+            <td>{{x.customer.gender}}</td>
+            <td>{{x.storeLocation}}</td>
+            <td>{{x.purchaseMethod}}</td>
+          </tr>
+        </tbody>
+      </table>
+    
+    </div>
+  </div>
+</div>

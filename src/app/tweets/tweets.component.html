@@ -1,0 +1,22 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="table-responsive">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Text</th>
+            <th scope="col">Source</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of tweetData?.posts">
+            <td>{{x.text}}</td>
+            <td>{{x.source}}</td>
+          </tr>
+        </tbody>
+      </table>
+     
+    </div>
+  </div>
+</div>

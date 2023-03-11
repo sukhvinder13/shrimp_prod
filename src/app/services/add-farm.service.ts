@@ -104,7 +104,16 @@ export class AddFarmService {
   getCustoemrs() {
     return this.http.get(environment.baseUrl + '/getCustomers');
   }
+  getTweets() {
+    return this.http.get(environment.baseUrl + '/getTweets');
+  }
   getInspections() {
     return this.http.get(environment.baseUrl + '/getInspections');
+  }
+  getSales(){
+    return this.http.get(environment.baseUrl + '/getSales');
+  } 
+  getAccounts(){
+    return this.http.get(environment.baseUrl + '/getAccounts');
   }
 }
