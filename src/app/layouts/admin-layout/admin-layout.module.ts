@@ -35,6 +35,7 @@ import { InspectionsComponent } from 'app/inspections/inspections.component';
 import { TweetsComponent } from 'app/tweets/tweets.component';
 import { SalesComponent } from 'app/sales/sales.component';
 import { AccountsComponent } from 'app/accounts/accounts.component';
+import { ToastrModule } from 'ngx-toastr/public_api';
 @NgModule({
   imports: [
     CommonModule,
@@ -52,7 +53,8 @@ import { AccountsComponent } from 'app/accounts/accounts.component';
     MatCardModule,
     MatPaginatorModule,
     MatTableModule,
-    MatRadioModule,NgxPaginationModule
+    MatRadioModule,NgxPaginationModule,
+
   ],
   declarations: [
     DashboardComponent,

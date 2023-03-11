@@ -25,7 +25,6 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
     AppRoutingModule,
     MatProgressSpinnerModule,
     MatRadioModule,
- 
   ],
   declarations: [
     AppComponent,
