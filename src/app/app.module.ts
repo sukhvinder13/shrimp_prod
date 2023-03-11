@@ -12,13 +12,7 @@ import { ComponentsModule } from './components/components.module';
 
 import { AppComponent } from './app.component';
 import { MatProgressSpinnerModule, MatRadioModule } from '@angular/material'
-// import {
-//   AgmCoreModule
-// } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { CountHarvestComponent } from './feed-input/count-harvest/count-harvest/count-harvest.component';
-import { StockStockingComponent } from './feed-input/stock-stocking/stock-stocking/stock-stocking.component';
-import { InspectionsComponent } from './inspections/inspections.component';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -31,14 +25,12 @@ import { InspectionsComponent } from './inspections/inspections.component';
     AppRoutingModule,
     MatProgressSpinnerModule,
     MatRadioModule,
-    // AgmCoreModule.forRoot({
-    //   apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
-    // })
+ 
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    ],
+   ],
   providers: [],
   bootstrap: [AppComponent]
 })

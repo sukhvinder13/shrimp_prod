@@ -1,0 +1,24 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="table-responsive">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Account_id</th>
+            <th scope="col">Limit</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of accountsData?.posts">
+            <td>{{x.account_id}}</td>
+            <td>{{x.limit}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="pagination-controls">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
