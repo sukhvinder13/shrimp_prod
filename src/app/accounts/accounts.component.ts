@@ -11,7 +11,7 @@ export class AccountsComponent implements OnInit {
 
  
   constructor(private AddFarmService: AddFarmService) { }
-  accountsData:any;
+  accountsData:any={};
   // @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   displayedColumns: string[] = ['account_id','limit'];
@@ -22,14 +22,14 @@ export class AccountsComponent implements OnInit {
   }
   
   getAccounts(){
-    this.AddFarmService.getAccounts().subscribe((data =>{
-      this.accountsData=data;
-  this.dataSource = new MatTableDataSource<any>(data.posts);
+    this.AddFarmService.getAccounts().subscribe((res:any) =>{
+      this.accountsData=res.posts;
+  this.dataSource = new MatTableDataSource<any>(this.accountsData);
   this.dataSource.paginator = this.paginator;
 
 
-      console.log(data)
-   }))
+      console.log(res)
+   })
   }
 
 }

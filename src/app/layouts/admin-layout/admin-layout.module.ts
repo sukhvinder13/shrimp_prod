@@ -35,7 +35,8 @@ import { InspectionsComponent } from 'app/inspections/inspections.component';
 import { TweetsComponent } from 'app/tweets/tweets.component';
 import { SalesComponent } from 'app/sales/sales.component';
 import { AccountsComponent } from 'app/accounts/accounts.component';
-import { ToastrModule } from 'ngx-toastr/public_api';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoadingInterceptor } from 'app/services/loadingIntercept';
 @NgModule({
   imports: [
     CommonModule,
@@ -73,7 +74,8 @@ import { ToastrModule } from 'ngx-toastr/public_api';
     TweetsComponent,
     SalesComponent,
     AccountsComponent
-  ]
+  ],
+ 
 })
 
 export class AdminLayoutModule {}
