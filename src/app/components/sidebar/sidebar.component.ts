@@ -38,11 +38,14 @@ export const ROUTES: RouteInfo[] = [
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
-  menuItems: any[];
+  menuItems: any[]; 
+  userInfo:any;
 
   constructor() { }
 
   ngOnInit() {
+   this.userInfo= localStorage.getItem('userInfo');
+   console.log(this.userInfo)
     this.menuItems = ROUTES.filter(menuItem => menuItem);
   }
   isMobileMenu() {

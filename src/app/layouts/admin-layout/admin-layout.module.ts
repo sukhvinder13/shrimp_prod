@@ -73,7 +73,8 @@ import { LoadingInterceptor } from 'app/services/loadingIntercept';
     InspectionsComponent,
     TweetsComponent,
     SalesComponent,
-    AccountsComponent
+    AccountsComponent,
+    
   ],
  
 })

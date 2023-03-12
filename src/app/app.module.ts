@@ -15,6 +15,7 @@ import { MatProgressSpinnerModule, MatRadioModule } from '@angular/material'
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { LoadingInterceptor } from './services/loadingIntercept';
+import { LoginComponent } from './login/login/login.component';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -32,6 +33,7 @@ import { LoadingInterceptor } from './services/loadingIntercept';
     AppComponent,
     AdminLayoutComponent,
     SpinnerComponent,
+    LoginComponent,
    ],
   providers: [
     {
