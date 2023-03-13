@@ -169,7 +169,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let getFarm of farmData.posts | paginate: { itemsPerPage: 10, currentPage: p };let i = index;">
+          <tr *ngFor="let getFarm of farmData.posts;let i = index;">
             <th scope="row">{{i +1}}</th>
             <td>
               <div *ngFor="let fo of farmData.posts[i].farmOwner;let j = index">
@@ -196,9 +196,9 @@
           </tr>
         </tbody>
       </table>
-      <div class="pagination-controls">
+      <!-- <div class="pagination-controls">
         <pagination-controls (pageChange)="p = $event"></pagination-controls>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
