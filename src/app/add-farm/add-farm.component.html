@@ -117,22 +117,12 @@
                 <div class="form-row">
                   <div class="col-md-8 mb-3">
                     <label for="tankArea">Water Area of Tank</label>
-                    <!-- <tr *ngFor="let field of waterAreaOfTank; let i = index">
-                      <td>
-                        <label for="tankArea">{{tankCode}}
-                          <input type="number" class="form-control is-valid" 
-                          [(ngModel)]="field.tankArea" name="field.tankArea" id="tankArea"
-                           placeholder="Enter area" required min="0">
-                        </label>
-                      </td>
-                    </tr> -->
                     <tbody >
                       <tr>
                         <th>Tank Code</th>
                         <th>Tank Area</th>
                       </tr>
                       <tr *ngFor="let field of fieldArray; let i = index">
-                        <!-- <td>{{tankCode.value}}</td> -->
                         <td>
                           <input type="text" class="form-control" 
                           [(ngModel)]="field.tank_name" name="field.tank_name" 
@@ -147,8 +137,6 @@
                     </tbody>
                   </div>
                 </div>
-                <!-- <button class="btn btn-primary" type="reset" (click)="resetFarm">Reset</button> -->
-
                 <button class="btn btn-primary" type="submit" id="closeModal" [disabled]="!addFarm.valid">Register
                   Farm</button>
               </form>
@@ -204,13 +192,10 @@
             <td>{{getFarm.noOfEmployess}}</td>
             <td>
               <button mat-button color="warn" (click)="onDelete(getFarm._id)">DELETE</button>
-
             </td> 
           </tr>
         </tbody>
       </table>
-      <!-- <mat-paginator [length]="totalPosts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOptions"
-        (page)=onChangePage($event)></mat-paginator> -->
       <div class="pagination-controls">
         <pagination-controls (pageChange)="p = $event"></pagination-controls>
       </div>

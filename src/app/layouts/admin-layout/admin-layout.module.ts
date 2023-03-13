@@ -15,7 +15,6 @@ import {
   MatTooltipModule,
   MatSelectModule,
   MatProgressSpinnerModule,
-  MatCard,
   MatCardModule,
   MatPaginatorModule,
   MatRadioModule,
@@ -35,8 +34,7 @@ import { InspectionsComponent } from 'app/inspections/inspections.component';
 import { TweetsComponent } from 'app/tweets/tweets.component';
 import { SalesComponent } from 'app/sales/sales.component';
 import { AccountsComponent } from 'app/accounts/accounts.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { LoadingInterceptor } from 'app/services/loadingIntercept';
+import { TransactionsComponent } from 'app/transactions/transactions.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -74,7 +72,7 @@ import { LoadingInterceptor } from 'app/services/loadingIntercept';
     TweetsComponent,
     SalesComponent,
     AccountsComponent,
-    
+    TransactionsComponent
   ],
  
 })

@@ -116,4 +116,7 @@ export class AddFarmService {
   getAccounts(){
     return this.http.get(environment.baseUrl + '/getAccounts');
   }
+  getTransactions(){
+    return this.http.get(environment.baseUrl + '/getTransactions');
+  }
 }

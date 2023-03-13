@@ -1,0 +1,26 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="table-responsive">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Account_id</th>
+            <th scope="col">transaction_count</th>
+            <th scope="col">Bucket_start_date</th>
+            <th scope="col">bBcket_end_date</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of transactionData?.Transactions">
+            <td>{{x.account_id}}</td>
+            <td>{{x.transaction_count}}</td>
+            <td>{{x.bucket_start_date | date:'dd/mm/yyyy'}}</td>
+            <td>{{x.bucket_end_date | date:'dd/mm/yyyy'}}</td>
+          </tr>
+        </tbody>
+      </table>
+     
+    </div>
+  </div>
+</div>

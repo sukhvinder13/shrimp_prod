@@ -9,10 +9,12 @@ import { InspectionsComponent } from 'app/inspections/inspections.component';
 import { TweetsComponent } from 'app/tweets/tweets.component';
 import { SalesComponent } from 'app/sales/sales.component';
 import { AccountsComponent } from 'app/accounts/accounts.component';
+import { ResolverService } from 'app/services/resolver.service';
+import { TransactionsComponent } from 'app/transactions/transactions.component';
 
 export const AdminLayoutRoutes: Routes = [
-   
-    { path: 'dashboard', component: DashboardComponent },
+  { path: '', resolve: { messages: ResolverService }, children: [
+    { path: 'dashboard', component: DashboardComponent},
     { path: 'registration', component: RegistrationComponent },
     { path: 'add-farm', component: AddFarmComponent },
     { path: 'feed-input', component: FeedInputComponent },
@@ -23,5 +25,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'tweets-data', component: TweetsComponent },
     { path: 'sales-data', component: SalesComponent },
     { path: 'accounts-data', component: AccountsComponent },
-
+    { path: 'transaction-data', component: TransactionsComponent },
+  ]}
 ];

@@ -20,7 +20,6 @@ export class AddFarmComponent implements OnInit {
   postsOwner: AddFarmOwner[] = [];
   farmOwnerData:any=[];
   farmData:any=[];
-  // @ViewChild('closebutton') closebutton;
   private postsSub: Subscription;
   private postsSubOwner: Subscription;
   isLoading = false;
