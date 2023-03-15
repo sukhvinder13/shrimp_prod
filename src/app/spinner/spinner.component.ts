@@ -1,4 +1,3 @@
-import { ViewEncapsulation } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
 import { LoaderService } from 'app/services/loader.service';
 

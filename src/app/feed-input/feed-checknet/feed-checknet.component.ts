@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormArray } from '@angular/forms';
 import { AddFarmService } from 'app/services/add-farm.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FeedInputService } from 'app/services/feed-input.service';
@@ -13,8 +13,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class FeedChecknetComponent implements OnInit {
 
   submitted = false;
-  feedsform: FormGroup;
-  checkNetform:FormGroup;
+  feedsform: UntypedFormGroup;
+  checkNetform:UntypedFormGroup;
   farmData: any = [];
   farmData_area: any = [];
   params: Params;
@@ -30,7 +30,7 @@ export class FeedChecknetComponent implements OnInit {
   SelectedFeeds: string;
   selectFeeds: string[] = ['Feed1', 'Feed2', 'Feed3', 'Feed4'];
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private _addFarmService: AddFarmService,
     private route: ActivatedRoute,
     private _inputFeed: FeedInputService) { }
@@ -64,25 +64,25 @@ export class FeedChecknetComponent implements OnInit {
 //for feed form
   addfeedsform() {
     // add address to the list
-    const control = <FormArray>this.feedsform.get('TankInput');
+    const control = <UntypedFormArray>this.feedsform.get('TankInput');
     control.push(this.initResponse());
   }
 
   removeResponse(i: number) {
     // remove address from the list
-    const control = <FormArray>this.feedsform.get('TankInput');
+    const control = <UntypedFormArray>this.feedsform.get('TankInput');
     control.removeAt(i);
   }
   //for checkNet form
   addcheckNetform() {
     // add address to the list
-    const control = <FormArray>this.checkNetform.get('TankInput');
+    const control = <UntypedFormArray>this.checkNetform.get('TankInput');
     control.push(this.initResponse());
   }
 
   removecheckNetform(i: number) {
     // remove address from the list
-    const control = <FormArray>this.checkNetform.get('TankInput');
+    const control = <UntypedFormArray>this.checkNetform.get('TankInput');
     control.removeAt(i);
   }
   getFarmData() {
@@ -99,8 +99,8 @@ export class FeedChecknetComponent implements OnInit {
       this.checkNetform.setControl('TankInput', this.setResponseCheckNet(this.responseData));
     })
   }
-  setResponse(responseSet): FormArray {
-    const formArray = new FormArray([]);
+  setResponse(responseSet): UntypedFormArray {
+    const formArray = new UntypedFormArray([]);
     responseSet.forEach(s => {
       formArray.push(this.formBuilder.group({
         feed: s.feed,
@@ -115,8 +115,8 @@ export class FeedChecknetComponent implements OnInit {
     return formArray;
   }
   //Adding tank_ dynamically for checknet
-  setResponseCheckNet(responseSet_CN): FormArray {
-    const formArray = new FormArray([]);
+  setResponseCheckNet(responseSet_CN): UntypedFormArray {
+    const formArray = new UntypedFormArray([]);
     responseSet_CN.forEach(s => {
       formArray.push(this.formBuilder.group({
         GmperCN:s.GmperCN,

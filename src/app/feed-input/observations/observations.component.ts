@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AddFarmService } from 'app/services/add-farm.service';
 import { ActivatedRoute } from '@angular/router';
 import { FeedInputService } from 'app/services/feed-input.service';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-observations',
@@ -13,8 +13,8 @@ export class ObservationsComponent implements OnInit {
 
   SelectedFeeds: string;
   selectFeeds: string[] = ['Feed1', 'Feed2', 'Feed3', 'Feed4'];
-  shrimpobvform: FormGroup;
-  waterobvform: FormGroup;
+  shrimpobvform: UntypedFormGroup;
+  waterobvform: UntypedFormGroup;
   farmData: any = [];
   farmFetchedById: any = [];
   responseData: Array<any>;
@@ -24,7 +24,7 @@ export class ObservationsComponent implements OnInit {
   farm_Date: string;
   feedInput: string;
   submitted = false;
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private _addFarmService: AddFarmService,
     private route: ActivatedRoute,
     private _inputFeed: FeedInputService) { }
@@ -66,8 +66,8 @@ export class ObservationsComponent implements OnInit {
       this.waterobvform.setControl('TankInput', this.setResponseWater(this.responseData));
     })
   }
-  setResponseShrimp(responseSet): FormArray {
-    const formArray = new FormArray([]);
+  setResponseShrimp(responseSet): UntypedFormArray {
+    const formArray = new UntypedFormArray([]);
     responseSet.forEach(s => {
       formArray.push(this.formBuilder.group({
         tank_area: s.tank_area,
@@ -119,8 +119,8 @@ export class ObservationsComponent implements OnInit {
     return formArray;
   }
   //Adding tank_ dynamically for checknet
-  setResponseWater(responseSet_water): FormArray {
-    const formArray = new FormArray([]);
+  setResponseWater(responseSet_water): UntypedFormArray {
+    const formArray = new UntypedFormArray([]);
     responseSet_water.forEach(s => {
       formArray.push(this.formBuilder.group({
         tank_area: s.tank_area,

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FeedInputService } from 'app/services/feed-input.service';
 import { ActivatedRoute, Params } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormArray } from '@angular/forms';
 import { AddFarmService } from 'app/services/add-farm.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -19,9 +19,9 @@ export class CountHarvestComponent implements OnInit {
   farm_Date: any;
   farmData: any = [];
   submitted = false;
-  countForm: FormGroup;
-  halfharvestform: FormGroup;
-  fullharvestForm:FormGroup;
+  countForm: UntypedFormGroup;
+  halfharvestform: UntypedFormGroup;
+  fullharvestForm:UntypedFormGroup;
   params: Params;
   firstParam: string;
   farmFetchedById: any = [];
@@ -30,7 +30,7 @@ export class CountHarvestComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private _inputFeed: FeedInputService,
     private _addFarmService: AddFarmService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: UntypedFormBuilder) { }
 
   ngOnInit() {
     this.farm_Id = this.route.snapshot.params.farmId;
@@ -115,7 +115,7 @@ export class CountHarvestComponent implements OnInit {
   }
   addcountsform() {
     // add  to the list
-    const control = <FormArray>this.countForm.get('TankInput');
+    const control = <UntypedFormArray>this.countForm.get('TankInput');
     control.push(this.initResponseCount());
   }
 
@@ -136,11 +136,11 @@ export class CountHarvestComponent implements OnInit {
 
   addharvestform() {
     // add  to the list
-    const control = <FormArray>this.halfharvestform.get('TankInput');
+    const control = <UntypedFormArray>this.halfharvestform.get('TankInput');
     control.push(this.initResponse());
   }
-  setResponse1(responseSet): FormArray {
-    const formArray = new FormArray([]);
+  setResponse1(responseSet): UntypedFormArray {
+    const formArray = new UntypedFormArray([]);
     responseSet.forEach(s => {
       formArray.push(this.formBuilder.group({
         count: s.count,
@@ -169,8 +169,8 @@ export class CountHarvestComponent implements OnInit {
       tank_area: [''],
     })
   };
-  setResponse(responseSet): FormArray {
-    const formArray = new FormArray([]);
+  setResponse(responseSet): UntypedFormArray {
+    const formArray = new UntypedFormArray([]);
     responseSet.forEach(s => {
       formArray.push(this.formBuilder.group({
         count: s.count,
@@ -189,13 +189,13 @@ export class CountHarvestComponent implements OnInit {
   //count observation dynamic form
 addcountformObv() {
   // add  to the list
-  const control1 = <FormArray>this.countForm.get('CountObservations');
+  const control1 = <UntypedFormArray>this.countForm.get('CountObservations');
   control1.push(this.initResponseCountObservations());
 }
   //count Report dynamic form
   addcountformReport() {
     // add  to the list
-    const control1 = <FormArray>this.countForm.get('CountReport');
+    const control1 = <UntypedFormArray>this.countForm.get('CountReport');
     control1.push(this.initCountReport());
   }
 //count report 
@@ -206,8 +206,8 @@ initCountReport(){
     tank_area: [''],
   })
 }
-setResponse3(responseSet): FormArray {
-  const formArray = new FormArray([]);
+setResponse3(responseSet): UntypedFormArray {
+  const formArray = new UntypedFormArray([]);
   responseSet.forEach(s => {
     formArray.push(this.formBuilder.group({
       count: s.count,
@@ -266,8 +266,8 @@ setResponse3(responseSet): FormArray {
   })
 };
 
-setResponse2(responseSet2): FormArray {
-  const formArray1 = new FormArray([]);
+setResponse2(responseSet2): UntypedFormArray {
+  const formArray1 = new UntypedFormArray([]);
   responseSet2.forEach(s => {
     formArray1.push(this.formBuilder.group({
       tank_area: s.tank_area,
