@@ -37,10 +37,10 @@ export class LoginComponent implements OnInit {
       this._service.loginUser(this.loginDetails.value).subscribe(res => {
         console.log(res);
         if (res.isAuth) {
-          sessionStorage.setItem('userInfo', res.token.name);
-          sessionStorage.setItem('access_token', res.jwtToken);
+          localStorage.setItem('userInfo', res.token.name);
+          localStorage.setItem('access_token', res.jwtToken);
           console.log('success');
-          sessionStorage.setItem('userInfo', res.token.name);
+          localStorage.setItem('userInfo', res.token.name);
           this.router.navigate(['/'])
         } else {
           alert(res.message);

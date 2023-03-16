@@ -46,7 +46,7 @@ export class SidebarComponent implements OnInit {
   constructor(private router:Router) { }
 
   ngOnInit() {
-   this.userInfo= sessionStorage.getItem('userInfo');
+   this.userInfo= localStorage.getItem('userInfo');
    console.log(this.userInfo)
     this.menuItems = ROUTES.filter(menuItem => menuItem);
   }
@@ -57,8 +57,8 @@ export class SidebarComponent implements OnInit {
       return true;
   };
   logout(){
-    sessionStorage.clear();
-    sessionStorage.clear();
+    localStorage.clear();
+    localStorage.clear();
     this.router.navigate(['/login'])
   }
 }
