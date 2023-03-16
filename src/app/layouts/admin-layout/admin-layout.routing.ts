@@ -11,11 +11,13 @@ import { SalesComponent } from 'app/sales/sales.component';
 import { AccountsComponent } from 'app/accounts/accounts.component';
 import { ResolverService } from 'app/services/resolver.service';
 import { TransactionsComponent } from 'app/transactions/transactions.component';
+import { AuthGuardService } from 'app/services/auth-guard.service';
 
 export const AdminLayoutRoutes: Routes = [
-  { path: '', resolve: { messages: ResolverService }, children: [
-    { path: 'dashboard', component: DashboardComponent},
-    { path: 'registration', component: RegistrationComponent },
+  { path: '', resolve: { messages: ResolverService }, 
+  children: [
+    { path: 'dashboard', component: DashboardComponent },
+    { path: 'registration', component: RegistrationComponent},
     { path: 'add-farm', component: AddFarmComponent },
     { path: 'feed-input', component: FeedInputComponent },
     { path: 'feed-input/:farmId', component: FeedInputComponent },

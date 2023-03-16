@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 declare const $: any;
 declare interface RouteInfo {
@@ -42,7 +43,7 @@ export class SidebarComponent implements OnInit {
   menuItems: any[]; 
   userInfo:any;
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit() {
    this.userInfo= localStorage.getItem('userInfo');
@@ -55,4 +56,9 @@ export class SidebarComponent implements OnInit {
       }
       return true;
   };
+  logout(){
+    localStorage.clear();
+    sessionStorage.clear();
+    this.router.navigate(['/login'])
+  }
 }

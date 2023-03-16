@@ -34,22 +34,16 @@ export class LoginComponent implements OnInit {
       alert('Please Fill the Mandatory Fields');
     } else {
       console.log(this.loginDetails.value);
-
-      this._service.loginUser(this.loginDetails.value).subscribe(token => {
-        console.log(token);
-
-        if (token.isAuth) {
+      this._service.loginUser(this.loginDetails.value).subscribe(res => {
+        console.log(res);
+        if (res.isAuth) {
+          localStorage.setItem('userInfo', res.token.name);
+          localStorage.setItem('access_token', res.jwtToken);
           console.log('success');
-          // console.log(token);
-          // localStorage.setItem('token', token.token);
-        console.log(token.token.name);
-
-          localStorage.setItem('userInfo', token.token.name);
+          localStorage.setItem('userInfo', res.token.name);
           this.router.navigate(['/'])
-
         } else {
-          // console.log('message');
-          alert(token.message);
+          alert(res.message);
         }
       }, error => {
         // console.log(error);

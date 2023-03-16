@@ -17,7 +17,10 @@ export class LoginService {
   loginUser(loginDetails){
     return this.http.post<any>( environment.baseUrl+'/login',loginDetails);
   }
-  isLoggedIn(){
-    return !!localStorage.getItem('token');
+  get isLoggedIn(){
+    let authToken = localStorage.getItem('access_token');
+    console.log(authToken);
+    return authToken !== null ? true : false;
+    // return !!localStorage.getItem('jwtToken');
   }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+import { Observable } from 'rxjs/internal/Observable';
 import { LoginService } from './login.service';
 
 @Injectable({
@@ -12,12 +13,23 @@ export class AuthGuardService {
     private service:LoginService
   ){}
   
-  canActivate(route:ActivatedRouteSnapshot):boolean {
-    if(this.service.isLoggedIn()){
-      return true;
-    }else{
+  canActivate(route:ActivatedRouteSnapshot,state: RouterStateSnapshot
+    ): Observable<boolean> | Promise<boolean> {
+      console.log(this.service.isLoggedIn)
+    if(this.service.isLoggedIn !== true){
       this.router.navigate(['/login']);
-      return false;
+    }else{
+      return;
     }
   }
+  // canActivatse(
+  //   next: ActivatedRouteSnapshot,
+  //   state: RouterStateSnapshot
+  // ): Observable<boolean> | Promise<boolean> | boolean {
+  //   if (this.authService.isLoggedIn !== true) {
+  //     window.alert('Access not allowed!');
+  //     this.router.navigate(['log-in']);
+  //   }
+  //   return true;
+  // }
 }
