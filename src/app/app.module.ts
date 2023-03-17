@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ToastrModule } from 'ngx-toastr';
 
 
 import { AppRoutingModule } from './app.routing';
@@ -28,6 +29,8 @@ import { MatRadioModule } from '@angular/material/radio';
     AppRoutingModule,
     MatProgressSpinnerModule,
     MatRadioModule,
+    ToastrModule.forRoot({
+         }),
   ],
   declarations: [
     AppComponent,

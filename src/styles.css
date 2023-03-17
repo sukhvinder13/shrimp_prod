@@ -2,3 +2,6 @@
 .pagination-controls{
     text-align: center;
    }
+   mdb-toast-component {
+    display: block !important;
+  }

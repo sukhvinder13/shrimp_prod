@@ -4,6 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { LoginService } from 'app/services/login.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
   constructor(private _formbuilder: UntypedFormBuilder,
     private _service: LoginService,
     private router: Router,
+    private toastrService: ToastrService,
     private location: Location) { }
 
   ngOnInit() {
@@ -35,14 +37,15 @@ export class LoginComponent implements OnInit {
     } else {
       console.log(this.loginDetails.value);
       this._service.loginUser(this.loginDetails.value).subscribe(res => {
-        console.log(res);
         if (res.isAuth) {
           localStorage.setItem('userInfo', res.token.name);
           localStorage.setItem('access_token', res.jwtToken);
           console.log('success');
           localStorage.setItem('userInfo', res.token.name);
+          this.toastrService.success(' Success!', 'Login Success!');
           this.router.navigate(['/'])
         } else {
+          this.toastrService.error(res.message);
           alert(res.message);
         }
       }, error => {

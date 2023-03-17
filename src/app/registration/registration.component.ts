@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AddFarmOwnerService } from 'app/services/add-farm-owner.service';
 import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -10,7 +11,9 @@ import { NgForm } from '@angular/forms';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private AddFarmOwnerService:AddFarmOwnerService) { }
+  constructor(private AddFarmOwnerService:AddFarmOwnerService,
+    private toastrService: ToastrService
+    ) { }
 
   ngOnInit() {
   }
@@ -27,6 +30,7 @@ export class RegistrationComponent implements OnInit {
       // form.value.companyAdhaarFile
       // );
       alert("Owner Registered Sucessfully");
+      this.toastrService.success('Success')
       form.reset();
   }
 }
