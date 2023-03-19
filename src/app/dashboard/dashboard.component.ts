@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AddFarmService } from 'app/services/add-farm.service';
+import { AddFarmService } from 'app/services/add-farm/add-farm.service';
 import * as Chartist from 'chartist';
 
 @Component({

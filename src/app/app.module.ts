@@ -12,8 +12,8 @@ import { ComponentsModule } from './components/components.module';
 
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { SpinnerComponent } from './spinner/spinner.component';
-import { LoadingInterceptor } from './services/loadingIntercept';
+import { SpinnerComponent } from './common/component/spinner/spinner.component';
+import { LoadingInterceptor } from './common/service/loading-interceptor/loadingIntercept';
 import { LoginComponent } from './login/login/login.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';

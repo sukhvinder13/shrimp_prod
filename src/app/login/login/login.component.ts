@@ -3,8 +3,8 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { LoginService } from 'app/services/login.service';
 import { ToastrService } from 'ngx-toastr';
+import { LoginService } from 'app/services/login/login.service';
 
 
 @Component({

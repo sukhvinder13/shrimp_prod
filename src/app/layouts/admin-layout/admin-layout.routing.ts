@@ -1,17 +1,17 @@
 import { Routes } from '@angular/router';
 
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { RegistrationComponent } from 'app/registration/registration.component';
-import { AddFarmComponent } from 'app/add-farm/add-farm.component';
-import { FeedInputComponent } from 'app/feed-input/feed-input.component';
-import { CustomersDataComponent } from 'app/customers-data/customers-data.component';
-import { InspectionsComponent } from 'app/inspections/inspections.component';
-import { TweetsComponent } from 'app/tweets/tweets.component';
-import { SalesComponent } from 'app/sales/sales.component';
-import { AccountsComponent } from 'app/accounts/accounts.component';
-import { ResolverService } from 'app/services/resolver.service';
-import { TransactionsComponent } from 'app/transactions/transactions.component';
-import { AuthGuardService } from 'app/services/auth-guard.service';
+import { RegistrationComponent } from 'app/farm-inputs/registration/registration.component';
+import { AddFarmComponent } from 'app/farm-inputs/add-farm/add-farm.component';
+import { AccountsComponent } from 'app/user-data/accounts/accounts.component';
+import { AuthGuardService } from 'app/services/auth-guard/auth-guard.service';
+import { CustomersDataComponent } from 'app/user-data/customers-data/customers-data.component';
+import { InspectionsComponent } from 'app/user-data/inspections/inspections.component';
+import { SalesComponent } from 'app/user-data/sales/sales.component';
+import { TransactionsComponent } from 'app/user-data/transactions/transactions.component';
+import { TweetsComponent } from 'app/user-data/tweets/tweets.component';
+import { FeedInputComponent } from 'app/farm-inputs/feed-input/feed-input/feed-input.component';
+import { ResolverService } from 'app/common/service/resolver/resolver.service';
 
 export const AdminLayoutRoutes: Routes = [
   { path: '', resolve: { messages: ResolverService }, 
