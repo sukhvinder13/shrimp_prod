@@ -25,7 +25,7 @@ export class CustomersDataComponent implements OnInit {
       this.toastr.success('Success')
       console.log(data)
       
-  this.dataSource = new MatTableDataSource<any>(data.posts);
+  this.dataSource = new MatTableDataSource<any>(this.customerData.posts);
   this.dataSource.paginator = this.paginator;
    }))
   }

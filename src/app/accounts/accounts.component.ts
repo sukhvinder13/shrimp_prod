@@ -24,7 +24,7 @@ export class AccountsComponent implements OnInit {
   getAccounts(){
     this.AddFarmService.getAccounts().subscribe((data =>{
       this.accountsData=data;
-  this.dataSource = new MatTableDataSource<any>(data.posts);
+  this.dataSource = new MatTableDataSource<any>(this.accountsData.posts);
   this.dataSource.paginator = this.paginator;
 
 
