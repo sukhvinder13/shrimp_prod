@@ -1,8 +1,8 @@
 <div class="main-content">
   <div class="container-fluid">
-    <mat-form-field appearance="standard">
+    <mat-form-field appearance="standard" style="width: 150px;">
       <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Search columns" #input>
+      <input matInput (keyup.enter)="applyFilter($event)" placeholder="Search columns" #input>
   </mat-form-field>
     <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal"
       data-target="#addCustomer">Add</button>
