@@ -18,8 +18,8 @@ export class AddFarmComponent implements OnInit {
   // newFarmData={};
   posts: AddFarm[] = [];
   postsOwner: AddFarmOwner[] = [];
-  farmOwnerData:any=[];
-  farmData:any=[];
+  farmOwnerData: any = [];
+  farmData: any = [];
   private postsSub: Subscription;
   private postsSubOwner: Subscription;
   isLoading = false;
@@ -34,24 +34,24 @@ export class AddFarmComponent implements OnInit {
   }
 
   //read farm owner
-  readFarmOwner(){
-    this.addFarmOwnerService.getFarmOwner().subscribe((data)=>{
-      this.farmOwnerData=data;
+  readFarmOwner() {
+    this.addFarmOwnerService.getFarmOwner().subscribe((data) => {
+      this.farmOwnerData = data;
       console.log(data);
     })
   }
   //read farm
-  readFarm_details(){
-    this.AddFarmService.getFarm().subscribe((data)=>{
-      this.farmData=data;
+  readFarm_details() {
+    this.AddFarmService.getFarm().subscribe((data) => {
+      this.farmData = data;
       console.log(data);
     })
   }
   //dynamic button
   fieldArray: Array<any> = [{}];
   newAttribute1: any = {
-    'tank_name':'',
-    'tank_area':''
+    'tank_name': '',
+    'tank_area': ''
   }; firstField1 = true;
   firstFieldName1 = 'First Item name'; isEditItems1: boolean;
   addFieldValue1(index) {

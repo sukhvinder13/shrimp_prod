@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AddFarm } from './addFarm.model';
 import { Subject } from 'rxjs'
 // import { from } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from 'environments/environment';
 
@@ -118,5 +118,16 @@ export class AddFarmService {
   }
   getTransactions(){
     return this.http.get(environment.baseUrl + '/getTransactions');
+  }
+   httpOptions={
+    headers:new HttpHeaders({
+      'Content-Type':'application/json'
+    })
+  }
+  saveCustomer(data){
+    return this.http.post(environment.baseUrl + '/saveCustomers',data,this.httpOptions);
+  }
+  deleteCustomer(data){
+    return this.http.post(environment.baseUrl + '/deleteCustomer',data,this.httpOptions);
   }
 }
