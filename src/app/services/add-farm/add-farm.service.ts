@@ -19,46 +19,9 @@ export class AddFarmService {
 
   Farms = [];
   constructor(private http: HttpClient) { }
-  // getFarm() {
-  //   this.http.get('http://localhost:3000/addFarm').subscribe(res => {
-  //     this.Farms = res.json();
-  //   });
-  // }
   getFarm() {
     return this.http.get(environment.baseUrl + '/readFarm');
   }
-  // getFarm() {
-  //   this.http
-  //     .get<{ message: string; posts: any }>(
-  //       environment.baseUrl + '/readFarm'
-  //       // "http://localhost:3000/readFarm"
-  //     )
-  //     .pipe(map((postData) => {
-  //       console.log(postData);
-  //       // this.Farms=postData;
-  //       // console.log(posts);
-
-  //       return postData.posts.map(post => {
-  //         return {
-  //           farmOwner: post.farmOwner,
-  //           farmHistory: post.farmHistory,
-  //           village: post.village,
-  //           mandal: post.mandal, 
-  //           city: post.city,
-  //           state: post.state, 
-  //           zip: post.zip,
-  //           country: post.country,
-  //           noOfEmployess: post.noOfEmployess,
-  //           noOfTanks: post.noOfTanks,
-  //           id: post._id
-  //         };
-  //       });
-  //     }))
-  //     .subscribe(transformedPosts => {
-  //       this.posts = transformedPosts;
-  //       this.postsUpdated.next([...this.posts]);
-  //     });
-  // }
   getPostUpdateListener() {
     return this.postsUpdated.asObservable();
   }
@@ -73,13 +36,11 @@ export class AddFarmService {
       country: country, noOfTanks: noOfTanks, noOfEmployess: noOfEmployess,
       tankCode: tankCode, tankArea: tankArea
     };
-    console.log(post);
     // return
     this.http.
       post<{ message: string, postId: string }>(
         environment.baseUrl + '/addFarm',
 
-        // 'http://localhost:3000/addFarm',
         post).subscribe(res => {
           // this.getFarm
           const id = res.postId;
@@ -129,5 +90,8 @@ export class AddFarmService {
   }
   deleteCustomer(data){
     return this.http.post(environment.baseUrl + '/deleteCustomer',data,this.httpOptions);
+  }
+  updateCustomer(data){
+    return this.http.post(environment.baseUrl + '/updateCustomer',data,this.httpOptions);
   }
 }

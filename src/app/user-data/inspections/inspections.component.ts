@@ -23,7 +23,6 @@ export class InspectionsComponent implements OnInit {
   getInspections(){
     this.AddFarmService.getInspections().subscribe((data =>{
       this.inspections=data;
-      console.log(data);
       this.inspectiondataSource =this.inspections.posts;
    }))
   }

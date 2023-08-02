@@ -19,7 +19,6 @@ export class LoginService {
   }
   get isLoggedIn(){
     let authToken = localStorage.getItem('access_token');
-    console.log(authToken);
     return authToken !== null ? true : false;
     // return !!localStorage.getItem('jwtToken');localStorage
   }

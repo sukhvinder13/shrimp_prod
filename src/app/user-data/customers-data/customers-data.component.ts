@@ -13,10 +13,10 @@ import { ToastrService } from 'ngx-toastr';
 export class CustomersDataComponent implements OnInit {
   customerData: any;
   customerForm: FormGroup;
-  constructor(private AddFarmService: AddFarmService, private fb: FormBuilder,private toast:ToastrService) { }
+  constructor(private AddFarmService: AddFarmService, private fb: FormBuilder, private toast: ToastrService) { }
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  displayedColumns: string[] = ['sr', 'email', 'name', 'birthdate', 'address','action'];
+  displayedColumns: string[] = ['sr', 'email', 'name', 'birthdate', 'address', 'action'];
   dataSource = new MatTableDataSource<any>();
   ngOnInit() {
     this.loadCustomerForm();
@@ -32,7 +32,7 @@ export class CustomersDataComponent implements OnInit {
   }
   loadCustomerForm() {
     this.customerForm = this.fb.group({
-      id: [''],
+      id: [null],
       email: ['', [Validators.required]],
       name: ['', [Validators.required]],
       address: ['', [Validators.required]],
@@ -40,24 +40,51 @@ export class CustomersDataComponent implements OnInit {
     })
   }
   saveCustomer() {
-    console.log(this.customerForm.value);
-    this.AddFarmService.saveCustomer(this.customerForm.value).subscribe(data => {
-      if(data){
-        console.log(data);
-        this.toast.success('Save Successfully')
+    if (this.customerForm.value.id == null) {
+      this.AddFarmService.saveCustomer(this.customerForm.value).subscribe(data => {
+        if (data) {
+          this.toast.success('Save Successfully')
+          this.getCustomer()
+        }
+      })
+    } else {
+      this.updateRecord()
+    }
+
+  }
+  deleteRow(element) {
+    let obj = {
+      id: element
+    }
+    this.AddFarmService.deleteCustomer(obj).subscribe(data => {
+      if (data) {
+        this.toast.success('Deleted Successfully')
         this.getCustomer()
       }
     })
   }
-  deleteRow(element){
-    console.log(element);
-    let obj={
-      id:element
-    }
-    this.AddFarmService.deleteCustomer(obj).subscribe(data => {
-      if(data){
-        this.toast.success('Deleted Successfully')
-        console.log(data);
+  dateFormat() {
+
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+}
+  editRow(element) {
+    console.log(element._id)
+    this.customerForm = this.fb.group({
+      id: [element._id],
+      email: [element.email ? element.email : ''],
+      name: [element.name ? element.name : ''],
+      address: [element.address ? element.address : ''],
+      birthdate: [element.birthdate ? new Date(element.birthdate) : ''],
+    })
+  }
+  updateRecord() {
+    this.AddFarmService.updateCustomer(this.customerForm.value).subscribe(data => {
+      console.log(data)
+      if (data) {
+        this.toast.success('Updated Successfully')
         this.getCustomer()
       }
     })

@@ -16,7 +16,6 @@ export class SalesComponent implements OnInit {
   getSales(){
     this.AddFarmService.getSales().subscribe((data =>{
       this.salesData=data;
-      console.log(data)
    }))
   }
 }

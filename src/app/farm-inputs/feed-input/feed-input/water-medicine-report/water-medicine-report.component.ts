@@ -33,8 +33,6 @@ export class WaterMedicineReportComponent implements OnInit {
   ngOnInit() {
     this.farm_Id = this.route.snapshot.params.farmId;
     this.farm_Date = this.route.snapshot.params.farmDate;
-    // console.log(this.farm_Id);
-    // console.log(this.farm_Date);
     this.watermedicineform = this.formBuilder.group({
       farmCode: [this.farm_Id, Validators.required],
       selectedAt: [this.farm_Date, Validators.required],
@@ -58,13 +56,8 @@ export class WaterMedicineReportComponent implements OnInit {
   getFarmData() {
     this._addFarmService.getFarm().subscribe((data) => {
       this.farmData = data['posts'];
-      console.log(this.farmData);
-      // this.farmData_area=this.farmData.tankArea;
-      // console.log(this.farmData_area);
       this.farmFetchedById = this.farmData.filter(x => x.farmId === this.farm_Id);
-      console.log(this.farmFetchedById);
       this.responseData = this.farmFetchedById[0].tankArea;
-      console.log(this.responseData);
       this.watermedicineform.setControl('TankInput', this.setResponseMedicine(this.responseData));
       this.waterreportform.setControl('TankInput', this.setResponseReport(this.responseData));
     })
@@ -166,7 +159,6 @@ loadWaterReport() {
   this.div_water_report=true;
 }
 changeFeed(event) {
-  console.log(event);
   this.feedInput = event.value;
 }
 get f() { return this.watermedicineform.controls; }
@@ -175,7 +167,6 @@ get c() { return this.waterreportform.controls; }
   onSubmit() {
     this.submitted = true;
     this.watermedicineform.patchValue({ feedInput: this.feedInput });
-    console.log(this.watermedicineform.value);
     if (!this.watermedicineform.valid && this.feedInput=='undefined') {
       alert('Please select Feed')
       return false;
@@ -195,7 +186,6 @@ get c() { return this.waterreportform.controls; }
  onSubmitWaterReport() {
   this.submitted = true;
   this.waterreportform.patchValue({ feedInput: this.feedInput });
-  console.log(this.waterreportform.value);
   if (!this.waterreportform.valid) {
     return false;
   } else {
@@ -205,7 +195,6 @@ get c() { return this.waterreportform.controls; }
           alert('Water Report added Successfully')
           // this.router.navigateByUrl('/manageLesson');
         }, (error) => {
-          console.log(error)
         })
     }
   }

@@ -15,7 +15,6 @@ export class AuthGuardService {
   
   canActivate(route:ActivatedRouteSnapshot,state: RouterStateSnapshot
     ): Observable<boolean> | Promise<boolean> {
-      console.log(this.service.isLoggedIn)
     if(this.service.isLoggedIn !== true){
       this.router.navigate(['/login']);
     }else{

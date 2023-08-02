@@ -37,14 +37,12 @@ export class AddFarmComponent implements OnInit {
   readFarmOwner() {
     this.addFarmOwnerService.getFarmOwner().subscribe((data) => {
       this.farmOwnerData = data;
-      console.log(data);
     })
   }
   //read farm
   readFarm_details() {
     this.AddFarmService.getFarm().subscribe((data) => {
       this.farmData = data;
-      console.log(data);
     })
   }
   //dynamic button
@@ -61,7 +59,6 @@ export class AddFarmComponent implements OnInit {
       //   'tank_name':'',
       //   'tank_area':''
       // };
-      console.log(this.fieldArray);
 
     } else {
     }
@@ -73,13 +70,10 @@ export class AddFarmComponent implements OnInit {
   // dynamic tank
   tankValue: any;
   dataChanged(noOfTanks) {
-    // console.log(noOfTanks.value);
     this.tankValue = noOfTanks.value;
-    // console.log(this.tankValue);
     this.fieldArray = [];
     for (let i = 0; i < this.tankValue; i++) {
       this.fieldArray.push(this.newAttribute1);
-      // console.log('hi');
       this.newAttribute1 = {};
     }
   }
@@ -87,13 +81,9 @@ export class AddFarmComponent implements OnInit {
 
   postFarm(form: NgForm) {
     if (form.invalid) {
-      console.log(form);
       return;
     }
-    console.log(form.value);
-    // console.log(form.value.fieldArray);
     // return;
-    console.log(this.fieldArray);
     this.AddFarmService.postFarm(form.value.farmOwner, form.value.farmHistory, form.value.village,
       form.value.mandal, form.value.city, form.value.state,
       form.value.zip, form.value.country, form.value.noOfTanks, form.value.noOfEmployess,
@@ -105,10 +95,8 @@ export class AddFarmComponent implements OnInit {
   //delete query
   onDelete(postId: string) {
     let x: boolean = confirm("Are You Sure ? Do you wan to delete ");
-    console.log(x);
     if (x == true) {
       this.AddFarmService.deleteFarm(postId);
-      console.log(postId)
     } else {
       return
     }

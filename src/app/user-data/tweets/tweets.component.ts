@@ -17,7 +17,6 @@ export class TweetsComponent implements OnInit {
   getTweets(){
     this.AddFarmService.getTweets().subscribe((data =>{
       this.tweetData=data;
-      console.log(data)
    }))
   }
 }

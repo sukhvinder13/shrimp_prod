@@ -151,7 +151,6 @@ export class DashboardComponent implements OnInit {
   getCustomer(){
     this.AddFarmService.getCustoemrs().subscribe((data =>{
       this.customerData=data;
-      console.log(data)
    }))
   }
 }

@@ -30,16 +30,13 @@ export class FeedInputComponent implements OnInit {
   }
   //read selected farm
   selectedFarm(value) {
-    console.log(value.viewModel);
     this.selectedFarmId = value.viewModel.farmId;
-    console.log(this.selectedFarmId)
     // this.router.navigate(['/urlname/stockdata', id]);
     // this.router.navigate(['/feed-input',this.selectedFarmId]);
   }
   //read date
   selectedDateFun(value){
     this.selectedFarmDate=value.viewModel;
-    console.log(this.selectedFarmDate)
     this.router.navigate(['/feed-input',{farmId:this.selectedFarmId,farmDate:this.selectedFarmDate}]);
 
   }
@@ -48,12 +45,10 @@ export class FeedInputComponent implements OnInit {
   readFarm() {
     this._farmService.getFarm().subscribe((data) => {
       this.farmData = data;
-      console.log(data);
     })
   }
 
   changeComboo(event) {
-    console.log('chnaged', event && event.value);
   }
   loadFeedAndChecknet() {
     this.FeedAndChecknet = true;

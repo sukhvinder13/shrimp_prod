@@ -35,12 +35,10 @@ export class LoginComponent implements OnInit {
     if (this.loginDetails.invalid) {
       alert('Please Fill the Mandatory Fields');
     } else {
-      console.log(this.loginDetails.value);
       this._service.loginUser(this.loginDetails.value).subscribe(res => {
         if (res.isAuth) {
           localStorage.setItem('userInfo', res.token.name);
           localStorage.setItem('access_token', res.jwtToken);
-          console.log('success');
           localStorage.setItem('userInfo', res.token.name);
           this.toastrService.success(' Success!', 'Login Success!');
           this.router.navigate(['/'])
@@ -49,7 +47,6 @@ export class LoginComponent implements OnInit {
           alert(res.message);
         }
       }, error => {
-        // console.log(error);
         if (error instanceof HttpErrorResponse) {
           if (error.status === 401 || error.status === 500) {
             alert('Sorry!! You are not authorized for this Action');

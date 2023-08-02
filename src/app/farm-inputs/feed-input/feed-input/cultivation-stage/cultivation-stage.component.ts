@@ -82,7 +82,6 @@ export class CultivationStageComponent implements OnInit {
   //add feeds
   postAddFeed(form: NgForm) {
     if (form.invalid) {
-      console.log(form);
       return;
     }
     this.CultivationStageService.postAddFeeds(form.value.farmOwner, form.value.feedName, form.value.tankId,

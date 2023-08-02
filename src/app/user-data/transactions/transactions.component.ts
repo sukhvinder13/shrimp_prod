@@ -17,7 +17,6 @@ export class TransactionsComponent implements OnInit {
   getTransactions(){
     this.AddFarmService.getTransactions().subscribe((data =>{
       this.transactionData=data;
-      console.log(data)
    }))
   }
 

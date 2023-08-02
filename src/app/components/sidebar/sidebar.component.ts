@@ -47,7 +47,6 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
    this.userInfo= localStorage.getItem('userInfo');
-   console.log(this.userInfo)
     this.menuItems = ROUTES.filter(menuItem => menuItem);
   }
   isMobileMenu() {

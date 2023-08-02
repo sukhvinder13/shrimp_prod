@@ -329,7 +329,6 @@ setResponse2(responseSet2): UntypedFormArray {
               alert('Count added Successfully')
             }
           },error=> {
-            console.log(error);
             if (error instanceof HttpErrorResponse) {
               if (error.status === 409 || error.status === 500) {
                 alert('Already Exist');

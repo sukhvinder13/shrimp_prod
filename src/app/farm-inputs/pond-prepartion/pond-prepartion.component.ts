@@ -33,16 +33,13 @@ export class PondPrepartionComponent implements OnInit {
       .subscribe((farmOwnerData: AddFarmOwner[]) => {
         // this.isLoading = false;
         this.postsFarmOwner = farmOwnerData;
-        console.log(this.postsFarmOwner);
       });
   }
 
   ChangePondStage(event) {
-    console.log('chnaged', event && event.value);
   }
   postAddMedicine(form: NgForm) {
     if (form.invalid) {
-      console.log(form);
       return;
     }
     this.PondPreparationService.postAddMedicine(form.value.farmOwner,form.value.selectMedicine, form.value.selectTank, form.value.dosage);
@@ -51,23 +48,19 @@ export class PondPrepartionComponent implements OnInit {
   }
   postAddWaterReport(form: NgForm) {
     if (form.invalid) {
-      console.log(form);
       return;
     }
     this.PondPreparationService.postAddWaterReport(form.value.farmOwner, form.value.selectTank,form.value.selectTime, form.value.selectPH);
     alert("Water Report Saved Sucessfully");
-    console.log(form.value)
     form.reset();
   }
   //add picture
   postAddPicture(form: NgForm) {
     if (form.invalid) {
-      console.log(form);
       return;
     }
     this.PondPreparationService.postAddPicture(form.value.farmOwner, form.value.selectTank,form.value.addFile);
     alert("Picture Saved Sucessfully");
-    console.log(form.value)
     form.reset();
   }
 }
