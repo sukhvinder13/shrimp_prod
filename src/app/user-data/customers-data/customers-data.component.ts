@@ -69,7 +69,7 @@ export class CustomersDataComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-}
+  }
   editRow(element) {
     console.log(element._id)
     this.customerForm = this.fb.group({
@@ -88,5 +88,9 @@ export class CustomersDataComponent implements OnInit {
         this.getCustomer()
       }
     })
+  }
+  selectedRows: any;
+  selectedRow(row) {
+    this.selectedRows = row;
   }
 }

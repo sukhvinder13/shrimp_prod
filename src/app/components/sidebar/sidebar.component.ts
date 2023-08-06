@@ -10,9 +10,9 @@ declare interface RouteInfo {
 }
 export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '' },
-    { path: '/registration', title: 'Register Farm Owner',  icon: 'person_add', class: '' },
-    { path: '/add-farm', title: 'Add Farm ',  icon: 'group_add', class: '' },
-    { path: '/feed-input', title: 'Feed Input ',  icon: 'input', class: '' },
+    // { path: '/registration', title: 'Register Farm Owner',  icon: 'person_add', class: '' },
+    // { path: '/add-farm', title: 'Add Farm ',  icon: 'group_add', class: '' },
+    // { path: '/feed-input', title: 'Feed Input ',  icon: 'input', class: '' },
     { path: '/customers-data', title: 'Customer ',  icon: 'person', class: '' },
     { path: '/inspection-data', title: 'Inspections ',  icon: 'search', class: '' },
     { path: '/tweets-data', title: 'Tweets ',  icon: 'notifications', class: '' },
@@ -31,7 +31,7 @@ export const ROUTES: RouteInfo[] = [
     // { path: '/typography', title: 'Typography',  icon:'library_books', class: '' },
     // { path: '/icons', title: 'Icons',  icon:'bubble_chart', class: '' },
     // { path: '/maps', title: 'Maps',  icon:'location_on', class: '' },
-    // { path: '/notifications', title: 'Notifications',  icon:'notifications', class: '' }
+    // { path: '/notifications', title: 'Notifications',  icon:'notifications', class: '' }/
 ];
 
 @Component({
