@@ -5,3 +5,4 @@
    mdb-toast-component {
     display: block !important;
   }
+  @import '~ngx-toastr/toastr.css';

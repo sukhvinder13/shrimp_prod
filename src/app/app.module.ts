@@ -17,6 +17,7 @@ import { LoadingInterceptor } from './common/service/loading-interceptor/loading
 import { LoginComponent } from './login/login/login.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
+import { DatePipe } from '@angular/common';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -30,7 +31,9 @@ import { MatRadioModule } from '@angular/material/radio';
     MatProgressSpinnerModule,
     MatRadioModule,
     ToastrModule.forRoot({
-         }),
+      timeOut: 1000,
+      positionClass: 'toast-bottom-right'
+    })
   ],
   declarations: [
     AppComponent,
@@ -39,6 +42,7 @@ import { MatRadioModule } from '@angular/material/radio';
     LoginComponent,
    ],
   providers: [
+    DatePipe,
     {
       provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
     }
