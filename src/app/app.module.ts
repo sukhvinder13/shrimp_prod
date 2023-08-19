@@ -18,8 +18,10 @@ import { LoginComponent } from './login/login/login.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { DatePipe } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
 @NgModule({
   imports: [
+    BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
@@ -31,8 +33,8 @@ import { DatePipe } from '@angular/common';
     MatProgressSpinnerModule,
     MatRadioModule,
     ToastrModule.forRoot({
-      timeOut: 1000,
-      positionClass: 'toast-bottom-right'
+      timeOut: 2000,
+      positionClass: 'toast-top-right'
     })
   ],
   declarations: [

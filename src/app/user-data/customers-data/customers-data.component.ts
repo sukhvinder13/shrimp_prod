@@ -27,9 +27,12 @@ export class CustomersDataComponent implements OnInit {
   getCustomer() {
     this.AddFarmService.getCustoemrs().subscribe((data: customersData) => {
       this.customerData = data
-      this.dataSource = new MatTableDataSource<any>(data.posts);
-      this.dataSource.paginator = this.paginator;
+      this.setPagination(data.posts)
     })
+  }
+  setPagination(data) {
+    this.dataSource = new MatTableDataSource<any>(data);
+    this.dataSource.paginator = this.paginator;
   }
   loadCustomerForm() {
     this.customerForm = this.fb.group({
@@ -41,8 +44,6 @@ export class CustomersDataComponent implements OnInit {
     })
   }
   saveCustomer() {
-    console.log(this.customerForm.value);
-    console.log(this.dateFormatter(this.customerForm.value.birthdate));
     if (this.customerForm.value.id == null) {
       this.AddFarmService.saveCustomer(this.customerForm.value).subscribe(data => {
         if (data) {
@@ -61,9 +62,10 @@ export class CustomersDataComponent implements OnInit {
     }
     this.AddFarmService.deleteCustomer(obj).subscribe(data => {
       if (data) {
-        console.log(data)
-        this.toast.success('Deleted Successfully')
-        this.getCustomer()
+        this.toast.success('Deleted Successfully', 'Deleted')
+        const index = this.customerData.posts.indexOf(element);
+        this.customerData.posts.splice(index, 1);
+        this.setPagination(this.customerData.posts)
       }
     })
   }
@@ -78,8 +80,8 @@ export class CustomersDataComponent implements OnInit {
     return this.datePipe.transform(param, 'MM/dd/yyyy')
   }
   editRow(element) {
-    console.log(element);
-    console.log(this.dateFormatter(element.birthdate))
+    this.selectedRows = element;
+    console.log(this.selectedRows)
     this.customerForm = this.fb.group({
       id: [element._id],
       email: [element.email ? element.email : ''],
@@ -89,11 +91,13 @@ export class CustomersDataComponent implements OnInit {
     })
   }
   updateRecord() {
-    this.AddFarmService.updateCustomer(this.customerForm.value).subscribe(data => {
-      console.log(data)
-      if (data) {
+    this.AddFarmService.updateCustomer(this.customerForm.value).subscribe((datas:any) => {
+      if (datas) {
+        console.log(datas.result);
         this.toast.success('Updated Successfully')
-        this.getCustomer()
+        const index = this.customerData.posts.indexOf(this.selectedRows);
+        this.customerData.posts[index] = datas.result;
+        this.setPagination(this.customerData.posts);
       }
     })
   }
@@ -105,7 +109,8 @@ export class CustomersDataComponent implements OnInit {
 }
 export class customersData {
 
-  posts: cust[];
+  posts:cust[];
+  result:{}
 }
 export class cust {
   id: string

@@ -148,9 +148,18 @@ export class DashboardComponent implements OnInit {
       //start animation for the Emails Subscription Chart
       // this.startAnimationForBarChart(websiteViewsChart);
   }
+totalRevenue=0;
+activeCustomers=0;
   getCustomer(){
     this.AddFarmService.getCustoemrs().subscribe((data =>{
       this.customerData=data;
    }))
+   this.AddFarmService.getCustomerCount().subscribe((data:any) =>{
+    console.log(data);
+    if(data){
+      this.totalRevenue=data.totalValue;
+      this.activeCustomers=data.transactionCount;
+    }
+ })
   }
 }

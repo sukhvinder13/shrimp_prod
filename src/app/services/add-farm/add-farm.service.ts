@@ -65,6 +65,9 @@ export class AddFarmService {
   getCustoemrs() {
     return this.http.get(environment.baseUrl + '/getCustomers');
   }
+  getCustomerCount() {
+    return this.http.get(environment.baseUrl + '/getCustomerCount');
+  }
   getTweets() {
     return this.http.get(environment.baseUrl + '/getTweets');
   }
