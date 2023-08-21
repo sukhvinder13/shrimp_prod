@@ -10,12 +10,11 @@ import { AddFarmService } from 'app/services/add-farm/add-farm.service';
 })
 export class AccountsComponent implements OnInit {
 
-
   constructor(private AddFarmService: AddFarmService) { }
   accountsData: any = {};
   // @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  displayedColumns: string[] = ['account_id', 'limit'];
+  displayedColumns: string[] = ['account_id', 'limit','products','products1'];
   dataSource = new MatTableDataSource<any>();
 
   ngOnInit() {
@@ -25,10 +24,14 @@ export class AccountsComponent implements OnInit {
   getAccounts() {
     this.AddFarmService.getAccounts().subscribe((res: any) => {
       this.accountsData = res.posts;
-      this.dataSource = new MatTableDataSource<any>(this.accountsData);
-      this.dataSource.paginator = this.paginator;
+      this.dataSource =this.accountsData;
+      this.setPagination(this.dataSource);
+      console.log(res)
 
     })
   }
-
+  setPagination(data) {
+    this.dataSource = new MatTableDataSource<any>(data);
+    this.dataSource.paginator = this.paginator;
+  }
 }
