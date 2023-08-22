@@ -80,23 +80,23 @@
           <div class="tab-content">
             <div class="tab-pane active" id="profile">
               <table mat-table [dataSource]="dataSource" class="table">
-                <ng-container matColumnDef="email">
-                  <th mat-header-cell *matHeaderCellDef class="thead-dark"> Email </th>
-                  <td mat-cell *matCellDef="let element"> {{element.customer.email}} </td>
+                <ng-container matColumnDef="text">
+                  <th mat-header-cell *matHeaderCellDef class="thead-dark"> Text </th>
+                  <td mat-cell *matCellDef="let element"> {{element.text}} </td>
                 </ng-container>
-                <ng-container matColumnDef="storeLocation">
-                  <th mat-header-cell *matHeaderCellDef class="thead-dark"> StoreLocation </th>
-                  <td mat-cell *matCellDef="let element"> {{element.storeLocation}} </td>
+                <ng-container matColumnDef="source">
+                  <th mat-header-cell *matHeaderCellDef class="thead-dark"> Source </th>
+                  <td mat-cell *matCellDef="let element"> {{element.source}} </td>
                 </ng-container>
-                <ng-container matColumnDef="purchaseMethod">
-                  <th mat-header-cell *matHeaderCellDef class="thead-dark"> PurchaseMethod </th>
-                  <td mat-cell *matCellDef="let element"> {{element.purchaseMethod}} </td>
+                <ng-container matColumnDef="in_reply_to_screen_name">
+                  <th mat-header-cell *matHeaderCellDef class="thead-dark"> Name </th>
+                  <td mat-cell *matCellDef="let element"> {{element.in_reply_to_screen_name}} </td>
                 </ng-container>
-                <ng-container matColumnDef="saleDate">
-                  <th mat-header-cell *matHeaderCellDef class="thead-dark"> SaleDate </th>
-                  <td mat-cell *matCellDef="let element"> {{element.saleDate}} </td>
+                <ng-container matColumnDef="created_at">
+                  <th mat-header-cell *matHeaderCellDef class="thead-dark"> Created_at </th>
+                  <td mat-cell *matCellDef="let element"> {{element.created_at}} </td>
                 </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns" class="thead-dark"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky:true" class="thead-dark" ></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
               </table>
               <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons

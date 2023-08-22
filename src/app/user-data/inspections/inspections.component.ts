@@ -17,7 +17,7 @@ export class InspectionsComponent implements OnInit {
   pageSizeOptions = [5, 10, 25, 100];
   inspections:any;
   inspectiondataSource=new  MatTableDataSource();
-  displayedColumns:String[]=['business_name', 'name', 'weight', 'symbol'];
+  displayedColumns:String[]=['business_name', 'certificate_number', 'result','sector', 'date'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 

@@ -56,7 +56,7 @@
 
         <!-- Name Column -->
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns" class="thead-dark"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky:true" class="thead-dark"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectedRow(row)"
           [ngClass]="{'myOwnBg': selectedRows==row }"></tr>
       </table>
