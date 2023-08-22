@@ -50,9 +50,11 @@ export class CustomersDataComponent implements OnInit {
     })
   }
   saveCustomer() {
+    let obj = this.customerForm.value;
+    obj.updatedBy = localStorage.getItem('userInfo');
+    obj.birthdate = new Date(obj.birthdate);
     if (this.customerForm.value.id == null) {
-      let obj = this.customerForm.value;
-      obj.updatedBy = localStorage.getItem('userInfo');
+      
       this.AddFarmService.saveCustomer(obj).subscribe((data: any) => {
         if (data) {
           this.customerData.posts.push(data.result);
@@ -62,7 +64,7 @@ export class CustomersDataComponent implements OnInit {
         }
       })
     } else {
-      this.updateRecord()
+      this.updateRecord(obj)
     }
 
   }
@@ -89,7 +91,7 @@ export class CustomersDataComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   dateFormatter(param) {
-    return this.datePipe.transform(param, 'yyyy/MM/dd  HH:mm:ss')
+    return this.datePipe.transform(new Date(param), 'yyyy-dd-MM')
   }
   editRow(element) {
     this.selectedRows = element;
@@ -100,11 +102,12 @@ export class CustomersDataComponent implements OnInit {
       name: [element.name ? element.name : ''],
       address: [element.address ? element.address : ''],
       birthdate: [this.dateFormatter(element.birthdate) ? this.dateFormatter(element.birthdate): ''],
+      // birthdate: [element.birthdate],
     })
+    console.log( this.dateFormatter(new Date(element.birthdate)))
   }
-  updateRecord() {
-    let obj = this.customerForm.value;
-    obj.updatedBy = localStorage.getItem('userInfo');
+  updateRecord(obj) {
+   
     this.AddFarmService.updateCustomer(obj).subscribe((datas: any) => {
       if (datas.success) {
         this.toast.success('Updated Successfully')
