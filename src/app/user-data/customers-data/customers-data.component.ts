@@ -47,6 +47,9 @@ export class CustomersDataComponent implements OnInit {
       name: ['', [Validators.required]],
       address: ['', [Validators.required]],
       birthdate: [''],
+      username:[''],
+      accounts: [''],
+      tier_and_details:['']
     })
   }
   saveCustomer() {
@@ -103,6 +106,9 @@ export class CustomersDataComponent implements OnInit {
       address: [element.address ? element.address : ''],
       birthdate: [this.dateFormatter(element.birthdate) ? this.dateFormatter(element.birthdate): ''],
       // birthdate: [element.birthdate],
+      username:[element.username ? element.username : ''],
+      accounts: [element.accounts ? element.accounts : ''],
+      tier_and_details:[element.tier_and_details ? element.tier_and_details : '']
     })
     console.log( this.dateFormatter(new Date(element.birthdate)))
   }
@@ -122,7 +128,7 @@ export class CustomersDataComponent implements OnInit {
   selectedRows: any;
   selectedRow(row) {
     this.dateFormat(row.birthdate)
-    console.log(this.dateFormatter(row.birthdate))
+    console.log(row)
     this.selectedRows = row;
   }
 }
