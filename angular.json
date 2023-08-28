@@ -25,7 +25,7 @@
               "src/assets/scss/material-dashboard.scss",
               "src/assets/css/demo.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/ngx-toastr/toastr.css"
+              "node_modules/ngx-toastr/toastr.css",
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
@@ -101,8 +101,8 @@
               "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
               "src/assets/scss/material-dashboard.scss",
               "src/assets/css/demo.css",
-              "node_modules/ngx-toastr/toastr.css"
-
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "assets": [
               "src/assets",
@@ -127,6 +127,7 @@
       }
     }
   },
+  "defaultProject": "material-dashboard-angular",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

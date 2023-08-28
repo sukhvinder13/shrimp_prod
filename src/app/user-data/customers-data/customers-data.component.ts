@@ -7,6 +7,7 @@ import { Title } from '@angular/platform-browser';
 import { AddFarmService } from 'app/services/add-farm/add-farm.service';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-customers-data',
   templateUrl: './customers-data.component.html',
@@ -17,7 +18,7 @@ export class CustomersDataComponent implements OnInit {
   customerForm: FormGroup;
   constructor(private AddFarmService: AddFarmService,
     private fb: FormBuilder, private toast: ToastrService,
-    private titleService: Title,
+    private titleService: Title, private modalService: NgbModal,
     private datePipe: DatePipe) {
     // this.titleService.setTitle("Customers");
   }
@@ -47,9 +48,9 @@ export class CustomersDataComponent implements OnInit {
       name: ['', [Validators.required]],
       address: ['', [Validators.required]],
       birthdate: [''],
-      username:[''],
+      username: [''],
       accounts: [''],
-      tier_and_details:['']
+      tier_and_details: ['']
     })
   }
   saveCustomer() {
@@ -57,13 +58,12 @@ export class CustomersDataComponent implements OnInit {
     obj.updatedBy = localStorage.getItem('userInfo');
     obj.birthdate = new Date(obj.birthdate);
     if (this.customerForm.value.id == null) {
-      
+
       this.AddFarmService.saveCustomer(obj).subscribe((data: any) => {
         if (data) {
           this.customerData.posts.push(data.result);
           this.setPagination(this.customerData.posts)
           this.toast.success('Save Successfully')
-          // this.getCustomer();
         }
       })
     } else {
@@ -85,8 +85,6 @@ export class CustomersDataComponent implements OnInit {
     })
   }
   dateFormat(param) {
-    // var moment = require('moment');
-    console.log(moment().format("YYYY-MM-DD HH:mm:ss"));
     return moment(param).format("YYYY-MM-DD HH:mm:ss");
   }
   applyFilter(event: Event) {
@@ -97,23 +95,21 @@ export class CustomersDataComponent implements OnInit {
     return this.datePipe.transform(new Date(param), 'yyyy-dd-MM')
   }
   editRow(element) {
+    console.log('edit row')
     this.selectedRows = element;
-    console.log(this.selectedRows)
     this.customerForm = this.fb.group({
       id: [element._id],
       email: [element.email ? element.email : ''],
       name: [element.name ? element.name : ''],
       address: [element.address ? element.address : ''],
-      birthdate: [this.dateFormatter(element.birthdate) ? this.dateFormatter(element.birthdate): ''],
-      // birthdate: [element.birthdate],
-      username:[element.username ? element.username : ''],
+      birthdate: [this.dateFormatter(element.birthdate) ? this.dateFormatter(element.birthdate) : ''],
+      username: [element.username ? element.username : ''],
       accounts: [element.accounts ? element.accounts : ''],
-      tier_and_details:[element.tier_and_details ? element.tier_and_details : '']
+      tier_and_details: [element.tier_and_details ? element.tier_and_details : '']
     })
-    console.log( this.dateFormatter(new Date(element.birthdate)))
   }
   updateRecord(obj) {
-   
+
     this.AddFarmService.updateCustomer(obj).subscribe((datas: any) => {
       if (datas.success) {
         this.toast.success('Updated Successfully')
@@ -125,10 +121,40 @@ export class CustomersDataComponent implements OnInit {
       }
     })
   }
+  open(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  closeResult: string;
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+  close() {
+    //('close')
+    this.modalService.dismissAll();
+  }
+  onDoubleClick(row, mymodal) {
+    this.selectedRows = row;
+    let newObj = []
+    if(row?.tier_and_details !== undefined){
+    Object.keys(row.tier_and_details).forEach(key => {
+    });
+  }
+  row['tier_and_detail_array'] = newObj;
+    this.open(mymodal)
+  }
   selectedRows: any;
   selectedRow(row) {
     this.dateFormat(row.birthdate)
-    console.log(row)
     this.selectedRows = row;
   }
 }

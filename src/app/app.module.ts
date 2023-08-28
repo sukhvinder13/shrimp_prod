@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ToastrModule } from 'ngx-toastr';
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
@@ -35,7 +35,8 @@ import { BrowserModule } from '@angular/platform-browser';
     ToastrModule.forRoot({
       timeOut: 2000,
       positionClass: 'toast-top-right'
-    })
+    }),
+    NgbModule
   ],
   declarations: [
     AppComponent,

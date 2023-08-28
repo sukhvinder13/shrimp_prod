@@ -1,3 +1,6 @@
 .myOwnBg {
     background-color: rgb(148, 218, 255);
  }
+ ::ng-deep ngb-modal-backdrop {
+    z-index: 1050 !important;
+  }
