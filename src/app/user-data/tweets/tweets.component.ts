@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddFarmService } from 'app/services/add-farm/add-farm.service';
 
 @Component({
@@ -13,7 +14,8 @@ export class TweetsComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
-  constructor(private AddFarmService: AddFarmService) { }
+  constructor(private AddFarmService: AddFarmService,
+    private modalService:NgbModal) { }
   tweetData: any;
   ngOnInit() {
     this.getTweets()
@@ -29,6 +31,29 @@ export class TweetsComponent implements OnInit {
   setPagination(data) {
     this.dataSource = new MatTableDataSource<any>(data);
     this.dataSource.paginator = this.paginator;
+  }
+  closeResult: string;
+  open(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+  selectedRows:{}
+  onDoubleClick(row, mymodal) {
+    console.log(row)
+    this.selectedRows = row;
+    this.open(mymodal)
   }
 }
 export interface TweetsModel{
