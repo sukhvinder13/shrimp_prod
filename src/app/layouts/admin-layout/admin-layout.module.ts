@@ -42,6 +42,8 @@ import { FeedInputComponent } from 'app/farm-inputs/feed-input/feed-input/feed-i
 import { ObservationsComponent } from 'app/farm-inputs/feed-input/feed-input/observations/observations.component';
 import { StockStockingComponent } from 'app/farm-inputs/feed-input/feed-input/stock-stocking/stock-stocking/stock-stocking.component';
 import { WaterMedicineReportComponent } from 'app/farm-inputs/feed-input/feed-input/water-medicine-report/water-medicine-report.component';
+import { UserChatHistoryComponent } from 'app/user-data/user-chat-history/user-chat-history.component';
+import { StoriesComponent } from 'app/user-data/stories/stories.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -78,7 +80,9 @@ import { WaterMedicineReportComponent } from 'app/farm-inputs/feed-input/feed-in
     TweetsComponent,
     SalesComponent,
     AccountsComponent,
-    TransactionsComponent
+    TransactionsComponent,
+    StoriesComponent,
+    UserChatHistoryComponent
   ],
  
 })

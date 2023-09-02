@@ -6,10 +6,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ToastrModule } from 'ngx-toastr';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
-
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { SpinnerComponent } from './common/component/spinner/spinner.component';
@@ -19,6 +17,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { DatePipe } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -42,8 +41,8 @@ import { BrowserModule } from '@angular/platform-browser';
     AppComponent,
     AdminLayoutComponent,
     SpinnerComponent,
-    LoginComponent,
-   ],
+    LoginComponent
+  ],
   providers: [
     DatePipe,
     {

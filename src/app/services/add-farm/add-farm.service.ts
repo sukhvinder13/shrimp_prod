@@ -97,4 +97,21 @@ export class AddFarmService {
   updateCustomer(data){
     return this.http.post(environment.baseUrl + '/updateCustomer',data,this.httpOptions);
   }
+  sendConvo(data){
+    return this.http.post(environment.baseUrl + '/saveConversation',data,this.httpOptions);
+  }
+  getConvoById(data){
+    console.log(data)
+    return this.http.post(environment.baseUrl + '/getAllConversations',data);
+  }
+  getUserDetails(){
+    return this.http.get(environment.baseUrl + '/getUsersInfo');
+  }
+  saveStory(data){
+    console.log(data)
+    return this.http.post(environment.baseUrl + '/saveStories',data);
+  }
+  getAllStories(){
+    return this.http.get(environment.baseUrl + '/getStories');
+  }
 }

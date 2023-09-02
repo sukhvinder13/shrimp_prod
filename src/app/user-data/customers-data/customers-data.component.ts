@@ -28,7 +28,8 @@ export class CustomersDataComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   ngOnInit() {
     this.loadCustomerForm();
-    this.getCustomer()
+    this.getCustomer();
+    // this.sendMessage()
   }
 
   getCustomer() {
@@ -70,6 +71,23 @@ export class CustomersDataComponent implements OnInit {
       this.updateRecord(obj)
     }
 
+  }
+  sendMessage(){
+    let info={
+        "name": localStorage.getItem('userInfo'),
+        "email": "iain_glen@gameofthron.es",
+        "sent": "This is for testing",
+        "received": "This is for testing",
+        "from": localStorage.getItem('_id'),
+        "to": localStorage.getItem('_id'),
+        "createdBy": localStorage.getItem('_id'),
+        "updatedBy": localStorage.getItem('userInfo'),
+        "lastModified": new Date(),
+        "createdOn":new Date()
+    }
+    this.AddFarmService.sendConvo(info).subscribe((data =>{
+      console.log(data)
+   }))
   }
   deleteRow(element) {
     let obj = {

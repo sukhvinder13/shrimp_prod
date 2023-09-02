@@ -9,4 +9,6 @@
   ::ng-deep .modal-backdrop{
     z-index:9999
   }
- 
+  ::ng-deep ngb-modal-backdrop {
+    z-index: 1050 !important;
+  }

@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
       this._service.loginUser(this.loginDetails.value).subscribe(res => {
         if (res.isAuth) {
           localStorage.setItem('userInfo', res.token.name);
+          localStorage.setItem('_id', res.token._id);
           localStorage.setItem('access_token', res.jwtToken);
           localStorage.setItem('userInfo', res.token.name);
           this.toastrService.success(' Success!', 'Login Success!');
