@@ -7,6 +7,7 @@
     "declaration": false,
     "moduleResolution": "node",
     "experimentalDecorators": true,
+    "useDefineForClassFields": true,
     "target": "es2020",
     "module": "esnext", // add this line
     "typeRoots": [
@@ -15,6 +16,7 @@
     "lib": [
       "es2016",
       "dom"
-    ]
+    ],
+    "paths": { "@angular/*": ["./node_modules/@angular/*"] }
   }
 }

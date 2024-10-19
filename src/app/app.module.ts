@@ -17,6 +17,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { DatePipe } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
+import { EffectsModule } from '@ngrx/effects';
+import { authReducer } from './store/reducers/auth.reducer';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   imports: [
@@ -35,7 +38,9 @@ import { BrowserModule } from '@angular/platform-browser';
       timeOut: 2000,
       positionClass: 'toast-top-right'
     }),
-    NgbModule
+    NgbModule,
+    EffectsModule.forRoot([]), StoreModule.forRoot({ auth: authReducer }),
+
   ],
   declarations: [
     AppComponent,

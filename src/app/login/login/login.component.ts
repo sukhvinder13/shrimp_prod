@@ -4,6 +4,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LoginService } from 'app/services/login/login.service';
+import { Store } from '@ngrx/store';
+import { AuthState } from 'app/store/reducers/auth.reducer';
+import { login, logout } from 'app/store/actions/auth.actions';
+
 
 
 @Component({
@@ -19,6 +23,7 @@ export class LoginComponent implements OnInit {
     private _service: LoginService,
     private router: Router,
     private toastrService: ToastrService,
+    private store: Store<AuthState>
   ) { }
 
   ngOnInit() {
@@ -40,6 +45,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('access_token', res.jwtToken);
           localStorage.setItem('userInfo', res.token.name);
           this.toastrService.success(' Success!', 'Login Success!');
+          this.onLogin(res.token.name,res.jwtToken)
           this.router.navigate(['/'])
         } else {
           this.toastrService.error(res.message);
@@ -62,5 +68,10 @@ export class LoginComponent implements OnInit {
       })
     }
   }
-
+  onLogin(username: string, token: string) {
+    this.store.dispatch(login({ username, token }));
+  } 
+  onLogout() {
+    this.store.dispatch(logout());
+  }
 }

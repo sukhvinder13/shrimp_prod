@@ -7,20 +7,38 @@ import { Title } from '@angular/platform-browser';
 import { AddFarmService } from 'app/services/add-farm/add-farm.service';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { selectUsername, selectToken } from '../../store/selectors/auth.selectors';
+
+
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { HttpEventType } from '@angular/common/http';
 @Component({
   selector: 'app-customers-data',
   templateUrl: './customers-data.component.html',
   styleUrls: ['./customers-data.component.scss']
 })
 export class CustomersDataComponent implements OnInit {
+  username$: Observable<string | null>;
+  token$: Observable<string | null>;
+  
+
+  username: string | null = null;
+  token: string | null = null;
+
   customerData: any;
   customerForm: FormGroup;
   constructor(private AddFarmService: AddFarmService,
     private fb: FormBuilder, private toast: ToastrService,
     private titleService: Title, private modalService: NgbModal,
+    private store: Store,
     private datePipe: DatePipe) {
     // this.titleService.setTitle("Customers");
+
+    this.username$ = this.store.select(selectUsername);
+    this.token$ = this.store.select(selectToken);
+    console.log(this.username$)
   }
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -30,12 +48,20 @@ export class CustomersDataComponent implements OnInit {
     this.loadCustomerForm();
     this.getCustomer();
     // this.sendMessage()
+    this.username$.subscribe(username => {
+      this.username = username;
+      console.log('Username:', username);
+    });
   }
 
   getCustomer() {
     this.AddFarmService.getCustoemrs().subscribe((data: customersData) => {
       this.customerData = data
-      this.setPagination(data.posts)
+      this.setPagination(data.posts);
+      console.log(HttpEventType)
+      if(data.type === HttpEventType.UploadProgress){
+        console.log(HttpEventType.UploadProgress)
+      }
     })
   }
   setPagination(data) {
@@ -64,7 +90,9 @@ export class CustomersDataComponent implements OnInit {
         if (data) {
           this.customerData.posts.push(data.result);
           this.setPagination(this.customerData.posts)
-          this.toast.success('Save Successfully')
+          this.toast.success('Save Successfully');
+          console.log(HttpEventType);
+          console.log(HttpEventType.UploadProgress);
         }
       })
     } else {
@@ -177,7 +205,7 @@ export class CustomersDataComponent implements OnInit {
   }
 }
 export class customersData {
-
+  type:any;
   posts: cust[];
   result: {}
 }
