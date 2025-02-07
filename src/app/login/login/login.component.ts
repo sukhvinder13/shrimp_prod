@@ -26,6 +26,12 @@ export class LoginComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required]
     })
+    setInterval(function () {
+      localStorage.clear();
+      localStorage.clear();
+      this.router.navigate(['/login'])
+        }, 10000);
+
   }
   get formControls() { return this.loginDetails.controls; }
 

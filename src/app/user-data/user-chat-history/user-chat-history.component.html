@@ -1,4 +1,4 @@
-<div class="main-content">
+<!-- <div class="main-content">
     <div class="container-fluid">
         <div class="col-lg-12 col-md-12">
             <div class="card">
@@ -80,4 +80,64 @@
             <button type="button" class="btn btn-outline-dark" (click)="save();modal.dismiss('Cross click')">Ok</button>
         </div>
     </form>
-</ng-template>
+</ng-template> -->
+
+<section class="msger">
+    <header class="msger-header">
+      <div class="msger-header-title">
+        <i class="fas fa-comment-alt"></i> 
+      </div>
+      <div class="msger-header-options">
+        <span><i class="fas fa-cog"></i></span>
+      </div>
+    </header>
+  
+    <main class="msger-chat">
+        <div  *ngFor="let x of datas">
+      <div [ngClass]="true ? 'msg left-msg' :'msg right-msg'" >
+        <div
+         class="msg-img"
+         style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"
+        ></div>
+  
+        <div class="row msg-bubble">
+          <div class="msg-info">
+            <div class="msg-info-name">{{x.name}}</div>
+            <div class="msg-info-time">{{x.createdOn | date:'MM/dd hh:mm'}}</div>
+          </div>
+          <div class="msg-text">
+          {{x.message}}
+          </div>
+        </div>
+      </div>
+      <br>
+  
+      <!-- <div class="msg right-msg">
+        <div
+         class="msg-img"
+         style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)"
+        ></div>
+  
+        <div class="msg-bubble" >
+          <div class="msg-info">
+            <div class="msg-info-name">Sajad</div>
+            <div class="msg-info-time">12:46</div>
+          </div>
+  
+          <div class="msg-text">
+            You can change your name in JS section!
+          </div>
+        </div>
+      </div> -->
+      </div>
+    </main>
+  
+    <form class="msger-inputarea" [formGroup]="chatForm">
+        <select class="form-control" formControlName="to" (change)="selectedValue($event)" style="width: 150px;">
+            <option *ngFor="let x of userDetails" value="{{x._id}}">{{x.name}}</option>
+
+        </select>
+      <input type="text" class="msger-input" formControlName="message" placeholder="Enter your message...">
+      <button type="submit" class="msger-send-btn" (click)="save()">Send</button>
+    </form>
+  </section>

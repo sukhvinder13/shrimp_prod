@@ -21,17 +21,20 @@ userDetails:any;
   constructor(private AddFarmService: AddFarmService,private modalService:NgbModal,
     private toastr:ToastrService, private fb: FormBuilder) { }
   transactionData:any;
+  loginId:any;
   ngOnInit() {
     this.getChatHistory();
-    this.loadChatData()
+    this.loadChatData();
+    this.loginId =localStorage.getItem('_id')
   }
-
+datas:any
   getChatHistory(){
     let obj={
       'createdBy':localStorage.getItem('_id')
     }
     this.AddFarmService.getConvoById(obj).subscribe((data:any) =>{
       this.dataSource=data.posts;
+      this.datas=data.posts
       console.log(data.posts)
       this.setPagination(this.dataSource)
    })
@@ -79,7 +82,8 @@ userDetails:any;
   save(){
     this.AddFarmService.sendConvo(this.chatForm.value).subscribe((data:any) =>{
       console.log(data);
-      this.toastr.success("saved")
+      this.toastr.success("saved");
+      this.getChatHistory();
    })
   }
 }
