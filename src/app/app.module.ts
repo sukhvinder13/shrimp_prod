@@ -2,7 +2,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ToastrModule } from 'ngx-toastr';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -21,43 +21,36 @@ import { EffectsModule } from '@ngrx/effects';
 import { authReducer } from './store/reducers/auth.reducer';
 import { StoreModule } from '@ngrx/store';
 
-@NgModule({
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,NgSelectModule,
-    HttpClientModule,
-    ComponentsModule,
-    RouterModule,
-    AppRoutingModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    ToastrModule.forRoot({
-      timeOut: 2000,
-      positionClass: 'toast-top-right'
-    }),
-    NgbModule,
-    EffectsModule.forRoot([]), StoreModule.forRoot({ auth: authReducer }),
-
-  ],
-  declarations: [
-    AppComponent,
-    AdminLayoutComponent,
-    SpinnerComponent,
-    LoginComponent
-  ],
-  providers: [
-    DatePipe,
-    {
-      provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
-    }
-  ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA,
-    NO_ERRORS_SCHEMA
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        AdminLayoutComponent,
+        SpinnerComponent,
+        LoginComponent
+    ],
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+      NgSelectModule,
+        ComponentsModule,
+        RouterModule,
+        AppRoutingModule,
+        MatProgressSpinnerModule,
+        MatRadioModule,
+        ToastrModule.forRoot({
+            timeOut: 2000,
+            positionClass: 'toast-top-right'
+        }),
+        NgbModule,
+        EffectsModule.forRoot([]), StoreModule.forRoot({ auth: authReducer })], providers: [
+        DatePipe,
+        {
+            provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }
