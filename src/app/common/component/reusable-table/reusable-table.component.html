@@ -1,0 +1,141 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="col-lg-12 col-md-12">
+      <div class="card">
+        <!-- Card Header -->
+        <div class="card-header card-header-tabs card-header-primary">
+          <div class="nav-tabs-navigation">
+            <div class="nav-tabs-wrapper">
+              <span class="nav-tabs-title">{{ config.title }}</span>
+              <ul class="nav nav-tabs" data-tabs="tabs">
+                <li class="nav-item">
+                  <a mat-button class="nav-link active" href="#profile" data-toggle="tab">
+                    <i class="material-icons">table_chart</i> {{ config.title }}
+                  </a>
+                </li>
+                <li class="nav-item col-md-9" *ngIf="config.showFilter">
+                  <a mat-button class="nav-link active" href="#profile" data-toggle="tab" style="height: 45px;">
+                    <mat-form-field style="top: -21px">
+                      <mat-label>Filter</mat-label>
+                      <input matInput 
+                        [value]="filterValue"
+                        (keyup)="applyFilter($event)" 
+                        placeholder="Search columns">
+                      <button mat-icon-button matSuffix *ngIf="filterValue" (click)="clearFilter()">
+                        <i class="material-icons">clear</i>
+                      </button>
+                    </mat-form-field>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card Body with Table -->
+        <div class="card-body">
+          <div class="tab-content">
+            <div class="tab-pane active" id="profile">
+              <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource" class="table">
+                  
+                  <!-- Serial Number Column -->
+                  <ng-container matColumnDef="sr">
+                    <th mat-header-cell *matHeaderCellDef class="thead-dark">Sr No.</th>
+                    <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                  </ng-container>
+
+                  <!-- Dynamic Data Columns -->
+                  <ng-container *ngFor="let column of columns" [matColumnDef]="column.key">
+                    <th mat-header-cell *matHeaderCellDef class="thead-dark" [style.width]="column.width">
+                      {{ column.label }}
+                    </th>
+                    <td mat-cell 
+                      *matCellDef="let element" 
+                      [style.width]="column.width">
+                      <ng-container [ngSwitch]="column.type">
+                        <!-- Date type column -->
+                        <span *ngSwitchCase="'date'">
+                          {{ getCellValue(element, column) | date: column.format || 'dd/MM/yyyy' }}
+                        </span>
+                        <!-- Custom type column - requires ng-content -->
+                        <span *ngSwitchDefault>
+                          {{ getCellValue(element, column) }}
+                        </span>
+                      </ng-container>
+                    </td>
+                  </ng-container>
+
+                  <!-- Action Column -->
+                  <ng-container matColumnDef="action" *ngIf="config.showActions">
+                    <th mat-header-cell *matHeaderCellDef class="thead-dark">Action</th>
+                    <td mat-cell *matCellDef="let element" class="action-cell">
+                      <!-- Delete Button -->
+                      <button *ngIf="isActionVisible('delete')"
+                        class="btn btn-sm btn-danger" 
+                        (click)="handleAction('delete', element)" 
+                        title="Delete"
+                        matTooltip="Delete">
+                        <i class="material-icons">close</i>
+                      </button>
+
+                      <!-- Edit Button -->
+                      <button *ngIf="isActionVisible('edit')"
+                        class="btn btn-sm btn-primary" 
+                        (click)="handleAction('edit', element)" 
+                        title="Edit"
+                        matTooltip="Edit">
+                        <i class="material-icons">edit</i>
+                      </button>
+
+                      <!-- View Button -->
+                      <button *ngIf="isActionVisible('view')"
+                        class="btn btn-sm btn-info" 
+                        (click)="handleAction('view', element)" 
+                        title="View Details"
+                        matTooltip="View Details">
+                        <i class="material-icons">visibility</i>
+                      </button>
+
+                      <!-- Custom Action Buttons -->
+                      <button *ngFor="let customAction of config.actionButtons?.custom"
+                        class="btn btn-sm btn-secondary" 
+                        (click)="handleAction(customAction.action, element)" 
+                        [title]="customAction.label"
+                        [matTooltip]="customAction.label">
+                        <i class="material-icons">{{ customAction.icon }}</i>
+                      </button>
+                    </td>
+                  </ng-container>
+
+                  <!-- Table Rows -->
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" class="thead-dark"></tr>
+                  <tr mat-row 
+                    *matRowDef="let row; columns: displayedColumns;" 
+                    (click)="selectRow(row)" 
+                    [ngClass]="{'selected-row': selectedRow === row}">
+                  </tr>
+
+                  <!-- No Data Row -->
+                  <tr *matNoDataRow class="no-data-row">
+                    <td [colspan]="displayedColumns.length" class="text-center">
+                      <p>No data available</p>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <!-- Paginator -->
+              <mat-paginator 
+                [pageSizeOptions]="config.pageSizeOptions || [10, 20, 30]" 
+                [pageSize]="config.pageSize || 10"
+                showFirstLastButtons
+                aria-label="Select page">
+              </mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

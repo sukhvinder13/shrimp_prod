@@ -20,12 +20,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
 
 // Third-party modules
 import { NgSelectModule } from '@ng-select/ng-select';
 
 // Shared components
 import { FormModalComponent } from 'app/common/component/form-modal/form-modal.component';
+import { ReusableTableComponent } from 'app/common/component/reusable-table/reusable-table.component';
 
 // Page components
 import { DashboardComponent } from '../../dashboard/dashboard.component';
@@ -63,10 +65,11 @@ const MATERIAL_MODULES = [
   MatBottomSheetModule,
   MatDialogModule,
   MatSnackBarModule,
-  MatSortModule
+  MatSortModule,
+  MatIconModule
 ];
 
-const SHARED_COMPONENTS = [FormModalComponent];
+const SHARED_COMPONENTS = [FormModalComponent, ReusableTableComponent];
 
 const PAGE_COMPONENTS = [
   DashboardComponent,
@@ -99,6 +102,7 @@ const PAGE_COMPONENTS = [
     NgSelectModule,
     ...MATERIAL_MODULES
   ],
-  declarations: [...SHARED_COMPONENTS, ...PAGE_COMPONENTS]
+  declarations: [...SHARED_COMPONENTS, ...PAGE_COMPONENTS],
+  exports: [...SHARED_COMPONENTS]
 })
 export class AdminLayoutModule { }

@@ -1,14 +1,13 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
 import { AddFarmService } from 'app/services/add-farm/add-farm.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalConfig, FormField } from 'app/common/component/form-modal/form-modal.component';
+import { TableColumn, TableConfig, TableActionEvent } from 'app/common/component/reusable-table/reusable-table.component';
 
 @Component({
   selector: 'app-customers-data',
@@ -16,10 +15,28 @@ import { ModalConfig, FormField } from 'app/common/component/form-modal/form-mod
   styleUrls: ['./customers-data.component.scss']
 })
 export class CustomersDataComponent implements OnInit, OnDestroy {
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild('detailsModal', { static: false }) detailsModal: TemplateRef<any>;
+  tableColumns: TableColumn[] = [
+    { key: 'email', label: 'Email', width: '150px' },
+    { key: 'name', label: 'Name', width: 'auto' },
+    { key: 'birthdate', label: 'Birthdate', width: '150px', type: 'date', format: 'dd/MM/yyyy' },
+    { key: 'address', label: 'Address', width: 'auto' }
+  ];
 
-  displayedColumns: string[] = ['sr', 'email', 'name', 'birthdate', 'address', 'action'];
-  dataSource = new MatTableDataSource<any>();
+  tableConfig: TableConfig = {
+    title: 'Customers Management',
+    showFilter: true,
+    showActions: true,
+    actionButtons: {
+      edit: true,
+      delete: true,
+      view: true
+    },
+    pageSizeOptions: [10, 20, 30],
+    pageSize: 10
+  };
+
+  tableData: Customer[] = [];
   
   customerForm: FormGroup;
   selectedRows: any;
@@ -128,12 +145,7 @@ export class CustomersDataComponent implements OnInit, OnDestroy {
 
   private handleCustomerData(data: CustomerResponse): void {
     this.customerData = data;
-    this.updateDataSource(data.posts);
-  }
-
-  private updateDataSource(data: Customer[]): void {
-    this.dataSource = new MatTableDataSource<Customer>(data);
-    this.dataSource.paginator = this.paginator;
+    this.tableData = data.posts;
   }
 
   saveCustomer(): void {
@@ -189,7 +201,7 @@ export class CustomersDataComponent implements OnInit, OnDestroy {
     const index = this.customerData.posts.indexOf(element);
     if (index > -1) {
       this.customerData.posts.splice(index, 1);
-      this.updateDataSource(this.customerData.posts);
+      this.tableData = [...this.customerData.posts];
     }
   }
 
@@ -223,18 +235,45 @@ export class CustomersDataComponent implements OnInit, OnDestroy {
     return this.datePipe.transform(new Date(date), 'yyyy-MM-dd') || '';
   }
 
-  applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  /**
+   * Handle table actions
+   */
+  onTableAction(event: TableActionEvent): void {
+    switch (event.action) {
+      case 'edit':
+        this.editRow(event.data);
+        // Trigger modal programmatically
+        const addCustomerBtn = document.querySelector('[data-target="#addCustomer"]') as HTMLElement;
+        if (addCustomerBtn) {
+          addCustomerBtn.click();
+        }
+        break;
+      case 'delete':
+        this.deleteRow(event.data);
+        break;
+      case 'view':
+        this.openDetailsModal(event.data);
+        break;
+      default:
+        break;
+    }
+  }
+
+  /**
+   * Handle filter changes from table
+   */
+  onFilterChange(filterValue: string): void {
+    // Filter logic can be implemented here if needed
+    // The table component handles its own filtering
   }
 
   selectRow(row: Customer): void {
     this.selectedRows = row;
   }
 
-  openDetailsModal(row: Customer, modal: any): void {
+  openDetailsModal(row: Customer): void {
     this.selectedRows = { ...row };
-    this.modalService.open(modal, { ariaLabelledBy: 'modal-basic-title', size: 'lg' });
+    this.modalService.open(this.detailsModal, { ariaLabelledBy: 'modal-basic-title', size: 'lg' });
   }
 
   private handleError(message: string, error: any): void {

@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AddFarmService } from 'app/services/add-farm/add-farm.service';
 import { ToastrService } from 'ngx-toastr';
-import { BaseDataTableComponent } from 'app/common/component/base-data-table.component';
+import { Subject } from 'rxjs';
 import { ModalConfig, FormField, FieldType } from 'app/common/component/form-modal/form-modal.component';
 import { takeUntil } from 'rxjs/operators';
+import { TableColumn, TableConfig, TableActionEvent } from 'app/common/component/reusable-table/reusable-table.component';
 
 interface ChatMessage {
   from: string;
@@ -16,23 +17,45 @@ interface ChatMessage {
   templateUrl: './user-chat-history.component.html',
   styleUrls: ['./user-chat-history.component.scss']
 })
-export class UserChatHistoryComponent extends BaseDataTableComponent<ChatMessage> {
-  displayedColumns: string[] = ['from', 'message'];
+export class UserChatHistoryComponent implements OnInit, OnDestroy {
+  tableColumns: TableColumn[] = [
+    { key: 'from', label: 'From', width: '200px' },
+    { key: 'message', label: 'Message', width: 'auto' }
+  ];
+
+  tableConfig: TableConfig = {
+    title: 'Chat History',
+    showFilter: true,
+    showActions: false,
+    pageSizeOptions: [10, 20, 30],
+    pageSize: 10
+  };
+
+  tableData: ChatMessage[] = [];
   chatForm: FormGroup;
   userDetails: any;
   userId: string;
   modalConfig: ModalConfig;
   formFields: FormField[] = [];
+  private destroy$ = new Subject<void>();
 
   constructor(
-    farmService: AddFarmService,
+    private farmService: AddFarmService,
     private toastr: ToastrService,
     private fb: FormBuilder
   ) {
-    super(farmService);
     this.initializeForm();
     this.initializeFormFields();
     this.initializeModalConfig();
+  }
+
+  ngOnInit(): void {
+    this.loadData();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private initializeForm(): void {
@@ -76,28 +99,40 @@ export class UserChatHistoryComponent extends BaseDataTableComponent<ChatMessage
     };
   }
 
-  loadData(): void {
+  private loadData(): void {
     this.farmService
       .getConvoById({ createdBy: this.userId })
       .pipe(takeUntil(this.destroy$))
-      .subscribe(response => {
-        const data = this.extractPostsData(response);
-        this.setTableData(data);
-      });
+      .subscribe(
+        (response: any) => {
+          const data = response?.posts || response || [];
+          this.tableData = data;
+        },
+        (error) => {
+          console.error('Failed to load chat history', error);
+          this.toastr.error('Failed to load chat history');
+        }
+      );
 
     this.farmService
       .getUserDetails()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((response: any) => {
-        this.userDetails = this.extractPostsData(response);
-        // Update form field options with user details
-        if (this.userDetails && this.formFields[0]) {
-          this.formFields[0].options = this.userDetails.map(user => ({
-            label: user.name,
-            value: user._id
-          }));
+      .subscribe(
+        (response: any) => {
+          const data = response?.posts || response || [];
+          this.userDetails = data;
+          // Update form field options with user details
+          if (this.userDetails && this.formFields[0]) {
+            this.formFields[0].options = this.userDetails.map(user => ({
+              label: user.name,
+              value: user._id
+            }));
+          }
+        },
+        (error) => {
+          console.error('Failed to load user details', error);
         }
-      });
+      );
   }
 
   saveMessage(): void {
@@ -105,15 +140,25 @@ export class UserChatHistoryComponent extends BaseDataTableComponent<ChatMessage
       this.farmService
         .sendConvo(this.chatForm.value)
         .pipe(takeUntil(this.destroy$))
-        .subscribe(() => {
-          this.toastr.success('Message sent successfully');
-          this.loadData();
-          this.resetForm();
-        });
+        .subscribe(
+          () => {
+            this.toastr.success('Message sent successfully');
+            this.loadData();
+            this.resetForm();
+          },
+          (error) => {
+            console.error('Failed to send message', error);
+            this.toastr.error('Failed to send message');
+          }
+        );
     }
   }
 
   resetForm(): void {
     this.chatForm.reset();
+  }
+
+  onTableAction(event: TableActionEvent): void {
+    // No actions for chat history table currently
   }
 }

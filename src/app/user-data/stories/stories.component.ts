@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AddFarmService } from 'app/services/add-farm/add-farm.service';
 import { ToastrService } from 'ngx-toastr';
-import { BaseDataTableComponent } from 'app/common/component/base-data-table.component';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { TableColumn, TableConfig, TableActionEvent } from 'app/common/component/reusable-table/reusable-table.component';
 import { ModalConfig, FormField } from 'app/common/component/form-modal/form-modal.component';
 
 interface Story {
@@ -16,23 +17,45 @@ interface Story {
   templateUrl: './stories.component.html',
   styleUrls: ['./stories.component.scss']
 })
-export class StoriesComponent extends BaseDataTableComponent<Story> {
-  displayedColumns: string[] = ['account_id', 'transaction_count'];
+export class StoriesComponent implements OnInit, OnDestroy {
+  tableColumns: TableColumn[] = [
+    { key: 'account_id', label: 'Account ID', width: '200px' },
+    { key: 'transaction_count', label: 'Transaction Count', width: '150px' }
+  ];
+
+  tableConfig: TableConfig = {
+    title: 'Stories',
+    showFilter: true,
+    showActions: false,
+    pageSizeOptions: [10, 20, 30],
+    pageSize: 10
+  };
+
+  tableData: Story[] = [];
   storyForm: FormGroup;
   modalConfig: ModalConfig;
   formFields: FormField[] = [];
   userDetails: any;
   userId: string;
+  private destroy$ = new Subject<void>();
 
   constructor(
-    farmService: AddFarmService,
+    private farmService: AddFarmService,
     private toastr: ToastrService,
     private fb: FormBuilder
   ) {
-    super(farmService);
     this.initializeForm();
     this.initializeFormFields();
     this.initializeModalConfig();
+  }
+
+  ngOnInit(): void {
+    this.loadData();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private initializeForm(): void {
@@ -83,14 +106,20 @@ export class StoriesComponent extends BaseDataTableComponent<Story> {
     };
   }
 
-  loadData(): void {
+  private loadData(): void {
     this.farmService
       .getAllStories()
       .pipe(takeUntil(this.destroy$))
-      .subscribe(response => {
-        const data = this.extractPostsData(response);
-        this.setTableData(data);
-      });
+      .subscribe(
+        (response: any) => {
+          const data = response?.posts || response || [];
+          this.tableData = data;
+        },
+        (error) => {
+          console.error('Failed to load stories', error);
+          this.toastr.error('Failed to load stories');
+        }
+      );
   }
 
   saveStory(): void {
@@ -98,11 +127,17 @@ export class StoriesComponent extends BaseDataTableComponent<Story> {
       this.farmService
         .saveStory(this.storyForm.value)
         .pipe(takeUntil(this.destroy$))
-        .subscribe(() => {
-          this.toastr.success('Story saved successfully');
-          this.loadData();
-          this.resetForm();
-        });
+        .subscribe(
+          () => {
+            this.toastr.success('Story saved successfully');
+            this.loadData();
+            this.resetForm();
+          },
+          (error) => {
+            console.error('Failed to save story', error);
+            this.toastr.error('Failed to save story');
+          }
+        );
     }
   }
 
@@ -112,5 +147,9 @@ export class StoriesComponent extends BaseDataTableComponent<Story> {
       createdBy: this.userId,
       createdOn: new Date()
     });
+  }
+
+  onTableAction(event: TableActionEvent): void {
+    // No actions for stories table currently
   }
 }

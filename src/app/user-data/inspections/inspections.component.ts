@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AddFarmService } from 'app/services/add-farm/add-farm.service';
-import { BaseDataTableComponent } from 'app/common/component/base-data-table.component';
+import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { TableColumn, TableConfig, TableActionEvent } from 'app/common/component/reusable-table/reusable-table.component';
 
 interface Inspection {
   business_name: string;
@@ -17,20 +18,57 @@ interface Inspection {
   templateUrl: './inspections.component.html',
   styleUrls: ['./inspections.component.scss']
 })
-export class InspectionsComponent extends BaseDataTableComponent<Inspection> {
-  displayedColumns: string[] = ['business_name', 'certificate_number', 'result', 'sector', 'date'];
+export class InspectionsComponent implements OnInit, OnDestroy {
+  tableColumns: TableColumn[] = [
+    { key: 'business_name', label: 'Business Name', width: '200px' },
+    { key: 'certificate_number', label: 'Certificate Number', width: '150px' },
+    { key: 'result', label: 'Result', width: '100px' },
+    { key: 'sector', label: 'Sector', width: '150px' },
+    { key: 'date', label: 'Date', width: '150px', type: 'date', format: 'dd/MM/yyyy' }
+  ];
 
-  constructor(farmService: AddFarmService) {
-    super(farmService);
+  tableConfig: TableConfig = {
+    title: 'Inspections',
+    showFilter: true,
+    showActions: false,
+    pageSizeOptions: [10, 20, 30],
+    pageSize: 10
+  };
+
+  tableData: Inspection[] = [];
+  private destroy$ = new Subject<void>();
+
+  constructor(
+    private farmService: AddFarmService,
+    private toast: ToastrService
+  ) {}
+
+  ngOnInit(): void {
+    this.loadData();
   }
 
-  loadData(): void {
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private loadData(): void {
     this.farmService
       .getInspections()
       .pipe(takeUntil(this.destroy$))
-      .subscribe(response => {
-        const data = this.extractPostsData(response);
-        this.setTableData(data);
-      });
+      .subscribe(
+        (response: any) => {
+          const data = response?.posts || response || [];
+          this.tableData = data;
+        },
+        (error) => {
+          console.error('Failed to load inspections data', error);
+          this.toast.error('Failed to load inspections data');
+        }
+      );
+  }
+
+  onTableAction(event: TableActionEvent): void {
+    // No actions for inspections table currently
   }
 }

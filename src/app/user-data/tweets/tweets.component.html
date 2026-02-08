@@ -1,64 +1,10 @@
 <div class="main-content">
   <div class="container-fluid">
-    <div class="col-lg-12 col-md-12">
-      <div class="card">
-        <div class="card-header card-header-tabs card-header-primary">
-          <div class="nav-tabs-navigation">
-            <div class="nav-tabs-wrapper">
-              <span class="nav-tabs-title">Tweets</span>
-              <ul class="nav nav-tabs" data-tabs="tabs">
-                <li class="nav-item">
-                  <a mat-button class="nav-link active" href="#profile" data-toggle="tab">
-                    <i class="material-icons">message</i> Tweets
-                    <div class="ripple-container"></div>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="tab-content">
-            <div class="tab-pane active" id="profile">
-              <table mat-table [dataSource]="dataSource" class="table">
-                <ng-container matColumnDef="text">
-                  <th mat-header-cell *matHeaderCellDef class="thead-dark"> Text </th>
-                  <td mat-cell *matCellDef="let element"> {{element.text}} </td>
-                </ng-container>
-                <ng-container matColumnDef="source">
-                  <th mat-header-cell *matHeaderCellDef class="thead-dark"> Source </th>
-                  <td mat-cell *matCellDef="let element"> {{element.source}} </td>
-                </ng-container>
-                <ng-container matColumnDef="in_reply_to_screen_name">
-                  <th mat-header-cell *matHeaderCellDef class="thead-dark"> Name </th>
-                  <td mat-cell *matCellDef="let element"> {{element.in_reply_to_screen_name}} </td>
-                </ng-container>
-                <ng-container matColumnDef="created_at">
-                  <th mat-header-cell *matHeaderCellDef class="thead-dark"> Created At </th>
-                  <td mat-cell *matCellDef="let element"> {{element.created_at}} </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky:true" class="thead-dark"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns" 
-                  (dblclick)="onRowClick(row)" data-toggle="modal" data-target="#tweetModal">
-                </tr>
-              </table>
-              <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons
-                aria-label="Select page of tweets">
-              </mat-paginator>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <app-reusable-table
+      [columns]="tableColumns"
+      [data]="tableData"
+      [config]="tableConfig"
+      (action)="onTableAction($event)">
+    </app-reusable-table>
   </div>
 </div>
-
-<!-- Tweet Details Modal -->
-<app-form-modal 
-  modalId="tweetModal"
-  [config]="modalConfig"
-  [form]="tweetForm"
-  [fields]="formFields"
-  (submitted)="resetForm()"
-  (cancelled)="resetForm()">
-</app-form-modal>
