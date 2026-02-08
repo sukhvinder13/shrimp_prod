@@ -110,81 +110,14 @@
 </div>
 
 <!-- Add/Edit Customer Modal -->
-<div id="addCustomer" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">
-          {{ customerForm.get('id')?.value ? 'Edit Customer' : 'Add New Customer' }}
-        </h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-
-      <!-- Modal Body -->
-      <div class="modal-body">
-        <mat-card>
-          <form [formGroup]="customerForm">
-            <div class="form-row">
-              <div class="col-md-6 mb-3">
-                <label for="name">Name *</label>
-                <input type="text" class="form-control" id="name" 
-                  formControlName="name" placeholder="Enter Name" required>
-                <small class="text-danger" *ngIf="customerForm.get('name')?.invalid && customerForm.get('name')?.touched">
-                  Name is required
-                </small>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="email">Email *</label>
-                <input type="email" class="form-control" id="email" 
-                  formControlName="email" placeholder="Enter Email" required>
-                <small class="text-danger" *ngIf="customerForm.get('email')?.invalid && customerForm.get('email')?.touched">
-                  Valid email is required
-                </small>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="col-md-6 mb-3">
-                <label for="birthdate">Birthdate *</label>
-                <input type="date" class="form-control" id="birthdate" 
-                  formControlName="birthdate" required>
-                <small class="text-danger" *ngIf="customerForm.get('birthdate')?.invalid && customerForm.get('birthdate')?.touched">
-                  Birthdate is required
-                </small>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="col-md-12 mb-3">
-                <label for="address">Address *</label>
-                <textarea class="form-control" id="address" rows="3"
-                  formControlName="address" placeholder="Enter Address" required></textarea>
-                <small class="text-danger" *ngIf="customerForm.get('address')?.invalid && customerForm.get('address')?.touched">
-                  Address is required
-                </small>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="col-md-12">
-                <button type="button" class="btn btn-primary" 
-                  [disabled]="customerForm.invalid" (click)="saveCustomer()" 
-                  data-dismiss="modal">
-                  Save
-                </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </form>
-        </mat-card>
-      </div>
-    </div>
-  </div>
-</div>
+<app-form-modal 
+  modalId="addCustomer" 
+  [config]="modalConfig"
+  [form]="customerForm"
+  [fields]="formFields"
+  (submitted)="saveCustomer()"
+  (cancelled)="resetForm()">
+</app-form-modal>
 
 <!-- View Details Modal Template -->
 <ng-template #detailsModal let-modal>

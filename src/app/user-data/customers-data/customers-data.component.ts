@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalConfig, FormField } from 'app/common/component/form-modal/form-modal.component';
 
 @Component({
   selector: 'app-customers-data',
@@ -21,10 +22,12 @@ export class CustomersDataComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource<any>();
   
   customerForm: FormGroup;
-  customerData: CustomerResponse;
   selectedRows: any;
-  
+  modalConfig: ModalConfig;
+  formFields: FormField[] = [];
+
   private destroy$ = new Subject<void>();
+  private customerData: CustomerResponse;
 
   constructor(
     private farmService: AddFarmService,
@@ -34,6 +37,8 @@ export class CustomersDataComponent implements OnInit, OnDestroy {
     private datePipe: DatePipe
   ) {
     this.initializeForm();
+    this.initializeFormFields();
+    this.initializeModalConfig();
   }
 
   ngOnInit(): void {
@@ -48,18 +53,72 @@ export class CustomersDataComponent implements OnInit, OnDestroy {
   private initializeForm(): void {
     this.customerForm = this.fb.group({
       id: [null],
+      name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      name: ['', [Validators.required]],
-      address: ['', [Validators.required]],
-      birthdate: ['', [Validators.required]],
+      birthdate: ['', Validators.required],
+      address: ['', Validators.required],
       username: [''],
       accounts: [''],
       tier_and_details: ['']
     });
   }
 
+  private initializeFormFields(): void {
+    this.formFields = [
+      {
+        name: 'name',
+        label: 'Name',
+        type: 'text',
+        placeholder: 'Enter Name',
+        required: true,
+        columnSize: 'half'
+      },
+      {
+        name: 'email',
+        label: 'Email',
+        type: 'email',
+        placeholder: 'Enter Email',
+        required: true,
+        columnSize: 'half'
+      },
+      {
+        name: 'birthdate',
+        label: 'Birthdate',
+        type: 'date',
+        required: true,
+        columnSize: 'half'
+      },
+      {
+        name: 'address',
+        label: 'Address',
+        type: 'textarea',
+        placeholder: 'Enter Address',
+        required: true,
+        columnSize: 'full',
+        rows: 3
+      },
+      {
+        name: 'username',
+        label: 'Username',
+        type: 'text',
+        placeholder: 'Enter Username (Optional)',
+        columnSize: 'half'
+      }
+    ];
+  }
+
+  private initializeModalConfig(): void {
+    this.modalConfig = {
+      title: 'Add New Customer',
+      submitButtonText: 'Save',
+      cancelButtonText: 'Cancel',
+      size: 'lg'
+    };
+  }
+
   private loadCustomers(): void {
-    this.farmService.getCustoemrs()
+    this.farmService
+      .getCustoemrs()
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (data: CustomerResponse) => this.handleCustomerData(data),
@@ -72,8 +131,8 @@ export class CustomersDataComponent implements OnInit, OnDestroy {
     this.updateDataSource(data.posts);
   }
 
-  private updateDataSource(data: any[]): void {
-    this.dataSource = new MatTableDataSource<any>(data);
+  private updateDataSource(data: Customer[]): void {
+    this.dataSource = new MatTableDataSource<Customer>(data);
     this.dataSource.paginator = this.paginator;
   }
 
@@ -85,10 +144,12 @@ export class CustomersDataComponent implements OnInit, OnDestroy {
       ? this.farmService.updateCustomer(formData)
       : this.farmService.saveCustomer(formData);
 
-    operation$.pipe(takeUntil(this.destroy$)).subscribe(
-      (response: any) => this.handleSaveSuccess(response, formData.id),
-      (error) => this.handleError('Failed to save customer', error)
-    );
+    operation$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (response: any) => this.handleSaveSuccess(response, !!formData.id),
+        (error) => this.handleError('Failed to save customer', error)
+      );
   }
 
   private prepareFormData(): any {
@@ -104,34 +165,26 @@ export class CustomersDataComponent implements OnInit, OnDestroy {
     if (response.success || response.result) {
       const message = isUpdate ? 'Updated Successfully' : 'Saved Successfully';
       this.toast.success(message);
-      this.refreshCustomersList();
+      this.loadCustomers();
       this.resetForm();
     } else {
       this.toast.warning('Operation failed');
     }
   }
 
-  private refreshCustomersList(): void {
-    this.loadCustomers();
-  }
-
-  private resetForm(): void {
-    this.customerForm.reset();
-    this.selectedRows = null;
-  }
-
-  deleteRow(element: any): void {
+  deleteRow(element: Customer): void {
     if (!confirm('Are you sure you want to delete this customer?')) return;
 
-    this.farmService.deleteCustomer({ id: element._id })
+    this.farmService
+      .deleteCustomer({ id: element._id })
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        (response: any) => this.handleDeleteSuccess(element),
+        () => this.handleDeleteSuccess(element),
         (error) => this.handleError('Failed to delete customer', error)
       );
   }
 
-  private handleDeleteSuccess(element: any): void {
+  private handleDeleteSuccess(element: Customer): void {
     this.toast.success('Deleted Successfully');
     const index = this.customerData.posts.indexOf(element);
     if (index > -1) {
@@ -140,20 +193,29 @@ export class CustomersDataComponent implements OnInit, OnDestroy {
     }
   }
 
-  editRow(element: any): void {
+  editRow(element: Customer): void {
     this.selectedRows = element;
+    this.updateModalTitle('Edit Customer');
     const formattedBirthdate = this.formatDateForInput(element.birthdate);
-    
+
     this.customerForm.patchValue({
       id: element._id,
-      email: element.email || '',
       name: element.name || '',
-      address: element.address || '',
+      email: element.email || '',
       birthdate: formattedBirthdate || '',
-      username: element.username || '',
-      accounts: element.accounts || '',
-      tier_and_details: element.tier_and_details || ''
+      address: element.address || '',
+      username: element.username || ''
     });
+  }
+
+  resetForm(): void {
+    this.customerForm.reset();
+    this.selectedRows = null;
+    this.updateModalTitle('Add New Customer');
+  }
+
+  private updateModalTitle(title: string): void {
+    this.modalConfig = { ...this.modalConfig, title };
   }
 
   private formatDateForInput(date: any): string {
@@ -166,17 +228,13 @@ export class CustomersDataComponent implements OnInit, OnDestroy {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  selectRow(row: any): void {
+  selectRow(row: Customer): void {
     this.selectedRows = row;
   }
 
-  openDetailsModal(row: any, modal: any): void {
+  openDetailsModal(row: Customer, modal: any): void {
     this.selectedRows = { ...row };
     this.modalService.open(modal, { ariaLabelledBy: 'modal-basic-title', size: 'lg' });
-  }
-
-  closeModal(): void {
-    this.modalService.dismissAll();
   }
 
   private handleError(message: string, error: any): void {

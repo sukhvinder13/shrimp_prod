@@ -1,0 +1,193 @@
+<div [id]="modalId" class="modal fade" role="dialog">
+  <div class="modal-dialog" [ngClass]="getModalSizeClass()">
+    <div class="modal-content">
+      
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">{{ config?.title }}</h4>
+        <button type="button" class="close" data-dismiss="modal" (click)="onCancel()">&times;</button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <!-- Dynamic Form Fields -->
+        <form [formGroup]="form" *ngIf="fields && fields.length > 0">
+          <!-- Form Row for responsive layout -->
+          <div class="form-row" *ngIf="fields.length > 0">
+            <ng-container *ngFor="let field of fields">
+              <!-- Skip hidden fields -->
+              <div *ngIf="!field.hidden" [ngClass]="getColumnClass(field)" class="mb-3">
+                <!-- Text Input Fields (text, email, password, number, tel, url, time, datetime-local) -->
+                <ng-container *ngIf="field.type === 'text' || field.type === 'email' || field.type === 'password' || field.type === 'number' || field.type === 'tel' || field.type === 'url' || field.type === 'time' || field.type === 'datetime-local'">
+                  <label [for]="field.name">
+                    {{ field.label }}
+                    <span class="text-danger" *ngIf="field.required">*</span>
+                  </label>
+                  <input 
+                    [type]="field.type" 
+                    class="form-control" 
+                    [ngClass]="{'is-invalid': hasError(field.name)}"
+                    [id]="field.name" 
+                    [formControlName]="field.name"
+                    [placeholder]="field.placeholder"
+                    [disabled]="field.disabled"
+                    [required]="field.required"
+                    [pattern]="field.pattern"
+                    [min]="field.min"
+                    [max]="field.max"
+                    [step]="field.step">
+                  <small class="text-danger d-block" *ngIf="hasError(field.name)">
+                    {{ getFieldError(field.name) }}
+                  </small>
+                  <small class="text-muted d-block" *ngIf="field.helpText">
+                    {{ field.helpText }}
+                  </small>
+                </ng-container>
+
+                <!-- Date Input -->
+                <ng-container *ngIf="field.type === 'date'">
+                  <label [for]="field.name">
+                    {{ field.label }}
+                    <span class="text-danger" *ngIf="field.required">*</span>
+                  </label>
+                  <input 
+                    type="date" 
+                    class="form-control" 
+                    [ngClass]="{'is-invalid': hasError(field.name)}"
+                    [id]="field.name" 
+                    [formControlName]="field.name"
+                    [disabled]="field.disabled"
+                    [required]="field.required"
+                    [min]="field.min"
+                    [max]="field.max">
+                  <small class="text-danger d-block" *ngIf="hasError(field.name)">
+                    {{ getFieldError(field.name) }}
+                  </small>
+                  <small class="text-muted d-block" *ngIf="field.helpText">
+                    {{ field.helpText }}
+                  </small>
+                </ng-container>
+
+                <!-- Textarea -->
+                <ng-container *ngIf="field.type === 'textarea'">
+                  <label [for]="field.name">
+                    {{ field.label }}
+                    <span class="text-danger" *ngIf="field.required">*</span>
+                  </label>
+                  <textarea 
+                    class="form-control" 
+                    [ngClass]="{'is-invalid': hasError(field.name)}"
+                    [id]="field.name" 
+                    [formControlName]="field.name"
+                    [placeholder]="field.placeholder"
+                    [rows]="field.rows || 3"
+                    [disabled]="field.disabled"
+                    [required]="field.required">
+                  </textarea>
+                  <small class="text-danger d-block" *ngIf="hasError(field.name)">
+                    {{ getFieldError(field.name) }}
+                  </small>
+                  <small class="text-muted d-block" *ngIf="field.helpText">
+                    {{ field.helpText }}
+                  </small>
+                </ng-container>
+
+                <!-- Select Dropdown -->
+                <ng-container *ngIf="field.type === 'select'">
+                  <label [for]="field.name">
+                    {{ field.label }}
+                    <span class="text-danger" *ngIf="field.required">*</span>
+                  </label>
+                  <select 
+                    class="form-control" 
+                    [ngClass]="{'is-invalid': hasError(field.name)}"
+                    [id]="field.name" 
+                    [formControlName]="field.name"
+                    [disabled]="field.disabled"
+                    [required]="field.required">
+                    <option value="" disabled selected>{{ field.placeholder || 'Select ' + field.label }}</option>
+                    <option *ngFor="let option of field.options" [value]="option.value">
+                      {{ option.label }}
+                    </option>
+                  </select>
+                  <small class="text-danger d-block" *ngIf="hasError(field.name)">
+                    {{ getFieldError(field.name) }}
+                  </small>
+                  <small class="text-muted d-block" *ngIf="field.helpText">
+                    {{ field.helpText }}
+                  </small>
+                </ng-container>
+
+                <!-- Checkbox -->
+                <ng-container *ngIf="field.type === 'checkbox'">
+                  <div class="form-check">
+                    <input 
+                      type="checkbox" 
+                      class="form-check-input" 
+                      [id]="field.name" 
+                      [formControlName]="field.name"
+                      [disabled]="field.disabled">
+                    <label class="form-check-label" [for]="field.name">
+                      {{ field.label }}
+                      <span class="text-danger" *ngIf="field.required">*</span>
+                    </label>
+                  </div>
+                  <small class="text-danger d-block" *ngIf="hasError(field.name)">
+                    {{ getFieldError(field.name) }}
+                  </small>
+                  <small class="text-muted d-block" *ngIf="field.helpText">
+                    {{ field.helpText }}
+                  </small>
+                </ng-container>
+
+                <!-- Radio Buttons -->
+                <ng-container *ngIf="field.type === 'radio'">
+                  <label>
+                    {{ field.label }}
+                    <span class="text-danger" *ngIf="field.required">*</span>
+                  </label>
+                  <div class="form-check">
+                    <div class="form-check" *ngFor="let option of field.options">
+                      <input 
+                        type="radio" 
+                        class="form-check-input" 
+                        [id]="field.name + '_' + option.value" 
+                        [formControlName]="field.name"
+                        [value]="option.value"
+                        [disabled]="field.disabled">
+                      <label class="form-check-label" [for]="field.name + '_' + option.value">
+                        {{ option.label }}
+                      </label>
+                    </div>
+                  </div>
+                  <small class="text-danger d-block" *ngIf="hasError(field.name)">
+                    {{ getFieldError(field.name) }}
+                  </small>
+                  <small class="text-muted d-block" *ngIf="field.helpText">
+                    {{ field.helpText }}
+                  </small>
+                </ng-container>
+              </div>
+            </ng-container>
+          </div>
+        </form>
+
+        <!-- Fallback Content (if no fields provided, use ng-content) -->
+        <ng-content *ngIf="!fields || fields.length === 0"></ng-content>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" 
+          [disabled]="form?.invalid" (click)="onSubmit()" 
+          data-dismiss="modal">
+          {{ config?.submitButtonText || 'Save' }}
+        </button>
+        <button type="button" class="btn btn-secondary" 
+          data-dismiss="modal" (click)="onCancel()">
+          {{ config?.cancelButtonText || 'Cancel' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

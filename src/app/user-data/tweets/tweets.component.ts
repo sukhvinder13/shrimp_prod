@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddFarmService } from 'app/services/add-farm/add-farm.service';
 import { BaseDataTableComponent } from 'app/common/component/base-data-table.component';
 import { takeUntil } from 'rxjs/operators';
+import { ModalConfig, FormField } from 'app/common/component/form-modal/form-modal.component';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 export interface Tweet {
   text: string;
@@ -30,10 +31,47 @@ export interface Tweet {
 export class TweetsComponent extends BaseDataTableComponent<Tweet> {
   displayedColumns: string[] = ['text', 'source', 'in_reply_to_screen_name', 'created_at'];
   selectedRow: Tweet;
-  closeResult: string;
+  tweetForm: FormGroup;
+  modalConfig: ModalConfig;
+  formFields: FormField[] = [];
 
-  constructor(farmService: AddFarmService, private modalService: NgbModal) {
+  constructor(
+    farmService: AddFarmService,
+    private fb: FormBuilder
+  ) {
     super(farmService);
+    this.initializeForm();
+    this.initializeFormFields();
+    this.initializeModalConfig();
+  }
+
+  private initializeForm(): void {
+    this.tweetForm = this.fb.group({
+      text: ['']
+    });
+  }
+
+  private initializeFormFields(): void {
+    this.formFields = [
+      {
+        name: 'text',
+        label: 'Tweet Text',
+        type: 'textarea',
+        placeholder: 'Enter tweet text',
+        columnSize: 'full',
+        rows: 4,
+        disabled: true
+      }
+    ];
+  }
+
+  private initializeModalConfig(): void {
+    this.modalConfig = {
+      title: 'Tweet Details',
+      submitButtonText: 'Close',
+      cancelButtonText: 'Cancel',
+      size: 'lg'
+    };
   }
 
   loadData(): void {
@@ -46,30 +84,13 @@ export class TweetsComponent extends BaseDataTableComponent<Tweet> {
       });
   }
 
-  onRowClick(row: Tweet, modal: any): void {
+  onRowClick(row: Tweet): void {
     this.selectedRow = row;
-    this.openModal(modal);
+    this.tweetForm.patchValue({ text: row.text });
   }
 
-  private openModal(content: any): void {
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
-      .result.then(
-        () => {
-          this.closeResult = 'Closed with success';
-        },
-        (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    }
-    return `with: ${reason}`;
+  resetForm(): void {
+    this.tweetForm.reset();
+    this.selectedRow = null;
   }
 }

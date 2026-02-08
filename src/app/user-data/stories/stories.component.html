@@ -5,17 +5,19 @@
                 <div class="card-header card-header-tabs card-header-primary">
                     <div class="nav-tabs-navigation">
                         <div class="nav-tabs-wrapper">
-                            <span class="nav-tabs-title">Chat History:</span>
+                            <span class="nav-tabs-title">Stories</span>
                             <ul class="nav nav-tabs" data-tabs="tabs">
                                 <li class="nav-item">
                                     <a mat-button class="nav-link active" href="#profile" data-toggle="tab">
-                                        <i class="material-icons">bug_report</i> Chat History
+                                        <i class="material-icons">book</i> Stories
                                         <div class="ripple-container"></div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal"
-                                        (click)="open(mymodal)">Add</button>
+                                        data-target="#addStory" (click)="resetForm()">
+                                        <i class="material-icons">add</i> Add Story
+                                    </button>
                                 </li>
                             </ul>
                         </div>
@@ -26,11 +28,11 @@
                         <div class="tab-pane active" id="profile">
                             <table mat-table [dataSource]="dataSource" class="table">
                                 <ng-container matColumnDef="account_id">
-                                    <th mat-header-cell *matHeaderCellDef class="thead-dark" style="width: 100px;"> Name. </th>
+                                    <th mat-header-cell *matHeaderCellDef class="thead-dark" style="width: 100px;"> Name </th>
                                     <td mat-cell *matCellDef="let element" style="width: 100px;"> {{element.name}} </td>
                                 </ng-container>
                                 <ng-container matColumnDef="transaction_count">
-                                    <th mat-header-cell *matHeaderCellDef class="thead-dark" style="width: 400px;"> Story. </th>
+                                    <th mat-header-cell *matHeaderCellDef class="thead-dark" style="width: 400px;"> Story </th>
                                     <td mat-cell *matCellDef="let element" style="width: 400px;"> {{element.story}} </td>
                                 </ng-container>
                                
@@ -39,7 +41,7 @@
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
                             </table>
                             <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons
-                                aria-label="Select page of periodic elements">
+                                aria-label="Select page of stories">
                             </mat-paginator>
                         </div>
                     </div>
@@ -48,28 +50,13 @@
         </div>
     </div>
 </div>
-<ng-template #mymodal let-modal style="z-index:0 !important">
-    <form [formGroup]="storyForm">
 
-        <div class="modal-header">
-            <h4 class="modal-title" id="modal-basic-title">Story Details</h4>
-            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                <span aria-hidden="true">×</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div class="form-row">
-                <div class="col-md-12 mb-3">
-                    <label>Story:</label>
-                    <textarea  class="form-control is-valid" formControlName="story" name="story" id="story"
-                        placeholder="Enter story" required></textarea>
-                </div>
-            </div>
-            
-
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-outline-dark" (click)="save();modal.dismiss('Cross click')">Ok</button>
-        </div>
-    </form>
-</ng-template>
+<!-- Add Story Modal -->
+<app-form-modal 
+  modalId="addStory" 
+  [config]="modalConfig"
+  [form]="storyForm"
+  [fields]="formFields"
+  (submitted)="saveStory()"
+  (cancelled)="resetForm()">
+</app-form-modal>

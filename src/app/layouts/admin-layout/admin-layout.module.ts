@@ -24,7 +24,10 @@ import { MatTableModule } from '@angular/material/table';
 // Third-party modules
 import { NgSelectModule } from '@ng-select/ng-select';
 
-// Components
+// Shared components
+import { FormModalComponent } from 'app/common/component/form-modal/form-modal.component';
+
+// Page components
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { RegistrationComponent } from '../../farm-inputs/registration/registration.component';
 import { AddFarmComponent } from 'app/farm-inputs/add-farm/add-farm.component';
@@ -63,7 +66,9 @@ const MATERIAL_MODULES = [
   MatSortModule
 ];
 
-const COMPONENTS = [
+const SHARED_COMPONENTS = [FormModalComponent];
+
+const PAGE_COMPONENTS = [
   DashboardComponent,
   RegistrationComponent,
   AddFarmComponent,
@@ -94,6 +99,6 @@ const COMPONENTS = [
     NgSelectModule,
     ...MATERIAL_MODULES
   ],
-  declarations: COMPONENTS
+  declarations: [...SHARED_COMPONENTS, ...PAGE_COMPONENTS]
 })
 export class AdminLayoutModule { }

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AddFarmService } from 'app/services/add-farm/add-farm.service';
 import { ToastrService } from 'ngx-toastr';
 import { BaseDataTableComponent } from 'app/common/component/base-data-table.component';
 import { takeUntil } from 'rxjs/operators';
+import { ModalConfig, FormField } from 'app/common/component/form-modal/form-modal.component';
 
 interface Story {
   account_id: string;
@@ -19,18 +19,20 @@ interface Story {
 export class StoriesComponent extends BaseDataTableComponent<Story> {
   displayedColumns: string[] = ['account_id', 'transaction_count'];
   storyForm: FormGroup;
+  modalConfig: ModalConfig;
+  formFields: FormField[] = [];
   userDetails: any;
-  closeResult: string;
   userId: string;
 
   constructor(
     farmService: AddFarmService,
-    private modalService: NgbModal,
     private toastr: ToastrService,
     private fb: FormBuilder
   ) {
     super(farmService);
     this.initializeForm();
+    this.initializeFormFields();
+    this.initializeModalConfig();
   }
 
   private initializeForm(): void {
@@ -38,10 +40,47 @@ export class StoriesComponent extends BaseDataTableComponent<Story> {
     this.storyForm = this.fb.group({
       name: [localStorage.getItem('userInfo')],
       email: [],
-      story: [],
+      story: ['', Validators.required],
       createdBy: [this.userId],
       createdOn: [new Date()]
     });
+  }
+
+  private initializeFormFields(): void {
+    this.formFields = [
+      {
+        name: 'name',
+        label: 'Name',
+        type: 'text',
+        columnSize: 'half',
+        disabled: true
+      },
+      {
+        name: 'email',
+        label: 'Email',
+        type: 'email',
+        columnSize: 'half',
+        disabled: true
+      },
+      {
+        name: 'story',
+        label: 'Story',
+        type: 'textarea',
+        placeholder: 'Write your story here',
+        required: true,
+        columnSize: 'full',
+        rows: 4
+      }
+    ];
+  }
+
+  private initializeModalConfig(): void {
+    this.modalConfig = {
+      title: 'Add Story',
+      submitButtonText: 'Post',
+      cancelButtonText: 'Cancel',
+      size: 'lg'
+    };
   }
 
   loadData(): void {
@@ -54,28 +93,6 @@ export class StoriesComponent extends BaseDataTableComponent<Story> {
       });
   }
 
-  openModal(content: any): void {
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
-      .result.then(
-        () => {
-          this.closeResult = 'Closed with success';
-        },
-        (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    }
-    return `with: ${reason}`;
-  }
-
   saveStory(): void {
     if (this.storyForm.valid) {
       this.farmService
@@ -84,7 +101,16 @@ export class StoriesComponent extends BaseDataTableComponent<Story> {
         .subscribe(() => {
           this.toastr.success('Story saved successfully');
           this.loadData();
+          this.resetForm();
         });
     }
+  }
+
+  resetForm(): void {
+    this.storyForm.reset({
+      name: localStorage.getItem('userInfo'),
+      createdBy: this.userId,
+      createdOn: new Date()
+    });
   }
 }
