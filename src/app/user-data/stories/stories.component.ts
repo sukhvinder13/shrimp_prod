@@ -1,83 +1,90 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddFarmService } from 'app/services/add-farm/add-farm.service';
 import { ToastrService } from 'ngx-toastr';
+import { BaseDataTableComponent } from 'app/common/component/base-data-table.component';
+import { takeUntil } from 'rxjs/operators';
+
+interface Story {
+  account_id: string;
+  transaction_count: number;
+}
 
 @Component({
   selector: 'app-stories',
   templateUrl: './stories.component.html',
   styleUrls: ['./stories.component.scss']
 })
-export class StoriesComponent implements OnInit {
-
-  displayedColumns: String[] = ['account_id', 'transaction_count'];
-  dataSource = new MatTableDataSource<any>();
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+export class StoriesComponent extends BaseDataTableComponent<Story> {
+  displayedColumns: string[] = ['account_id', 'transaction_count'];
   storyForm: FormGroup;
   userDetails: any;
-  constructor(private AddFarmService: AddFarmService, private modalService: NgbModal,
-    private toastr: ToastrService, private fb: FormBuilder) { }
-  transactionData: any;
-  ngOnInit() {
-    this.getStory();
-    this.loadStory()
+  closeResult: string;
+  userId: string;
+
+  constructor(
+    farmService: AddFarmService,
+    private modalService: NgbModal,
+    private toastr: ToastrService,
+    private fb: FormBuilder
+  ) {
+    super(farmService);
+    this.initializeForm();
   }
 
-  getStory() {
-    let obj = {
-      'createdBy': localStorage.getItem('_id')
-    }
-    this.AddFarmService.getAllStories().subscribe((data: any) => {
-      this.dataSource = data.posts;
-      console.log(data.posts)
-      this.setPagination(this.dataSource)
-    })
-    //    this.AddFarmService.getUserDetails().subscribe((data:any) =>{
-    //     console.log(data);
-    //     this.userDetails=data.storys;
-    //  })
-  }
-  setPagination(data) {
-    this.dataSource = new MatTableDataSource<any>(data);
-    this.dataSource.paginator = this.paginator;
-  }
-  closeResult: string;
-  open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  private initializeForm(): void {
+    this.userId = localStorage.getItem('_id') || '';
+    this.storyForm = this.fb.group({
+      name: [localStorage.getItem('userInfo')],
+      email: [],
+      story: [],
+      createdBy: [this.userId],
+      createdOn: [new Date()]
     });
   }
+
+  loadData(): void {
+    this.farmService
+      .getAllStories()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(response => {
+        const data = this.extractPostsData(response);
+        this.setTableData(data);
+      });
+  }
+
+  openModal(content: any): void {
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
+      .result.then(
+        () => {
+          this.closeResult = 'Closed with success';
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
     }
+    return `with: ${reason}`;
   }
-  loadStory() {
-    this.storyForm = this.fb.group({
-      name: [localStorage.getItem('userInfo')],
-      email: [],
-      story: [],
-      createdBy: [localStorage.getItem('_id')],
-      createdOn: [new Date()],
-    })
-  }
-  selectedValue(event) {
-    console.log(event.target.value)
-  }
-  save() {
-    this.AddFarmService.saveStory(this.storyForm.value).subscribe((data: any) => {
-      if (data) {
-        this.toastr.success("Story saved Successfully")
-      }
-    })
+
+  saveStory(): void {
+    if (this.storyForm.valid) {
+      this.farmService
+        .saveStory(this.storyForm.value)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(() => {
+          this.toastr.success('Story saved successfully');
+          this.loadData();
+        });
+    }
   }
 }

@@ -1,75 +1,75 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddFarmService } from 'app/services/add-farm/add-farm.service';
+import { BaseDataTableComponent } from 'app/common/component/base-data-table.component';
+import { takeUntil } from 'rxjs/operators';
+
+export interface Tweet {
+  text: string;
+  in_reply_to_status_id?: string;
+  created_at: Date;
+  geo?: string;
+  source: string;
+  coordinates?: string;
+  truncated?: boolean;
+  in_reply_to_screen_name: string;
+  entities?: Record<string, any>;
+  retweeted?: boolean;
+  place?: string;
+  user?: Record<string, any>;
+  favorited?: boolean;
+  in_reply_to_user_id?: string;
+  id: number;
+}
 
 @Component({
   selector: 'app-tweets',
   templateUrl: './tweets.component.html',
   styleUrls: ['./tweets.component.scss']
 })
-export class TweetsComponent implements OnInit {
-  displayedColumns: String[] = ['text', 'source', 'in_reply_to_screen_name', 'created_at'];
-  dataSource = new MatTableDataSource<any>();
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-
-  constructor(private AddFarmService: AddFarmService,
-    private modalService:NgbModal) { }
-  tweetData: any;
-  ngOnInit() {
-    this.getTweets()
-  }
-
-  getTweets() {
-    this.AddFarmService.getTweets().subscribe((data: any) => {
-      this.dataSource = data.posts;
-      console.log(data)
-      this.setPagination(this.dataSource)
-    })
-  }
-  setPagination(data) {
-    this.dataSource = new MatTableDataSource<any>(data);
-    this.dataSource.paginator = this.paginator;
-  }
+export class TweetsComponent extends BaseDataTableComponent<Tweet> {
+  displayedColumns: string[] = ['text', 'source', 'in_reply_to_screen_name', 'created_at'];
+  selectedRow: Tweet;
   closeResult: string;
-  open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+
+  constructor(farmService: AddFarmService, private modalService: NgbModal) {
+    super(farmService);
   }
+
+  loadData(): void {
+    this.farmService
+      .getTweets()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(response => {
+        const data = this.extractPostsData(response);
+        this.setTableData(data);
+      });
+  }
+
+  onRowClick(row: Tweet, modal: any): void {
+    this.selectedRow = row;
+    this.openModal(modal);
+  }
+
+  private openModal(content: any): void {
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
+      .result.then(
+        () => {
+          this.closeResult = 'Closed with success';
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
     }
+    return `with: ${reason}`;
   }
-  selectedRows:{}
-  onDoubleClick(row, mymodal) {
-    console.log(row)
-    this.selectedRows = row;
-    this.open(mymodal)
-  }
-}
-export interface TweetsModel{
-  text:String,
-  in_reply_to_status_id: String ,
-  created_at: Date ,
-  geo: String ,
-  source: String ,
-  coordinates: String ,
-  truncated: Boolean ,
-  in_reply_to_screen_name: String ,
-  entities: Object ,
-  retweeted: Boolean ,
-  place: String ,
-  user: Object ,
-  favorited: Boolean ,
-  in_reply_to_user_id: String ,
-  id: Number 
 }

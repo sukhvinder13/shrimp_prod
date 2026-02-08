@@ -1,56 +1,74 @@
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+
+// Third-party modules
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { AppRoutingModule } from './app.routing';
-import { ComponentsModule } from './components/components.module';
-import { AppComponent } from './app.component';
-import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { SpinnerComponent } from './common/component/spinner/spinner.component';
-import { LoadingInterceptor } from './common/service/loading-interceptor/loadingIntercept';
-import { LoginComponent } from './login/login/login.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
-import { DatePipe } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
-import { EffectsModule } from '@ngrx/effects';
-import { authReducer } from './store/reducers/auth.reducer';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
-@NgModule({ declarations: [
-        AppComponent,
-        AdminLayoutComponent,
-        SpinnerComponent,
-        LoginComponent
-    ],
-    schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
-        NO_ERRORS_SCHEMA
-    ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        ReactiveFormsModule,
-      NgSelectModule,
-        ComponentsModule,
-        RouterModule,
-        AppRoutingModule,
-        MatProgressSpinnerModule,
-        MatRadioModule,
-        ToastrModule.forRoot({
-            timeOut: 2000,
-            positionClass: 'toast-top-right'
-        }),
-        NgbModule,
-        EffectsModule.forRoot([]), StoreModule.forRoot({ auth: authReducer })], providers: [
-        DatePipe,
-        {
-            provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
-        },
-        provideHttpClient(withInterceptorsFromDi())
-    ] })
+// App modules
+import { AppRoutingModule } from './app.routing';
+import { ComponentsModule } from './components/components.module';
+
+// Components
+import { AppComponent } from './app.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { LoginComponent } from './login/login/login.component';
+import { SpinnerComponent } from './common/component/spinner/spinner.component';
+
+// Services & Interceptors
+import { LoadingInterceptor } from './common/service/loading-interceptor/loadingIntercept';
+import { authReducer } from './store/reducers/auth.reducer';
+
+const MODULES = [
+  BrowserModule,
+  BrowserAnimationsModule,
+  FormsModule,
+  ReactiveFormsModule,
+  HttpClientModule,
+  RouterModule,
+  AppRoutingModule,
+  ComponentsModule,
+  NgSelectModule,
+  NgbModule,
+  MatProgressSpinnerModule,
+  MatRadioModule,
+  StoreModule.forRoot({ auth: authReducer }),
+  EffectsModule.forRoot([]),
+  ToastrModule.forRoot({
+    timeOut: 2000,
+    positionClass: 'toast-top-right'
+  })
+];
+
+const COMPONENTS = [
+  AppComponent,
+  AdminLayoutComponent,
+  LoginComponent,
+  SpinnerComponent
+];
+
+@NgModule({
+  declarations: COMPONENTS,
+  imports: MODULES,
+  providers: [
+    DatePipe,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true
+    }
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
+  bootstrap: [AppComponent]
+})
 export class AppModule { }

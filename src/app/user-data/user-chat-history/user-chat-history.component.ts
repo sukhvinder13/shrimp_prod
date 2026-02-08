@@ -1,70 +1,40 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddFarmService } from 'app/services/add-farm/add-farm.service';
 import { ToastrService } from 'ngx-toastr';
+import { BaseDataTableComponent } from 'app/common/component/base-data-table.component';
+import { takeUntil } from 'rxjs/operators';
+
+interface ChatMessage {
+  from: string;
+  message: string;
+}
 
 @Component({
   selector: 'app-user-chat-history',
   templateUrl: './user-chat-history.component.html',
   styleUrls: ['./user-chat-history.component.scss']
 })
-export class UserChatHistoryComponent implements OnInit {
-
-  displayedColumns:String[]=['from','message'];
-  dataSource = new MatTableDataSource<any>();
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+export class UserChatHistoryComponent extends BaseDataTableComponent<ChatMessage> {
+  displayedColumns: string[] = ['from', 'message'];
   chatForm: FormGroup;
-userDetails:any;
-  constructor(private AddFarmService: AddFarmService,private modalService:NgbModal,
-    private toastr:ToastrService, private fb: FormBuilder) { }
-  transactionData:any;
-  loginId:any;
-  ngOnInit() {
-    this.getChatHistory();
-    this.loadChatData();
-    this.loginId =localStorage.getItem('_id')
-  }
-datas:any
-  getChatHistory(){
-    let obj={
-      'createdBy':localStorage.getItem('_id')
-    }
-    this.AddFarmService.getConvoById(obj).subscribe((data:any) =>{
-      this.dataSource=data.posts;
-      this.datas=data.posts
-      console.log(data.posts)
-      this.setPagination(this.dataSource)
-   })
-   this.AddFarmService.getUserDetails().subscribe((data:any) =>{
-    console.log(data);
-    this.userDetails=data.posts;
- })
-  }
-  setPagination(data) {
-    this.dataSource = new MatTableDataSource<any>(data);
-    this.dataSource.paginator = this.paginator;
-  }
+  userDetails: any;
   closeResult: string;
-  open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+  userId: string;
+
+  constructor(
+    farmService: AddFarmService,
+    private modalService: NgbModal,
+    private toastr: ToastrService,
+    private fb: FormBuilder
+  ) {
+    super(farmService);
+    this.initializeForm();
   }
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
-  loadChatData() {
+
+  private initializeForm(): void {
+    this.userId = localStorage.getItem('_id') || '';
     this.chatForm = this.fb.group({
       name: [localStorage.getItem('userInfo')],
       email: [],
@@ -72,18 +42,60 @@ datas:any
       message: [],
       from: [],
       to: [],
-       createdBy: [localStorage.getItem('_id')],
-      createdOn: [new Date()],
-    })
+      createdBy: [this.userId],
+      createdOn: [new Date()]
+    });
   }
-  selectedValue(event){
-    console.log(event.target.value)
+
+  loadData(): void {
+    this.farmService
+      .getConvoById({ createdBy: this.userId })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(response => {
+        const data = this.extractPostsData(response);
+        this.setTableData(data);
+      });
+
+    this.farmService
+      .getUserDetails()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: any) => {
+        this.userDetails = this.extractPostsData(response);
+      });
   }
-  save(){
-    this.AddFarmService.sendConvo(this.chatForm.value).subscribe((data:any) =>{
-      console.log(data);
-      this.toastr.success("saved");
-      this.getChatHistory();
-   })
+
+  openModal(content: any): void {
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
+      .result.then(
+        () => {
+          this.closeResult = 'Closed with success';
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    }
+    return `with: ${reason}`;
+  }
+
+  saveMessage(): void {
+    if (this.chatForm.valid) {
+      this.farmService
+        .sendConvo(this.chatForm.value)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(() => {
+          this.toastr.success('Message saved successfully');
+          this.loadData();
+          this.chatForm.reset();
+        });
+    }
   }
 }

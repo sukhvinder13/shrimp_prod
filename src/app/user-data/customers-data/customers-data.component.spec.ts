@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {  ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CustomersDataComponent } from './customers-data.component';
 
@@ -6,13 +6,12 @@ describe('CustomersDataComponent', () => {
   let component: CustomersDataComponent;
   let fixture: ComponentFixture<CustomersDataComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ CustomersDataComponent ]
     })
     .compileComponents();
   }));
-
   beforeEach(() => {
     fixture = TestBed.createComponent(CustomersDataComponent);
     component = fixture.componentInstance;
@@ -23,3 +22,4 @@ describe('CustomersDataComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

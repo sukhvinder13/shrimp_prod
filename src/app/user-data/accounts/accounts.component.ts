@@ -1,37 +1,34 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component } from '@angular/core';
 import { AddFarmService } from 'app/services/add-farm/add-farm.service';
+import { BaseDataTableComponent } from 'app/common/component/base-data-table.component';
+import { takeUntil } from 'rxjs/operators';
+
+interface Account {
+  account_id: string;
+  limit: number;
+  products: string;
+  products1: string;
+}
 
 @Component({
   selector: 'app-accounts',
   templateUrl: './accounts.component.html',
   styleUrls: ['./accounts.component.scss']
 })
-export class AccountsComponent implements OnInit {
+export class AccountsComponent extends BaseDataTableComponent<Account> {
+  displayedColumns: string[] = ['account_id', 'limit', 'products', 'products1'];
 
-  constructor(private AddFarmService: AddFarmService) { }
-  accountsData: any = {};
-  // @ViewChild('paginator') paginator: MatPaginator;
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  displayedColumns: string[] = ['account_id', 'limit','products','products1'];
-  dataSource = new MatTableDataSource<any>();
-
-  ngOnInit() {
-    this.getAccounts()
+  constructor(farmService: AddFarmService) {
+    super(farmService);
   }
 
-  getAccounts() {
-    this.AddFarmService.getAccounts().subscribe((res: any) => {
-      this.accountsData = res.posts;
-      this.dataSource =this.accountsData;
-      this.setPagination(this.dataSource);
-      console.log(res)
-
-    })
-  }
-  setPagination(data) {
-    this.dataSource = new MatTableDataSource<any>(data);
-    this.dataSource.paginator = this.paginator;
+  loadData(): void {
+    this.farmService
+      .getAccounts()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(response => {
+        const data = this.extractPostsData(response);
+        this.setTableData(data);
+      });
   }
 }

@@ -1,34 +1,35 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component } from '@angular/core';
 import { AddFarmService } from 'app/services/add-farm/add-farm.service';
+import { BaseDataTableComponent } from 'app/common/component/base-data-table.component';
+import { takeUntil } from 'rxjs/operators';
+
+interface Sale {
+  couponUsed: string;
+  email: string;
+  gender: string;
+  storeLocation: string;
+  purchaseMethod: string;
+}
 
 @Component({
   selector: 'app-sales',
   templateUrl: './sales.component.html',
   styleUrls: ['./sales.component.scss']
 })
-export class SalesComponent implements OnInit {
-  constructor(private AddFarmService: AddFarmService) { }
-  salesData:any;
-  displayedColumns:String[]=['couponUsed','email', 'gender', 'storeLocation', 'purchaseMethod'];
-  dataSource = new MatTableDataSource<any>();
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+export class SalesComponent extends BaseDataTableComponent<Sale> {
+  displayedColumns: string[] = ['couponUsed', 'email', 'gender', 'storeLocation', 'purchaseMethod'];
 
-  ngOnInit() {
-    this.getSales()
+  constructor(farmService: AddFarmService) {
+    super(farmService);
   }
 
-  getSales(){
-    this.AddFarmService.getSales().subscribe((data =>{
-      this.salesData=data;
-      console.log(data)
-      this.dataSource =this.salesData.posts;
-      this.setPagination(this.dataSource)
-   }))
-  }
-  setPagination(data) {
-    this.dataSource = new MatTableDataSource<any>(data);
-    this.dataSource.paginator = this.paginator;
+  loadData(): void {
+    this.farmService
+      .getSales()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(response => {
+        const data = this.extractPostsData(response);
+        this.setTableData(data);
+      });
   }
 }
