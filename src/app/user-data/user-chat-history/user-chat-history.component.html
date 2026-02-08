@@ -7,57 +7,29 @@
   (cancelled)="resetForm()">
 </app-form-modal>
 
-<section class="msger">
-    <header class="msger-header">
-      <div class="msger-header-title">
-        <i class="fas fa-comment-alt"></i> 
-      </div>
-      <div class="msger-header-options">
-        <span><i class="fas fa-cog"></i></span>
-      </div>
-    </header>
-  
-    <main class="msger-chat">
-        <div  *ngFor="let x of datas">
-      <div [ngClass]="true ? 'msg left-msg' :'msg right-msg'" >
-        <div
-         class="msg-img"
-         style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"
-        ></div>
-  
-        <div class="row msg-bubble">
-          <div class="msg-info">
-            <div class="msg-info-name">{{x.name}}</div>
-            <div class="msg-info-time">{{x.createdOn | date:'MM/dd hh:mm'}}</div>
-          </div>
-          <div class="msg-text">
-          {{x.message}}
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="col-lg-12 col-md-12">
+      <div class="card">
+        <div class="card-header card-header-tabs card-header-primary">
+          <div class="nav-tabs-navigation">
+            <div class="nav-tabs-wrapper">
+              <span class="nav-tabs-title">Chat History</span>
+              <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#chatModal">
+                Send Message
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      <br>
-  
-      <!-- <div class="msg right-msg">
-        <div
-         class="msg-img"
-         style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)"
-        ></div>
-  
-        <div class="msg-bubble" >
-          <div class="msg-info">
-            <div class="msg-info-name">Sajad</div>
-            <div class="msg-info-time">12:46</div>
-          </div>
-  
-          <div class="msg-text">
-            You can change your name in JS section!
-          </div>
+        <div class="card-body">
+          <app-reusable-table
+            [columns]="tableColumns"
+            [data]="tableData"
+            [config]="tableConfig"
+            (action)="onTableAction($event)">
+          </app-reusable-table>
         </div>
-      </div> -->
       </div>
-    </main>
-  
-    <form class="msger-inputarea">
-      <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#chatModal">Send Message</button>
-    </form>
-  </section>
+    </div>
+  </div>
+</div>
