@@ -27,6 +27,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 // Shared components
 import { FormModalComponent } from 'app/common/component/form-modal/form-modal.component';
+import { DetailsModalComponent } from 'app/common/component/details-modal/details-modal.component';
 import { ReusableTableComponent } from 'app/common/component/reusable-table/reusable-table.component';
 
 // Page components
@@ -69,7 +70,7 @@ const MATERIAL_MODULES = [
   MatIconModule
 ];
 
-const SHARED_COMPONENTS = [FormModalComponent, ReusableTableComponent];
+const SHARED_COMPONENTS = [FormModalComponent, DetailsModalComponent, ReusableTableComponent];
 
 const PAGE_COMPONENTS = [
   DashboardComponent,

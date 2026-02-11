@@ -6,6 +6,7 @@ export interface ModalConfig {
   submitButtonText?: string;
   cancelButtonText?: string;
   size?: 'sm' | 'lg' | 'xl';
+  isEditMode?: boolean;
 }
 
 export type FieldType = 'text' | 'email' | 'password' | 'number' | 'date' | 'textarea' | 'select' | 'checkbox' | 'radio' | 'tel' | 'url' | 'time' | 'datetime-local';
@@ -47,15 +48,28 @@ export class FormModalComponent implements OnInit {
   @Output() submitted = new EventEmitter<void>();
   @Output() cancelled = new EventEmitter<void>();
 
+  isEditMode: boolean = false;
+
   ngOnInit(): void {
     if (!this.config) {
       this.config = {
         title: 'Modal',
         submitButtonText: 'Save',
         cancelButtonText: 'Cancel',
-        size: 'lg'
+        size: 'lg',
+        isEditMode: false
       };
     }
+    this.updateEditMode();
+  }
+
+  private updateEditMode(): void {
+    this.isEditMode = this.config?.isEditMode || false;
+  }
+
+  updateConfig(newConfig: ModalConfig): void {
+    this.config = newConfig;
+    this.updateEditMode();
   }
 
   onSubmit(): void {
@@ -75,6 +89,13 @@ export class FormModalComponent implements OnInit {
       'xl': 'modal-xl'
     };
     return sizeMap[this.config?.size] || 'modal-lg';
+  }
+
+  getSubmitButtonText(): string {
+    if (this.isEditMode) {
+      return this.config?.submitButtonText || 'Update';
+    }
+    return this.config?.submitButtonText || 'Save';
   }
 
   getColumnClass(field: FormField): string {

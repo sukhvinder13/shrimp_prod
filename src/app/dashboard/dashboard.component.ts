@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AddFarmService } from 'app/services/add-farm/add-farm.service';
 import * as Chartist from 'chartist';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, Observable } from 'rxjs';
+import { takeUntil, shareReplay } from 'rxjs/operators';
 
 interface ChartAnimationConfig {
   seq: number;
@@ -16,9 +16,8 @@ interface ChartAnimationConfig {
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  customerData: any[] = [];
-  totalRevenue = 0;
-  activeCustomers = 0;
+  customerData$: Observable<any>;
+  dashboardStats$: Observable<any>;
   private destroy$ = new Subject<void>();
 
   constructor(private addFarmService: AddFarmService) {}
@@ -33,22 +32,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   private loadDashboardData(): void {
-    this.addFarmService
+    this.customerData$ = this.addFarmService
       .getCustoemrs()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data: any) => {
-        this.customerData = data || [];
-      });
+      .pipe(
+        takeUntil(this.destroy$),
+        shareReplay(1)
+      );
 
-    this.addFarmService
+    this.dashboardStats$ = this.addFarmService
       .getCustomerCount()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data: any) => {
-        if (data) {
-          this.totalRevenue = data.totalValue || 0;
-          this.activeCustomers = data.transactionCount || 0;
-        }
-      });
+      .pipe(
+        takeUntil(this.destroy$),
+        shareReplay(1)
+      );
   }
 
   private animateChart(chart: any, dataType: 'line' | 'bar'): void {

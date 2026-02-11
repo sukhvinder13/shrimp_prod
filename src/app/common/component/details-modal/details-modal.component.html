@@ -1,0 +1,118 @@
+<div [id]="modalId" class="modal fade" role="dialog">
+  <div class="modal-dialog" [ngClass]="getModalSizeClass()">
+    <div class="modal-content">
+      
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">{{ config?.title }}</h4>
+        <button 
+          type="button" 
+          class="close" 
+          data-dismiss="modal" 
+          aria-label="Close"
+          (click)="onClose()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <!-- Data Content -->
+        <div *ngIf="hasData(); else noData">
+          <!-- Render each section -->
+          <div *ngFor="let section of sections; let last = last" [ngClass]="{'mb-4': !last}">
+            <!-- Section Title -->
+            <h5 *ngIf="section.title" class="mb-3 border-bottom pb-2">
+              {{ section.title }}
+            </h5>
+
+            <!-- Regular Fields Section -->
+            <div *ngIf="!section.showAsTable" class="form-row">
+              <ng-container *ngFor="let field of section.fields">
+                <!-- Text/Default Field -->
+                <div *ngIf="field.type !== 'array' && field.type !== 'table' && field.type !== 'keyvalue'" 
+                  [ngClass]="getColumnClass(field)" 
+                  class="mb-3">
+                  <label class="text-muted mb-1">
+                    <strong>{{ field.label }}:</strong>
+                  </label>
+                  <!-- Date Field -->
+                  <p *ngIf="field.type === 'date'" class="mb-0">
+                    {{ getFieldValue(field) | date: field.format || 'dd/MM/yyyy' }}
+                  </p>
+                  <!-- Text Field -->
+                  <p *ngIf="!field.type || field.type === 'text'" class="mb-0">
+                    {{ getFieldValue(field) }}
+                  </p>
+                </div>
+
+                <!-- Array Field -->
+                <div *ngIf="isArrayType(field)" class="col-md-12 mb-3">
+                  <label class="text-muted mb-2">
+                    <strong>{{ field.label }}:</strong>
+                  </label>
+                  <ul class="list-unstyled ms-3">
+                    <li *ngFor="let item of field.value" class="mb-1">
+                      {{ item }}
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- Key-Value Field -->
+                <div *ngIf="isKeyValueType(field)" class="col-md-12 mb-3">
+                  <label class="text-muted mb-2">
+                    <strong>{{ field.label }}:</strong>
+                  </label>
+                  <table class="table table-sm table-borderless">
+                    <tbody>
+                      <tr *ngFor="let item of getKeyValuePairs(field.value)">
+                        <td class="text-muted">{{ item.key }}:</td>
+                        <td><strong>{{ item.value }}</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </ng-container>
+            </div>
+
+            <!-- Table Section -->
+            <div *ngIf="section.showAsTable" class="table-responsive">
+              <table class="table table-sm">
+                <thead class="table-light">
+                  <tr>
+                    <th *ngFor="let field of section.fields">{{ field.label }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of section.fields[0]?.value || []">
+                    <td *ngFor="let field of section.fields">
+                      {{ row[field.label] || 'N/A' }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- No Data Template -->
+        <ng-template #noData>
+          <div class="text-center py-5">
+            <p class="text-muted fs-5">No data available</p>
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+        <button 
+          type="button" 
+          class="btn btn-secondary" 
+          data-dismiss="modal"
+          (click)="onClose()">
+          {{ config?.closeButtonText || 'Close' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

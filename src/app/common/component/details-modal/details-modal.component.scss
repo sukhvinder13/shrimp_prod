@@ -1,0 +1,136 @@
+// Details Modal Styles
+
+.modal-header {
+  border-bottom: 1px solid #e3e6f0;
+  background-color: #f8f9fa;
+
+  .modal-title {
+    font-weight: 600;
+    color: #333;
+  }
+}
+
+.modal-body {
+  padding: 2rem;
+
+  h5 {
+    font-weight: 600;
+    color: #333;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+
+    &.border-bottom {
+      border-bottom: 2px solid #e3e6f0 !important;
+      padding-bottom: 0.5rem;
+    }
+  }
+
+  label {
+    font-size: 0.85rem;
+    display: block;
+    margin-bottom: 0.25rem;
+
+    &.text-muted {
+      color: #6c757d !important;
+    }
+  }
+
+  p {
+    color: #333;
+    margin-bottom: 0;
+    font-size: 0.95rem;
+    word-wrap: break-word;
+  }
+
+  ul.list-unstyled {
+    li {
+      color: #333;
+      font-size: 0.95rem;
+      padding: 0.25rem 0;
+    }
+  }
+
+  .table {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+
+    thead.table-light {
+      background-color: #f8f9fa;
+
+      th {
+        font-weight: 600;
+        border-bottom: 2px solid #dee2e6;
+        color: #333;
+        padding: 0.75rem;
+      }
+    }
+
+    tbody {
+      tr {
+        &:hover {
+          background-color: #f8f9fa;
+        }
+
+        td {
+          padding: 0.75rem;
+          color: #333;
+          border-bottom: 1px solid #dee2e6;
+
+          &.text-muted {
+            color: #6c757d !important;
+          }
+        }
+      }
+    }
+
+    &.table-borderless {
+      tbody tr td {
+        border: none;
+        padding: 0.5rem 0;
+      }
+    }
+  }
+
+  .table-responsive {
+    margin-bottom: 0;
+  }
+}
+
+.modal-footer {
+  border-top: 1px solid #e3e6f0;
+  background-color: #f8f9fa;
+  padding: 1rem;
+
+  .btn {
+    min-width: 100px;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .modal-body {
+    padding: 1.5rem;
+
+    h5 {
+      font-size: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    label {
+      font-size: 0.8rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+    }
+
+    .table {
+      font-size: 0.85rem;
+
+      th,
+      td {
+        padding: 0.5rem;
+      }
+    }
+  }
+}

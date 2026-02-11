@@ -13,9 +13,13 @@
       <!-- Add Button Card -->
       <div class="card" style="margin-top: 20px;">
         <div class="card-body">
-          <button type="button" class="btn btn-info btn-sm" 
-            data-toggle="modal" data-target="#addCustomer" (click)="resetForm()">
-            <i class="material-icons">add</i> Add Customer
+          <button 
+            type="button" 
+            class="btn btn-info btn-sm" 
+            (click)="onAddCustomerClick()"
+            [attr.aria-label]="'Add new customer'">
+            <i class="material-icons">add</i>
+            Add Customer
           </button>
         </div>
       </div>
@@ -33,88 +37,14 @@
   (cancelled)="resetForm()">
 </app-form-modal>
 
+<!-- Details Modal Component -->
+<app-details-modal 
+  modalId="detailsModal"
+  [config]="detailsModalConfig"
+  [data]="selectedRows"
+  [sections]="detailsSections"
+  (closed)="resetForm()">
+</app-details-modal>
+
 <!-- View Details Modal Template -->
-<ng-template #detailsModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title">Customer Details</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  
-  <div class="modal-body" *ngIf="selectedRows">
-    <!-- Basic Information -->
-    <div class="form-row">
-      <div class="col-md-6 mb-3">
-        <label><strong>Name:</strong></label>
-        <p>{{selectedRows.name}}</p>
-      </div>
-      <div class="col-md-6 mb-3">
-        <label><strong>Email:</strong></label>
-        <p>{{selectedRows.email}}</p>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="col-md-6 mb-3">
-        <label><strong>Birthdate:</strong></label>
-        <p>{{selectedRows.birthdate | date:'dd/MM/yyyy'}}</p>
-      </div>
-      <div class="col-md-6 mb-3">
-        <label><strong>Username:</strong></label>
-        <p>{{selectedRows.username || 'N/A'}}</p>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="col-md-12 mb-3">
-        <label><strong>Address:</strong></label>
-        <p>{{selectedRows.address}}</p>
-      </div>
-    </div>
-
-    <!-- Tier and Details -->
-    <div class="form-row" *ngIf="selectedRows.tier_and_details && (selectedRows.tier_and_details | keyvalue)?.length > 0">
-      <div class="col-md-12 mb-3">
-        <h5>Tier and Details</h5>
-        <table class="table table-sm">
-          <thead>
-            <tr>
-              <th>Benefits</th>
-              <th>Tier</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of selectedRows.tier_and_details | keyvalue">
-              <td>{{item.key}}</td>
-              <td>{{item.value}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Accounts -->
-    <div class="form-row" *ngIf="selectedRows.accounts && selectedRows.accounts.length > 0">
-      <div class="col-md-12 mb-3">
-        <h5>Accounts</h5>
-        <table class="table table-sm">
-          <thead>
-            <tr>
-              <th>Account</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let account of selectedRows.accounts">
-              <td>{{account}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
-  </div>
-</ng-template>
+<ng-template #detailsModal let-modal></ng-template>

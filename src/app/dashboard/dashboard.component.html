@@ -27,7 +27,7 @@
                           <i class="material-icons">store</i>
                       </div>
                       <p class="card-category">Revenue</p>
-                      <h3 class="card-title">${{totalRevenue}}</h3>
+                      <h3 class="card-title">${{(dashboardStats$ | async)?.totalValue}}</h3>
                   </div>
                   <div class="card-footer">
                       <div class="stats">
@@ -43,7 +43,7 @@
                           <i class="material-icons">info_outline</i>
                       </div>
                       <p class="card-category">Transaction Count</p>
-                      <h3 class="card-title">{{activeCustomers}}</h3>
+                      <h3 class="card-title">{{(dashboardStats$ | async)?.transactionCount}}</h3>
                   </div>
                   <div class="card-footer">
                       <div class="stats">
@@ -379,7 +379,7 @@
                             <th scope="col">Email</th>
                             <th scope="col">DOB</th>
                           </thead>
-                          <tbody *ngFor="let x of customerData?.posts ; let i=index">
+                          <tbody *ngFor="let x of (customerData$ | async)?.posts ; let i=index">
                               <tr *ngIf="i<8">
                                     <td>{{x.name}}</td>
                                     <td>{{x.email}}</td>
