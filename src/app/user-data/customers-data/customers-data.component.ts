@@ -210,7 +210,8 @@ export class CustomersDataComponent implements OnInit, OnDestroy {
     this.updateModalTitle('Edit Customer');
     const formattedBirthdate = this.formatDateForInput(element.birthdate);
 
-    this.customerForm.patchValue({
+    // Reset form first to clear any previous values
+    this.customerForm.reset({
       id: element._id,
       name: element.name || '',
       email: element.email || '',
@@ -218,6 +219,9 @@ export class CustomersDataComponent implements OnInit, OnDestroy {
       address: element.address || '',
       username: element.username || ''
     });
+
+    // Mark as touched to show validation messages if needed
+    this.customerForm.markAllAsTouched();
   }
 
   resetForm(): void {
@@ -236,17 +240,19 @@ export class CustomersDataComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Handle table actions
+   * Handle table actions - Opens modal with row data
    */
   onTableAction(event: TableActionEvent): void {
     switch (event.action) {
       case 'edit':
         this.editRow(event.data);
-        // Trigger modal programmatically
-        const addCustomerBtn = document.querySelector('[data-target="#addCustomer"]') as HTMLElement;
-        if (addCustomerBtn) {
-          addCustomerBtn.click();
-        }
+        // Use setTimeout to ensure Angular change detection completes before opening modal
+        setTimeout(() => {
+          const addBtn = document.querySelector('[data-target="#addCustomer"]') as HTMLElement;
+          if (addBtn) {
+            addBtn.click();
+          }
+        }, 0);
         break;
       case 'delete':
         this.deleteRow(event.data);
